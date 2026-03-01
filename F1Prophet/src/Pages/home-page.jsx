@@ -1,5 +1,5 @@
 import React from 'react'
-//import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './HomePage.css'
 
 function HomePage() {
@@ -16,6 +16,18 @@ function HomePage() {
                         
                     </p>
                     <div className='hero-buttons'>
+                        <Link to='/' className='btn btn-primary'>
+                            Register
+                        </Link>
+                        <Link to='/' className='btn btn-primary'>
+                            Login
+                        </Link>
+                        <Link to='/' className='btn btn-primary'>
+                            Predict
+                        </Link>
+                        <Link to='/drivers' className='btn btn-primary'>
+                            View Drivers
+                        </Link>
                     </div>
                 </div>
             </section>
