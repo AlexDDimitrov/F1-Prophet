@@ -38,7 +38,7 @@ body {
     font-size: 4rem;
     font-weight: 900;
     letter-spacing: 0.3rem;
-    color: #ED1C01;
+    color: #d30700;
     text-shadow:
         0 0 10px rgba(225, 6, 0, 0.5),
         0 0 20px rgba(225, 6, 0, 0.3);
@@ -50,8 +50,8 @@ body {
     font-weight: 700;
     letter-spacing: 0.5rem;
     color: #ffffff;
-    border-top: 3px solid #ED1C01;
-    border-bottom: 3px solid #ED1C01;
+    border-top: 3px solid #d30700;
+    border-bottom: 3px solid #d30700;
     padding: 1rem 0;
     margin-top: 1rem;
 }
@@ -106,14 +106,14 @@ body {
 }
 
 .btn-primary {
-    background: #ED1C01;
+    background: #d30700;
     color: #ffffff;
-    border: 2px solid #ED1C01;
+    border: 2px solid #d30700;
     box-shadow: 0 4px 15px rgba(225, 6, 0, 0.4);
 }
 
 .btn-primary:hover {
-    background: #ff0800;
+    background: #ED1C01;
     box-shadow: 0 6px 20px rgba(225, 6, 0, 0.6);
     transform: translateY(-2px);
 }
