@@ -1,2 +1,0 @@
-pip install fastf1
-pip install requests
