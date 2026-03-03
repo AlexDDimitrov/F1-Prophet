@@ -65,7 +65,7 @@ class F1DriverData:
             print(f"Error fetching standings: {e}")
             return []
         
-    """def get_driver_career_stats(self, driver_id):
+    def get_driver_career_stats(self, driver_id):
         stats = {
             'wins': 0,
             'podiums': 0,
@@ -133,4 +133,4 @@ class F1DriverData:
             
         except Exception as e:
             print(f"Error fetching career stats for {driver_id}: {e}")
-            return stats"""
+            return stats
