@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import DisplayDriver from './driver'
+import './addDrivers.css'
 import { driversAPI } from '../services/api'
 
 function CollectDrivers() {
@@ -37,15 +38,22 @@ function CollectDrivers() {
             {drivers.map((driver) => (
                 <DisplayDriver 
                     key={driver.driver_id}
+                    driver_id={driver.driver_id}
                     name={driver.full_name}
                     team={driver.team}
                     number={driver.number}
                     code={driver.code}
                     nationality={driver.nationality}
-                />
+                    position={driver.position}
+                    points={driver.points} 
+                    />
             ))}
         </div>
     )
+    /* career_wins = {driver.career_wins}
+                    career_podiums = {driver.career_podiums} 
+                    career_poles = {driver.career_poles}
+                    career_championships = {driver.career_championships} */
 }
 
 export default CollectDrivers

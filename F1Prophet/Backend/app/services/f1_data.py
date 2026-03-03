@@ -66,71 +66,71 @@ class F1DriverData:
             return []
         
     """def get_driver_career_stats(self, driver_id):
-    stats = {
-        'wins': 0,
-        'podiums': 0,
-        'poles': 0,
-        'championships': 0
-    }
+        stats = {
+            'wins': 0,
+            'podiums': 0,
+            'poles': 0,
+            'championships': 0
+        }
 
-    try:
-        url = f"{self.JOLPICA}/drivers/{driver_id}/results.json?limit=1000"
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
+        try:
+            url = f"{self.JOLPICA}/drivers/{driver_id}/results.json?limit=1000"
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
 
-        races = data['MRData']['RaceTable']['Races']
+            races = data['MRData']['RaceTable']['Races']
 
-        for race in races:
-            if race['Results']:
-                driver_result = next(
-                    (r for r in race['Results'] if r['Driver']['driverId'] == driver_id), 
-                    None
-                )
-                
-                if driver_result:
-                    position = driver_result.get('position', '99')
+            for race in races:
+                if race['Results']:
+                    driver_result = next(
+                        (r for r in race['Results'] if r['Driver']['driverId'] == driver_id), 
+                        None
+                    )
                     
-                    if position == '1':
-                        stats['wins'] += 1
-                    if position in ['1', '2', '3']:
-                        stats['podiums'] += 1
+                    if driver_result:
+                        position = driver_result.get('position', '99')
+                        
+                        if position == '1':
+                            stats['wins'] += 1
+                        if position in ['1', '2', '3']:
+                            stats['podiums'] += 1
 
-        url = f"{self.JOLPICA}/drivers/{driver_id}/qualifying.json?limit=1000"
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
+            url = f"{self.JOLPICA}/drivers/{driver_id}/qualifying.json?limit=1000"
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
 
-        races = data['MRData']['RaceTable']['Races']
-        
-        for race in races:
-            if race['QualifyingResults']:
-                driver_qual = next(
-                    (q for q in race['QualifyingResults'] if q['Driver']['driverId'] == driver_id),
-                    None
-                )
-                
-                if driver_qual and driver_qual.get('position') == '1':
-                    stats['poles'] += 1
+            races = data['MRData']['RaceTable']['Races']
+            
+            for race in races:
+                if race['QualifyingResults']:
+                    driver_qual = next(
+                        (q for q in race['QualifyingResults'] if q['Driver']['driverId'] == driver_id),
+                        None
+                    )
+                    
+                    if driver_qual and driver_qual.get('position') == '1':
+                        stats['poles'] += 1
 
-        url = f"{self.JOLPICA}/drivers/{driver_id}/driverStandings.json"
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
+            url = f"{self.JOLPICA}/driverStandings.json?driverId={driver_id}"
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
 
-        standings_lists = data['MRData']['StandingsTable']['StandingsLists']
-        for season_standings in standings_lists:
-            if season_standings['DriverStandings']:
-                driver_standing = next(
-                    (s for s in season_standings['DriverStandings'] if s['Driver']['driverId'] == driver_id),
-                    None
-                )
-                
-                if driver_standing and driver_standing.get('position') == '1':
-                    stats['championships'] += 1
-        
-        return stats
-        
-    except Exception as e:
-        print(f"Error fetching career stats for {driver_id}: {e}")
-        return stats"""
+            standings_lists = data['MRData']['StandingsTable']['StandingsLists']
+            for season_standings in standings_lists:
+                if season_standings['DriverStandings']:
+                    driver_standing = next(
+                        (s for s in season_standings['DriverStandings'] if s['Driver']['driverId'] == driver_id),
+                        None
+                    )
+                    
+                    if driver_standing and driver_standing.get('position') == '1':
+                        stats['championships'] += 1
+            
+            return stats
+            
+        except Exception as e:
+            print(f"Error fetching career stats for {driver_id}: {e}")
+            return stats"""

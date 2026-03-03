@@ -70,12 +70,15 @@ def get_drivers():
                 'points': standing.get('points', 0),
                 'wins': standing.get('wins', 0),
                 
+                
             })
 
             """'career_wins': career_stats['wins'],
                 'career_podiums': career_stats['podiums'],
                 'career_poles': career_stats['poles'],
                 'career_championships': career_stats['championships']"""
+
+            
 
         return jsonify(result), 200
     
@@ -97,10 +100,11 @@ def get_driver_detail(driver_id):
             'team': standing.get('team'),
             'position': standing.get('position'),
             'points': standing.get('points'),
-            'wins': standing.get('wins')
+            'wins': standing.get('wins'),
+            
         }
 
-        """career_wins': stats['wins'],
+        """'career_wins': stats['wins'],
             'career_podiums': stats['podiums'],
             'career_poles': stats['poles'],
             'career_championships': stats['championships']"""

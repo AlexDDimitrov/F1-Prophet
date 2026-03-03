@@ -1,48 +1,104 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './driver.css'
 
-function DisplayDriver({name, 
+function DisplayDriver({ 
+    driver_id,
+    name, 
     team, 
     number, 
     code, 
     nationality, 
-    career_wins, 
-    career_podiums, 
-    career_poles, 
-    career_championships}) {
-    return (
-        <div className='driver-card'>            
-            <h2 className='driver-name'>{name}</h2>
-            
-        <div className='driver-photo'>
-                <div className='photo-placeholder'>{code || 'pic'}</div>
-        </div>
+    position, 
+    points 
+}) {
+    const navigate = useNavigate();
 
-            <div className='driver-info'>
-                <span className='driver-team'>{team}</span>
-                <span className='driver-number'>#{number}</span>
+    const handleViewProfile = () => {
+        navigate(`/drivers/${driver_id}`);
+    };
+    const driverImage = `/images/drivers/${code}.png`;
+    const getFlagGradient = (nationality) => {
+        const flags = {
+            'Dutch': 'linear-gradient(180deg, #AE1C28 0%, #AE1C28 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #21468B 66.66%, #21468B 100%)',
+            'British': 'linear-gradient(135deg, #012169 0%, #012169 30%, #C8102E 30%, #C8102E 35%, #FFFFFF 35%, #FFFFFF 40%, #012169 40%, #012169 60%, #FFFFFF 60%, #FFFFFF 65%, #C8102E 65%, #C8102E 70%, #012169 70%, #012169 100%)',
+            'Spanish': 'linear-gradient(180deg, #AA151B 0%, #AA151B 25%, #F1BF00 25%, #F1BF00 75%, #AA151B 75%, #AA151B 100%)',
+            'German': 'linear-gradient(180deg, #000000 0%, #000000 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%, #FFCE00 100%)',
+            'French': 'linear-gradient(90deg, #013f79 0%, #044989 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #EF4135 66.66%, #EF4135 100%)',
+            'Monegasque': 'linear-gradient(180deg, #CE1126 0%, #CE1126 50%, #FFFFFF 50%, #FFFFFF 100%)',
+            'Mexican': 'linear-gradient(90deg, #006847 0%, #006847 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #CE1126 66.66%, #CE1126 100%)',
+            'Finnish': `
+                linear-gradient(transparent 37%, #003580 37%, #003580 63%, transparent 63%),
+                linear-gradient(90deg, transparent 37%, #003580 37%, #003580 50%, transparent 50%),
+                linear-gradient(#FFFFFF 0%, #FFFFFF 100%)
+            `,
+            'Canadian': 'linear-gradient(90deg, #FF0000 0%, #FF0000 25%, #FFFFFF 25%, #FFFFFF 75%, #FF0000 75%, #FF0000 100%)',
+            'Australian': 'linear-gradient(135deg, #00247D 0%, #00247D 40%, #012169 40%, #012169 60%, #00247D 60%, #00247D 100%)',
+            'Thai': 'linear-gradient(180deg, #A51931 0%, #A51931 16.66%, #FFFFFF 16.66%, #FFFFFF 33.33%, #2D2A4A 33.33%, #2D2A4A 66.66%, #FFFFFF 66.66%, #FFFFFF 83.33%, #A51931 83.33%, #A51931 100%)',
+            'Italian': 'linear-gradient(90deg, #009246 0%, #009246 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #CE2B37 66.66%, #CE2B37 100%)',
+            'Brazilian': 'linear-gradient(135deg, #009B3A 0%, #009B3A 35%, #FFDF00 35%, #FFDF00 50%, #009B3A 50%, #009B3A 65%, #FFDF00 65%, #009B3A 65%, #009B3A 100%)',
+            'Argentine': 'linear-gradient(180deg, #74ACDF 0%, #74ACDF 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #74ACDF 66.66%, #74ACDF 100%)',
+            'New Zealander': 'linear-gradient(135deg, #00247D 0%, #00247D 40%, #012169 40%, #012169 60%, #00247D 60%, #00247D 100%)'};
+        
+        return flags[nationality] || 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)';
+    };
+    
+    return (
+        <div className='driver-card'>
+            <div 
+                className='card-background' 
+                style={{ background: getFlagGradient(nationality) }}
+            ></div>
+            <div className='driver-image-section'>
+                <img 
+                    src={driverImage} 
+                    alt={name}
+                    className='driver-image'
+                    onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                    }}
+                />
+                <div className='driver-placeholder' style={{display: 'none'}}>
+                    <span className='placeholder-code'>{code}</span>
+                </div>
             </div>
-            <div className='driver-stats'>
-                <div className='stat'>
-                    <span className='stat-label'>Titles</span>
-                    <span className='stat-value'>{career_championships || 0}</span>
+            <div className='driver-info-boxes'>
+                <div className='info-box'>
+                    <span className='info-label'>NAME</span>
+                    <span className='info-value'>{name}</span>
                 </div>
-                <div className='stat'>
-                    <span className='stat-label'>Wins</span>
-                    <span className='stat-value'>{career_wins || 0}</span>
+                
+                <div className='info-box'>
+                    <span className='info-label'>TEAM</span>
+                    <span className='info-value'>{team}</span>
                 </div>
-                <div className='stat'>
-                    <span className='stat-label'>Podiums</span>
-                    <span className='stat-value'>{career_podiums || 0}</span>
+                
+                <div className='info-box'>
+                    <span className='info-label'>NUMBER</span>
+                    <span className='info-value'>#{number}</span>
                 </div>
-                <div className='stat'>
-                    <span className='stat-label'>Poles</span>
-                    <span className='stat-value'>{career_poles || 0}</span>
+
+                <div className='info-box'>
+                    <span className='info-label'>NATIONALITY</span>
+                    <span className='info-value'>{nationality}</span>
                 </div>
-            </div>
-            
-            <div className='driver-nationality'>
-                {nationality}
+                
+                <div className='info-box'>
+                    <span className='info-label'>POSITION</span>
+                    <span className='info-value'>
+                        {position ? `P${position}` : 'N/A'}
+                    </span>
+                </div>
+                
+                <div className='info-box'>
+                    <span className='info-label'>POINTS</span>
+                    <span className='info-value'>{points || 0}</span>
+                </div>
+                
+                <button className='view-profile-btn' onClick={handleViewProfile}>
+                    View Profile →
+                </button>
             </div>
         </div>
     )
