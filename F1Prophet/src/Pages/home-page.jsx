@@ -30,12 +30,21 @@ function HomePage() {
                         </Link>
                     </div>
                 </div>
+
+                <div className='video-section'>
+                    <div className='video-wrapper'>
+                        <video autoPlay muted loop playsInline>
+                            <source src="/videos/New 2026 F1 Opening Titles - FORMULA 1 (1080p, h264).mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <p className='video-credit'>
+                        Video from https://www.youtube.com/watch?v=Sks_fMr2Yss
+                    </p>
+                </div>
+
             </section>
         </div>
     )
 }
-
-//buttons for login, register, predict, drivers to be done
-
 
 export default HomePage
