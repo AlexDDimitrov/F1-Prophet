@@ -24,6 +24,10 @@ function DriverPage() {
                     <CollectDrivers/>
                 </section>
             </div>
+
+            <p className='image-credit'>
+                Pictures from https://www.formulaonehistory.com/
+            </p>
         </div>
     )
 }

@@ -28,6 +28,9 @@ function HomePage() {
                         <Link to='/drivers' className='btn btn-primary'>
                             View Drivers
                         </Link>
+                        <Link to='/' className='btn btn-primary'>
+                            View Teams
+                        </Link>
                     </div>
                 </div>
 

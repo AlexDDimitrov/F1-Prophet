@@ -1,2 +1,42 @@
-F1 prophet
+**F1 Prophet**
 -------------------------
+
+
+**F1 Prophet** is a Formula 1 prediction game where users predict race results before qualifying and earn points based on accuracy.
+
+## What is F1 Prophet?
+
+F1 Prophet allows Formula 1 fans to:
+- **Predict race results** before each Grand Prix qualifying session
+- **Earn points** based on prediction accuracy
+- **Compete with other users** on monthly and seasonal leaderboards
+- **Track drivers, team statistics** and career achievements
+
+## Current Features
+
+- **Driver Grid** - View all 2026 F1 drivers with their teams
+- **Driver Profiles** - Detailed statistics for each driver including career wins, podiums, and championships
+- **Live F1 Data** - Real-time integration with official F1 data sources
+
+## Coming Soon
+
+- Team Overview - Browse all F1 teams and their standings
+- User registration and login
+- Race prediction submission system
+- Points and scoring system
+- Monthly and seasonal leaderboards
+- Admin panel for race management
+
+## Data Sources
+
+- **[Jolpica F1 API](https://api.jolpi.ca/ergast/)** - Driver and team information, race results, championship standings
+- **[FastF1](https://docs.fastf1.dev/)** - Detailed telemetry data and performance statistics
+- **[Formula One History](https://www.formulaonehistory.com/)** - Driver and team images
+- **[YouTube](https://www.youtube.com/watch?v=Sks_fMr2Yss)** - F1 2026 promotional video
+
+
+## License
+
+This project is for **educational purposes only**.
+
+**Note:** This is a student project and not affiliated with Formula 1, Liberty Media, or any F1 teams.
