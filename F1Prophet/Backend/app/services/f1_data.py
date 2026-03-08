@@ -5,7 +5,7 @@ class F1DriverData:
     JOLPICA = "https://api.jolpi.ca/ergast/f1"
     _cache = {}
     _cache_ttl = 3600 
-    """ 1 hour for now. Probably 1 week or a day bettter."""
+    """ 1 hour for now. Probably 1 week or a day better."""
 
     def _get(self, url):
         now = time.time()
@@ -50,13 +50,14 @@ class F1DriverData:
             for driver in drivers:
                 formatted_drivers.append({
                     'driver_id': driver['driverId'],
-                    'code': driver.get('code', ''),
-                    'number': driver.get('permanentNumber', ''),
+                    'code': driver.get('code', 'N/A'),
+                    'number': driver.get('permanentNumber', 'N/A'),
                     'full_name': f"{driver['givenName']} {driver['familyName']}",
                     'given_name': driver['givenName'],
                     'family_name': driver['familyName'],
-                    'date_of_birth': driver['dateOfBirth'],
-                    'nationality': driver['nationality']
+                    'nationality': driver.get('nationality', 'Unknown'),
+                    'date_of_birth': driver.get('dateOfBirth', 'Unknown'),
+                    'url': driver.get('url', '')
                 })
             return formatted_drivers
         except Exception as e:

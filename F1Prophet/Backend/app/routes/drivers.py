@@ -26,7 +26,7 @@ def get_drivers():
                 'given_name': driver['given_name'],
                 'family_name': driver['family_name'],
                 'nationality': driver['nationality'],
-                'date_of_birth': driver['date_of_birth'],
+                'date_of_birth': driver.get('date_of_birth', 'Unknown'),
                 'team': standing.get('team', 'Unknown'),
                 'position': standing.get('position'),
                 'points': standing.get('points', 0),
@@ -37,6 +37,8 @@ def get_drivers():
     
     except Exception as e:
         print(f"Error in get_drivers: {e}")
+        import traceback
+        traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
 
