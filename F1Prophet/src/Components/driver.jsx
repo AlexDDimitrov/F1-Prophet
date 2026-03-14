@@ -87,7 +87,7 @@ function DisplayDriver({
                 <div className='info-box'>
                     <span className='info-label'>POSITION</span>
                     <span className='info-value'>
-                        {position ? `P${position}` : 'N/A'}
+                        {position ? `P${position}` : 'DNF'}
                     </span>
                 </div>
                 

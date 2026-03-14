@@ -78,9 +78,9 @@ class F1DriverData:
                 formatted_standings.append({
                     'driver_id': driver['driverId'],
                     'code': driver.get('code', ''),
-                    'position': int(standing['position']),
-                    'points': float(standing['points']),
-                    'wins': int(standing['wins']),
+                    'position': int(standing['position']) if standing.get('position') else None,
+                    'points': float(standing['points']) if standing.get('points') else 0,
+                    'wins': int(standing['wins']) if standing.get('wins') else 0,
                     'team': standing['Constructors'][0]['name'] if standing['Constructors'] else 'Unknown'
                 })
             return formatted_standings
