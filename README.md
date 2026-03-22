@@ -1,6 +1,6 @@
 **F1 Prophet**
 -------------------------
-
+Badge key: [![wakatime](https://wakatime.com/badge/user/ed9508d4-b82d-4218-927f-61233aef9fb0/project/a68d9998-3c0a-4a16-8b74-ace4c55dc493.svg)](https://wakatime.com/badge/user/ed9508d4-b82d-4218-927f-61233aef9fb0/project/a68d9998-3c0a-4a16-8b74-ace4c55dc493)
 
 **F1 Prophet** is a Formula 1 prediction game where users predict race results before qualifying and earn points based on accuracy.
 
