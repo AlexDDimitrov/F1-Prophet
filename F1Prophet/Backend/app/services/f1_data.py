@@ -112,8 +112,13 @@ class F1DriverData:
             # Championships
             seasons_data = self._get(f"{self.JOLPICA}/drivers/{driver_id}/seasons.json?limit=100")
             seasons = seasons_data['MRData']['SeasonTable']['Seasons']
+
             for season in seasons:
                 year = season['season']
+                
+                if int(year) >= 2026:
+                    continue
+                
                 try:
                     s_data = self._get(f"{self.JOLPICA}/{year}/drivers/{driver_id}/driverStandings.json")
                     standings_lists = s_data['MRData']['StandingsTable']['StandingsLists']
@@ -122,7 +127,6 @@ class F1DriverData:
                             stats['championships'] += 1
                 except Exception:
                     continue
-
             return stats
         except Exception as e:
             print(f"Error fetching career stats for {driver_id}: {e}")
