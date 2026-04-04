@@ -11,9 +11,9 @@ def create_app():
         }
     })
     
-    # Register routes
-    from app.routes import drivers
+    from app.routes import drivers, teams
     app.register_blueprint(drivers.bp)
+    app.register_blueprint(teams.bp)
     
     @app.route('/')
     def index():

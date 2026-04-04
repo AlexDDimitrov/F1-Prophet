@@ -131,3 +131,53 @@ class F1DriverData:
         except Exception as e:
             print(f"Error fetching career stats for {driver_id}: {e}")
             return stats
+        
+def get_all_teams(self, season=2026):
+    url = f"{self.JOLPICA}/{season}/constructors.json"
+
+    try:
+        data = self._get(url)
+        constructors = data['MRData']['ConstructorTable']['Constructors']
+
+        formatted_teams = []
+        for team in constructors:
+            formatted_teams.append({
+                'team_id': team['constructorId'],
+                'name': team['name'],
+                'nationality': team.get('nationality', 'Unknown'),
+                'url': team.get('url', '')
+            })
+
+        return formatted_teams
+    except Exception as e:
+        print(f"Error fetching teams: {e}")
+        return[]
+    
+def get_team_standings(self, season = 2026):
+    url = f"{self.JOLPICA}/{season}/constructorStandings.json"
+
+    try: 
+        data = self._get(url)
+        standings_list = data['MRData']['StandingsTable']['StandingsLists']
+
+        if not standings_list:
+            return []
+        
+        standings = standings_list[0]['ConstructorStandings']
+
+        formatted_satndings = []
+        for standing in standings:
+            constructor = standing['Constructor']
+            formatted_satndings.append({
+                'team_id': constructor['constructorId'],
+                'name': constructor['name'],
+                'position': int(standing['position']) if standing.get('position') else None,
+                'points': float(standing['points']) if standing.get('points') else 0,
+                'wins': int(standing['wins']) if standing.get('wins') else 0
+            })
+
+        return formatted_satndings
+    
+    except Exception as e:
+        print(f"Error fetching team standings: {e}")
+        return []
