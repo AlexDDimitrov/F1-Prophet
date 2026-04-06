@@ -3,9 +3,55 @@ import './team.css';
 
 function Team({ team }) {
     const teamImage = `/images/teams/${team.team_id}.png`;
+    const getTeamGradient = (team_id) => {
+        const teams = {
+            "red_bull": ["#0600EF", "#DC052D"],
+            "mercedes": ["#00D2BE", "#000000"],
+            "ferrari": ["#DC0000", "#FFD700"],
+            "mclaren": ["#FF8700", "#000000"],
+            "aston_martin": ["#006F62", "#00FFB3"],
+            "alpine": ["#0090FF", "#FF87BC"],
+            "williams": ["#005AFF", "#FFFFFF"],
+            "rb": ["#1A2A3A", "#2B4562"],
+            "audi": ["#000000", "#E10600"],
+            "haas": ["#FFFFFF", "#B6BABD"],
+        };
 
+        const colors = teams[team_id];
+
+        if (!colors) {
+            return 'linear-gradient(135deg, #333, #111)';
+        }
+
+        return `
+            /* MAIN DIAGONAL SPLIT (same for all) */
+            linear-gradient(
+                135deg,
+                ${colors[0]} 0%,
+                ${colors[0]} 65%,
+                ${colors[1]} 65%,
+                ${colors[1]} 100%
+            ),
+
+            /* LEFT ACCENT STRIPE (same position) */
+            linear-gradient(
+                90deg,
+                rgba(255,255,255,0.15) 0%,
+                rgba(255,255,255,0.15) 5%,
+                transparent 5%
+            ),
+
+            /* SUBTLE DIAGONAL TEXTURE */
+            linear-gradient(
+                45deg,
+                rgba(255,255,255,0.05) 25%,
+                transparent 25%
+            )
+        `;
+    };
+    
     return (
-        <div className='team-card'>
+        <div className='team-card' style={{ background: getTeamGradient(team.team_id) }}>
             <div className='team-image-section'>
                 <img 
                     src={teamImage} 
