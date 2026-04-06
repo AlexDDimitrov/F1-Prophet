@@ -64,3 +64,51 @@ def register():
     
     finally:
         cursor.close()
+
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({'error': 'Invalid JSON body'}), 400
+ 
+    email    = (data.get('email')    or '').strip().lower()
+    password = (data.get('password') or '')
+ 
+    if not email or not password:
+        return jsonify({'error': 'email and password are required'}), 400
+ 
+    db     = get_db()
+    cursor = db.cursor(dictionary=True)
+ 
+    try:
+        cursor.execute(
+            'SELECT id, username, email, password_hash FROM users WHERE email = %s',
+            (email,)
+        )
+        user = cursor.fetchone()
+ 
+        if not user:
+            return jsonify({'error': 'Invalid email or password'}), 401
+ 
+        password_matches = bcrypt.checkpw(
+            password.encode('utf-8'),
+            user['password_hash'].encode('utf-8')
+        )
+ 
+        if not password_matches:
+            return jsonify({'error': 'Invalid email or password'}), 401
+ 
+        return jsonify({
+            'message': 'Login successful',
+            'user': {
+                'id':       user['id'],
+                'username': user['username'],
+                'email':    user['email'],
+            }
+        }), 200
+ 
+    except Exception as e:
+        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
+ 
+    finally:
+        cursor.close()
