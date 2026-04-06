@@ -4,6 +4,8 @@ import HomePage from './Pages/home-page';
 import DriverPage from './Pages/driverPage';
 import DriverDetailPage from './Pages/DriverDetailPage'
 import TeamPage from './Pages/TeamPage'
+import LoginPage from './Pages/LoginPage'
+import RegisterPage from './Pages/RegisterPage'
 import './App.css';
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
         <Route path="/drivers" element={<DriverPage />} />
         <Route path="/drivers/:driver_id" element={<DriverDetailPage />} />
         <Route path="/teams" element={<TeamPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </Router>
   )

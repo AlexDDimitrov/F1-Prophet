@@ -16,7 +16,8 @@ def create_app():
     
 
     init_db(app)
-    from app.routes import auth_bp, drivers, teams
+    from app.routes import drivers, teams
+    from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(drivers.bp)
     app.register_blueprint(teams.bp)

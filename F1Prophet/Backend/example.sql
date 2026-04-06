@@ -15,3 +15,6 @@ CREATE TABLE IF NOT EXISTS users (
     INDEX idx_email    (email),
     INDEX idx_username (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE users 
+ADD COLUMN is_admin TINYINT(1) NOT NULL DEFAULT 0;

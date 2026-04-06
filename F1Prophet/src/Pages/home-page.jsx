@@ -12,15 +12,23 @@ function HomePage() {
                         <span className='title-line2'>Race and Win</span>
                     </h1>
                     <p className='hero-subtitle'>
-                        Predict results before qualifying and score points.
-                        
+                        Predict results before qualifying and score points. {<br></br>}
+                        {localStorage.getItem('user') && (
+                            <span>Welcome back, {JSON.parse(localStorage.getItem('user')).username}!</span>
+                        )}
                     </p>
                     <div className='hero-buttons'>
-                        <Link to='/' className='btn btn-primary'>
+                        <Link to='/register' className='btn btn-primary'>
                             Register
                         </Link>
-                        <Link to='/' className='btn btn-primary'>
+                        <Link to='/login' className='btn btn-primary'>
                             Login
+                        </Link>
+                        <Link to='/' onClick={() => {
+                            localStorage.removeItem('user');
+                            window.location.reload();
+                        }} refresh={true} className='btn btn-primary'>
+                            Log out
                         </Link>
                         <Link to='/' className='btn btn-primary'>
                             Predict
