@@ -24,7 +24,6 @@ function Team({ team }) {
         }
 
         return `
-            /* MAIN DIAGONAL SPLIT (same for all) */
             linear-gradient(
                 135deg,
                 ${colors[0]} 0%,
@@ -33,7 +32,6 @@ function Team({ team }) {
                 ${colors[1]} 100%
             ),
 
-            /* LEFT ACCENT STRIPE (same position) */
             linear-gradient(
                 90deg,
                 rgba(255,255,255,0.15) 0%,
@@ -41,7 +39,6 @@ function Team({ team }) {
                 transparent 5%
             ),
 
-            /* SUBTLE DIAGONAL TEXTURE */
             linear-gradient(
                 45deg,
                 rgba(255,255,255,0.05) 25%,
@@ -49,7 +46,7 @@ function Team({ team }) {
             )
         `;
     };
-    
+
     return (
         <div className='team-card' style={{ background: getTeamGradient(team.team_id) }}>
             <div className='team-image-section'>
