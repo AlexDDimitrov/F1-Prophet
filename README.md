@@ -15,13 +15,15 @@ F1 Prophet allows Formula 1 fans to:
 ## Current Features
 
 - **Driver Grid** - View all 2026 F1 drivers with their teams
+- **Team Grid** - View all 2026 F1 teams
 - **Driver Profiles** - Detailed statistics for each driver including career wins, podiums, and championships
 - **Live F1 Data** - Real-time integration with official F1 data sources
 
+## In The Works:
+- User registration and login
+
 ## Coming Soon
 
-- Team Overview - Browse all F1 teams and their standings
-- User registration and login
 - Race prediction submission system
 - Points and scoring system
 - Monthly and seasonal leaderboards
