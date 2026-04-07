@@ -14,10 +14,10 @@ def get_db():
         )
     return g.db
 
-def close_dv(e=None):
+def close_db(e=None):
     db = g.pop('db', None)
     if db is not None and db.is_connected():
         db.close()
 
 def init_db(app):
-    app.teardown_appcontext(close_dv)
+    app.teardown_appcontext(close_db)
