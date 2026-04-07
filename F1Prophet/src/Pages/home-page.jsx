@@ -26,6 +26,7 @@ function HomePage() {
                         </Link>
                         <Link to='/' onClick={() => {
                             localStorage.removeItem('user');
+                            localStorage.removeItem('token');
                             window.location.reload();
                         }} refresh={true} className='btn btn-primary'>
                             Log out

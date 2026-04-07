@@ -55,6 +55,7 @@ function RegisterPage() {
             }
 
             localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('token', data.token);
             navigate('/');
 
         } catch (err) {

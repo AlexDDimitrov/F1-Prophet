@@ -1,10 +1,21 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 import bcrypt
 from ..database import get_db
+import jwt
+from datetime import datetime, timedelta
+from .. import limiter
 
 auth_bp = Blueprint('auth', __name__)
 
+def create_token(user_id):
+    payload = {
+        'user_id': user_id,
+        'exp': datetime.utcnow() + timedelta(days=7)
+    }
+    return jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm='HS256')
+
 @auth_bp.route('/register', methods=['POST'])
+@limiter.limit("5 per minute")
 def register():
     data = request.get_json(silent = True)
     if not data:
@@ -13,7 +24,7 @@ def register():
         }), 400
     
     username = data.get('username' or '').strip()
-    email    = (data.get('email')    or '').strip().lower()
+    email = (data.get('email')    or '').strip().lower()
     password = (data.get('password') or '').strip()
 
     if not username or not email or not password:
@@ -51,8 +62,11 @@ def register():
 
         user_id = cursor.lastrowid
 
+        token = create_token(user_id)
+
         return jsonify({
             'message': 'Registration successful',
+            'token': token,
             'user': {'id': user_id, 'username': username, 'email': email}
         }), 201
 
@@ -66,18 +80,19 @@ def register():
         cursor.close()
 
 @auth_bp.route('/login', methods=['POST'])
+@limiter.limit("5 per minute")
 def login():
     data = request.get_json(silent=True)
     if not data:
         return jsonify({'error': 'Invalid JSON body'}), 400
  
-    email    = (data.get('email')    or '').strip().lower()
+    email = (data.get('email') or '').strip().lower()
     password = (data.get('password') or '')
  
     if not email or not password:
         return jsonify({'error': 'email and password are required'}), 400
  
-    db     = get_db()
+    db = get_db()
     cursor = db.cursor(dictionary=True)
  
     try:
@@ -98,8 +113,10 @@ def login():
         if not password_matches:
             return jsonify({'error': 'Invalid email or password'}), 401
  
+        token = create_token(user['id'])
         return jsonify({
             'message': 'Login successful',
+            'token': token,
             'user': {
                 'id':       user['id'],
                 'username': user['username'],
