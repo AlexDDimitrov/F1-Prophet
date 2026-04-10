@@ -69,13 +69,13 @@ function PredictPage() {
         const updateTimer = () => {
             const now = new Date();
             const deadline = new Date(race.deadline);
-            const diff = deadline - now;
+            const slip = new Date(now.getTime() + (4 * 60 * 60 * 1000));
+            const diff = deadline - slip;
 
             if (diff <= 0) {
                 setTimeRemaining('Deadline passed');
                 return;
             }
-
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));

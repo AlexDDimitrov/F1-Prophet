@@ -55,3 +55,100 @@ def get_current_race():
     finally:
         cursor.close()
 
+@bp.route('/predictions', methods=['POST'])
+@token_required
+def submit_prediction():
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({'error': 'Invalid JSON body'}), 400
+    
+    race_id = data.get('race_id')
+    positions = data.get('positions', [])
+    fastest_lap = data.get('fastest_lap')
+    
+    if not race_id or not positions:
+        return jsonify({'error': 'race_id and positions are required'}), 400
+    
+    user_id = g.user_id
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    
+    try:
+        cursor.execute("""
+            SELECT id, deadline, status
+            FROM races
+            WHERE id = %s
+        """, (race_id,))
+        
+        race = cursor.fetchone()
+        
+        if not race:
+            return jsonify({'error': 'Race not found'}), 404
+        
+        if race['status'] == 'completed':
+            return jsonify({'error': 'Race has already finished'}), 400
+        
+        from datetime import datetime
+        if datetime.now() > race['deadline']:
+            return jsonify({'error': 'Prediction deadline has passed'}), 400
+        
+        cursor.execute("""
+            SELECT id FROM predictions
+            WHERE user_id = %s AND race_id = %s
+        """, (user_id, race_id))
+        
+        existing = cursor.fetchone()
+        
+        if existing:
+            prediction_id = existing['id']
+            
+            cursor.execute("""
+                UPDATE predictions
+                SET fastest_lap = %s, submitted_at = NOW()
+                WHERE id = %s
+            """, (fastest_lap, prediction_id))
+            
+            cursor.execute("""
+                DELETE FROM predicted_positions
+                WHERE prediction_id = %s
+            """, (prediction_id,))
+            
+        else:
+            cursor.execute("""
+                INSERT INTO predictions (user_id, race_id, fastest_lap)
+                VALUES (%s, %s, %s)
+            """, (user_id, race_id, fastest_lap))
+            
+            prediction_id = cursor.lastrowid
+        
+        for pos in positions:
+            cursor.execute("""
+                INSERT INTO predicted_positions (prediction_id, driver_id, position, is_dnf)
+                VALUES (%s, %s, %s, %s)
+            """, (
+                prediction_id,
+                pos['driver_id'],
+                pos.get('position'),
+                pos.get('is_dnf', False)
+            ))
+        
+        db.commit()
+        
+        return jsonify({
+            'message': 'Prediction submitted successfully',
+            'prediction_id': prediction_id
+        }), 201
+        
+    except Exception as e:
+        db.rollback()
+        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
+    finally:
+        cursor.close()
+
+
+#idea to be further updated
+@bp.route('/predictions/my/<int:race_id>', methods=['GET'])
+@token_required
+def get_my_prediction(race_id):
+    #To do
+    print("To do")
