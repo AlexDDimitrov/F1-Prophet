@@ -6,6 +6,7 @@ import DriverDetailPage from './Pages/DriverDetailPage'
 import TeamPage from './Pages/TeamPage'
 import LoginPage from './Pages/LoginPage'
 import RegisterPage from './Pages/RegisterPage'
+import PredictPage from './Pages/PredictPage';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/teams" element={<TeamPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/predict" element={<PredictPage />} />
       </Routes>
     </Router>
   )

@@ -31,7 +31,7 @@ function HomePage() {
                         }} refresh={true} className='btn btn-primary'>
                             Log out
                         </Link>
-                        <Link to='/' className='btn btn-primary'>
+                        <Link to='/predict' className='btn btn-primary'>
                             Predict
                         </Link>
                         <Link to='/drivers' className='btn btn-primary'>

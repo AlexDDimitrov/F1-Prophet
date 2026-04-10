@@ -18,6 +18,10 @@ def get_drivers():
             driver_id = driver['driver_id']
             standing = standings_dict.get(driver_id, {})
 
+            team = standing.get('team', 'Unknown')
+            if team == 'Unknown':
+                continue
+
             result.append({
                 'driver_id': driver_id,
                 'code': driver['code'],

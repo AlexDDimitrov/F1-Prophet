@@ -4,6 +4,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from .config import Config
 from .database import init_db
+from .routes import predictions
 
 limiter = Limiter(
     key_func=get_remote_address,
@@ -28,6 +29,7 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(drivers.bp)
     app.register_blueprint(teams.bp)
+    app.register_blueprint(predictions.bp)
     
     @app.route('/')
     def index():
