@@ -208,6 +208,29 @@
     box-shadow: 0 6px 20px rgba(237, 28, 1, 0.6);
 }
 
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.view-predictions-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    background: rgba(237, 28, 1, 0.2);
+    color: #ED1C01;
+    border: 2px solid #ED1C01;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-predictions-btn:hover {
+    background: #ED1C01;
+    color: #ffffff;
+}
+
 @media (max-width: 768px) {
     .predict-page {
         padding: 1rem;

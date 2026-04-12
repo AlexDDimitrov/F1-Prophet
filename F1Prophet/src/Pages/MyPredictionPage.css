@@ -1,0 +1,322 @@
+.my-predictions-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    color: #ffffff;
+    padding: 2rem;
+}
+
+.my-predictions-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.my-page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.my-page-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ED1C01;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.my-page-subtitle {
+    font-size: 1.2rem;
+    color: #cccccc;
+}
+
+.my-no-predictions {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 15px;
+}
+
+.my-no-predictions p {
+    font-size: 1.2rem;
+    color: #999;
+    margin-bottom: 2rem;
+}
+
+.my-cta-button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: #ED1C01;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.my-cta-button:hover {
+    background: #ff2d10;
+    transform: translateY(-2px);
+}
+
+.my-predictions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.my-prediction-card {
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.my-prediction-card:hover {
+    border-color: #ED1C01;
+    transform: translateY(-5px);
+}
+
+.my-prediction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.my-race-name {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ED1C01;
+    margin: 0;
+}
+
+.my-race-status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.my-race-status.upcoming {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.my-race-status.active {
+    background: rgba(76, 175, 80, 0.2);
+    color: #4caf50;
+}
+
+.my-race-status.completed {
+    background: rgba(158, 158, 158, 0.2);
+    color: #9e9e9e;
+}
+
+.my-prediction-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #999;
+    font-size: 0.95rem;
+}
+
+.my-points-earned {
+    background: rgba(237, 28, 1, 0.1);
+    border: 1px solid #ED1C01;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ED1C01;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.my-predicted-positions h3 {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.my-positions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.my-position-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #0a0a0a;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+    transition: 0.3s ease;
+}
+
+.my-position-item:hover {
+    border-color: #ED1C01;
+    transform: translateY(-5px);
+}
+
+.my-pos-number {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #ED1C01;
+    min-width: 40px;
+}
+
+.my-driver-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.my-driver-info > span:first-child {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.my-driver-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.my-driver-code {
+    font-weight: 700;
+    color: #fff;
+}
+
+.my-driver-full-name {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.my-driver-image-small {
+    object-fit: cover;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #333;
+}
+
+.my-driver-full-name {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.my-dnf-position-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #0a0a0a;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #555;
+}
+
+.my-dnf-pos-number {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #999;
+    min-width: 40px;
+}
+
+.my-dnf-driver-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.my-dnf-driver-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.my-dnf-driver-code {
+    font-weight: 700;
+    color: #ccc;
+}
+
+.my-dnf-driver-info > span:first-child {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.my-dnf-driver-full-name {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.my-fastest-lap-prediction {
+    background: rgba(237, 28, 1, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(237, 28, 1, 0.3);
+    margin-top: 1rem;
+}
+
+.my-fastest-lap-prediction strong {
+    color: #ED1C01;
+}
+
+.my-back-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    background: rgba(237, 28, 1, 0.9);
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.my-back-button:hover {
+    background: #ff2d10;
+    transform: translateY(-2px);
+}
+
+.my-loading, .error {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 3rem;
+}
+
+.error {
+    color: #ED1C01;
+}
+
+@media (max-width: 768px) {
+    .my-page-title {
+        font-size: 2rem;
+    }
+    
+    .my-prediction-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .my-prediction-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .my-positions-grid {
+        grid-template-columns: 1fr;
+    }
+}

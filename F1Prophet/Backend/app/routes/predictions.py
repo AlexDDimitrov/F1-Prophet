@@ -145,10 +145,38 @@ def submit_prediction():
     finally:
         cursor.close()
 
-
-#idea to be further updated
-@bp.route('/predictions/my/<int:race_id>', methods=['GET'])
+@bp.route('/predictions/my', methods=['GET'])
 @token_required
-def get_my_prediction(race_id):
-    #To do
-    print("To do")
+def get_all_my_predictions():
+    user_id = g.user_id
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    
+    try:
+        cursor.execute("""
+            SELECT p.id, p.race_id, p.fastest_lap, p.submitted_at, p.points_earned,
+                   r.name as race_name, r.location, r.race_date, r.status
+            FROM predictions p
+            JOIN races r ON p.race_id = r.id
+            WHERE p.user_id = %s
+            ORDER BY r.race_date DESC
+        """, (user_id,))
+        
+        predictions = cursor.fetchall()
+        
+        for prediction in predictions:
+            cursor.execute("""
+                SELECT driver_id, position, is_dnf
+                FROM predicted_positions
+                WHERE prediction_id = %s
+                ORDER BY position ASC, is_dnf ASC
+            """, (prediction['id'],))
+            
+            prediction['positions'] = cursor.fetchall()
+        
+        return jsonify(predictions), 200
+        
+    except Exception as e:
+        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
+    finally:
+        cursor.close()

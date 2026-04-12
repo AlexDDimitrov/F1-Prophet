@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS predicted_positions (
     INDEX idx_prediction (prediction_id)
 )
 
-//for 2026 season:
+-- for 2026 season:
 INSERT INTO races (name, location, race_date, deadline, season, round_number, status)
 VALUES
 ('Australian Grand Prix', 'Melbourne', '2026-03-08 15:00:00', '2026-03-07 16:00:00', 2026, 1, 'upcoming'),

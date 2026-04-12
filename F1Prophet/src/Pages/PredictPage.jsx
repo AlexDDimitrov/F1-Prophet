@@ -204,6 +204,12 @@ function PredictPage() {
                     </p>
                 </header>
 
+                <div className='action-buttons'>
+                    <button onClick={() => navigate('/my-predictions')} className='view-predictions-btn'>
+                        View My Predictions
+                    </button>
+                </div>
+
                 <div className='predict-content'>
                     <p className='instruction-text'>
                         Drag to reorder • Click × to mark as DNF
