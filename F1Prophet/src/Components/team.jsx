@@ -65,24 +65,24 @@ function Team({ team }) {
             </div>
 
             <div className='team-info-boxes'>
-                <div className='info-box'>
+                <div className='info-box-team'>
                     <span className='info-label'>Name</span>
                     <span className='info-value'>{team.name}</span>
                 </div>
 
-                <div className='info-box'>
+                <div className='info-box-team'>
                     <span className='info-label'>Nationality</span>
                     <span className='info-value'>{team.nationality}</span>
                 </div>
 
-                <div className='info-box'>
+                <div className='info-box-team'>
                     <span className='info-label'>Position</span>
                     <span className='info-value'>
                         {team.position ? `P${team.position}` : 'N/A'}
                     </span>
                 </div>
 
-                <div className='info-box'>
+                <div className='info-box-team'>
                     <span className='info-label'>Points</span>
                     <span className='info-value'>{team.points}</span>
                 </div>
