@@ -38,11 +38,12 @@
     color: #ED1C01;
 }
 
-.driver-info {
+.predict-driver-info {
     display: flex;
     align-items: center;
     gap: 1rem;
     flex: 1;
+    flex-wrap: wrap;
 }
 
 .driver-image-small {

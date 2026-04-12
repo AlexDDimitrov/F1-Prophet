@@ -29,7 +29,7 @@ function SortableDriverItem({ driver, position, onRemove, isDnf }) {
                 <span className='position-number'>{position === 'DNF' ? 'DNF' : `P${position}`}</span>
             </div>
 
-            <div className='driver-info'>
+            <div className='predict-driver-info'>
                 <img
                     src={driverImage}
                     alt={driver.full_name}
