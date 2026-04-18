@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useParams, useNavigate} from 'react-router-dom'
+import F1Loader from '../Components/F1Loader';
 import './DriverDetailPage.css'
 
 function DriverDetailPage() {
@@ -73,7 +74,12 @@ function DriverDetailPage() {
     }
 
     if (loading) {
-        return <div className='loading-page'>Loading driver details...</div>;
+        return( 
+            <div>                
+                <div className='predict-page'>
+                    <F1Loader track="suzuka" message="Loading driver details..." />
+                </div>
+            </div>);
     }
 
     if (error || !driver) {

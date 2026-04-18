@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
+import F1Loader from '../Components/F1Loader';
 import './MyPredictionPage.css'
 
 function MyPredictionsPage() {
@@ -54,8 +55,10 @@ function MyPredictionsPage() {
 
     if (loading) {
         return (
-            <div className='my-predictions-page'>
-                <div className='my-loading'>Loading predictions...</div>
+            <div>                
+                <div className='predict-page'>
+                    <F1Loader track="suzuka" message="Loading predictions..." />
+                </div>
             </div>
         );
     }

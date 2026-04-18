@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import DisplayDriver from './driver'
 import './addDrivers.css'
+import F1Loader from '../Components/F1Loader';
 import { driversAPI } from '../services/api'
 
 function CollectDrivers() {
@@ -26,7 +27,12 @@ function CollectDrivers() {
 
     
     if (loading) {
-        return <div className='loading'>Loading drivers...</div>;
+        return (
+            <div>                
+                <div className='predict-page'>
+                    <F1Loader track="suzuka" message="Loading drivers..." />
+                </div>
+            </div>);
     }
 
     if (error) {

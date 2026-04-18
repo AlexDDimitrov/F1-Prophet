@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Team from './team';
+import F1Loader from '../Components/F1Loader';
 import './addTeams.css';
 
 function CollectTeams() {
@@ -30,7 +31,13 @@ function CollectTeams() {
     }, []);
 
     if (loading) {
-        return <div className='error'>Loading teams...</div>;
+        return (
+            <div>                
+                <div className='predict-page'>
+                    <F1Loader track="suzuka" message="Loading teams..." />
+                </div>
+            </div>
+        );
     }
 
     if (error) {
