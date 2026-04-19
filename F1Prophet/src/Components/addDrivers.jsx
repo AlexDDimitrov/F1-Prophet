@@ -30,7 +30,7 @@ function CollectDrivers() {
         return (
             <div>                
                 <div className='predict-page'>
-                    <F1Loader track="suzuka" message="Loading drivers..." />
+                    <F1Loader message="Loading drivers..."/>
                 </div>
             </div>);
     }

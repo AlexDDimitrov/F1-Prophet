@@ -57,7 +57,7 @@ function MyPredictionsPage() {
         return (
             <div>                
                 <div className='predict-page'>
-                    <F1Loader track="suzuka" message="Loading predictions..." />
+                    <F1Loader message="Loading predictions..." />
                 </div>
             </div>
         );

@@ -77,7 +77,7 @@ function DriverDetailPage() {
         return( 
             <div>                
                 <div className='predict-page'>
-                    <F1Loader track="suzuka" message="Loading driver details..." />
+                    <F1Loader message="Loading driver details..." />
                 </div>
             </div>);
     }

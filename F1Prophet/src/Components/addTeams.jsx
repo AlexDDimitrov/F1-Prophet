@@ -34,7 +34,7 @@ function CollectTeams() {
         return (
             <div>                
                 <div className='predict-page'>
-                    <F1Loader track="suzuka" message="Loading teams..." />
+                    <F1Loader message="Loading teams..." />
                 </div>
             </div>
         );

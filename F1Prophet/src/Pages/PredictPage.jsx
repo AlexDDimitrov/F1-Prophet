@@ -175,7 +175,7 @@ function PredictPage() {
         return (
             <div>                
                 <div className='predict-page'>
-                    <F1Loader track="suzuka" message="Loading..." />
+                    <F1Loader message="Loading..." />
                 </div>
             </div>
         );
