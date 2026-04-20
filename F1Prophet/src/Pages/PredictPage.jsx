@@ -280,11 +280,11 @@ function PredictPage() {
                     <div className='points-system'>
                         <h3>Points System:</h3>
                         <ul>
-                            <li>• Correct position: 10 pts</li>
-                            <li>• +1 position: 5 pts</li>
-                            <li>• +2 positions: 3 pts</li>
-                            <li>• Correct DNF: 5 pts</li>
-                            <li>• Correct fastest lap: +5 pts</li>
+                            <li>&bull; Correct position: 10 pts</li>
+                            <li>&bull; +1 position: 5 pts</li>
+                            <li>&bull; +2 positions: 3 pts</li>
+                            <li>&bull; Correct DNF: 5 pts</li>
+                            <li>&bull; Correct fastest lap: +5 pts</li>
                         </ul>
                     </div>
                 </div>

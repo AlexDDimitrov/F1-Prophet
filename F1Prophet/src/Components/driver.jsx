@@ -76,7 +76,7 @@ function DisplayDriver({
                 
                 <div className='info-box'>
                     <span className='info-label'>NUMBER</span>
-                    <span className='info-value'>#{number}</span>
+                    <span className='info-value'>{number}</span>
                 </div>
 
                 <div className='info-box'>

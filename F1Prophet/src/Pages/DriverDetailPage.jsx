@@ -125,10 +125,10 @@ function DriverDetailPage() {
                     <div className="hero-driver-info">
                         <h1 className="driver-name">{driver.full_name}</h1>
                         <div className='driver-meta'>
-                            <span className='meta-item'>#{driver.number}</span>
-                            <span className='meta-divider'>•</span>
+                            <span className='meta-item'>{driver.number}</span>
+                            <span className='meta-divider'>&bull;</span>
                             <span className='meta-item'>{driver.nationality}</span>
-                            <span className='meta-divider'>•</span>
+                            <span className='meta-divider'>&bull;</span>
                             <span className='meta-item'>{driver.team}</span>
                         </div>
                     </div>
@@ -201,7 +201,7 @@ function DriverDetailPage() {
                         </div>
                         <div className='bio-item'>
                             <span className='bio-label'>Number:</span>
-                            <span className='bio-value'>#{driver.number}</span>
+                            <span className='bio-value'>{driver.number}</span>
                         </div>
                     </div>
                 </div>
