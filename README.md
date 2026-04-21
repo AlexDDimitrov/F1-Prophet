@@ -47,6 +47,7 @@ F1 Prophet allows Formula 1 fans to:
 - **[FastF1](https://docs.fastf1.dev/)** - Detailed telemetry data and performance statistics
 - **[Formula One History](https://www.formulaonehistory.com/)** - Driver and team images
 - **[YouTube](https://www.youtube.com/watch?v=Sks_fMr2Yss)** - F1 2026 promotional video
+- **[Formula 1 Race Calendar](https://formulacalendar.com/)** - Pictures of gp layouts for the videos
 
 
 ## License
