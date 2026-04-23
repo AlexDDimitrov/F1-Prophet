@@ -51,7 +51,7 @@ class F1DriverData:
                 formatted_drivers.append({
                     'driver_id': driver['driverId'],
                     'code': driver.get('code', 'N/A'),
-                    'number': driver.get('permanentNumber', 'N/A'),
+                    'number': '#' + driver.get('permanentNumber', 'N/A'),
                     'full_name': f"{driver['givenName']} {driver['familyName']}",
                     'given_name': driver['givenName'],
                     'family_name': driver['familyName'],
