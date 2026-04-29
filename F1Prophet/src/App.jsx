@@ -8,6 +8,7 @@ import LoginPage from './Pages/LoginPage'
 import RegisterPage from './Pages/RegisterPage'
 import PredictPage from './Pages/PredictPage';
 import MyPredictionsPage from './Pages/MyPredictionsPage';
+import AdminPage from './Pages/AdminPage';
 import './App.css';
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/predict" element={<PredictPage />} />
-        <Route path="/my-predictions" element={<MyPredictionsPage/>} /> 
+        <Route path="/my-predictions" element={<MyPredictionsPage/>} />
+        <Route path="/admin" element={<AdminPage />} /> 
       </Routes>
     </Router>
   )

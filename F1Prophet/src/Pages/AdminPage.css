@@ -1,0 +1,321 @@
+.admin-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    color: #ffffff;
+    padding: 2rem;
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.admin-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ED1C01;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-subtitle {
+    font-size: 1.2rem;
+    color: #cccccc;
+}
+
+.admin-race-info {
+    text-align: center;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.admin-race-info h2 {
+    font-size: 1.8rem;
+    color: #ED1C01;
+    margin: 0 0 0.5rem 0;
+}
+
+.admin-race-info p {
+    color: #999;
+    margin: 0;
+}
+
+.admin-message {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+.admin-message.success {
+    background: rgba(76, 175, 80, 0.2);
+    border: 1px solid #4caf50;
+    color: #4caf50;
+}
+
+.admin-message.error {
+    background: rgba(237, 28, 1, 0.2);
+    border: 1px solid #ED1C01;
+    color: #ED1C01;
+}
+
+.admin-form {
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+.admin-results-section h3,
+.admin-fastest-lap-section h3 {
+    font-size: 1.5rem;
+    color: #ED1C01;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.admin-instruction {
+    color: #999;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.admin-result-item {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-driver-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.admin-driver-code {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #ED1C01;
+}
+
+.admin-driver-name {
+    font-size: 0.9rem;
+    color: #cccccc;
+}
+
+.admin-result-inputs {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.admin-position-input {
+    width: 70px;
+    padding: 0.5rem;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 5px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.admin-position-input:focus {
+    outline: none;
+    border-color: #ED1C01;
+}
+
+.admin-position-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.admin-dnf-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.admin-dnf-checkbox input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.admin-dnf-checkbox span {
+    font-weight: 700;
+    color: #999;
+}
+
+.admin-fastest-lap-section {
+    margin-bottom: 2rem;
+}
+
+.admin-fastest-lap-select {
+    width: 100%;
+    padding: 1rem;
+    background: #0a0a0a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.admin-fastest-lap-select:focus {
+    outline: none;
+    border-color: #ED1C01;
+}
+
+.admin-calculate-button {
+    width: 100%;
+    padding: 1.5rem;
+    background: #ED1C01;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.admin-calculate-button:hover:not(:disabled) {
+    background: #ff2d10;
+    transform: translateY(-2px);
+}
+
+.admin-calculate-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.admin-points-info {
+    background: rgba(237, 28, 1, 0.1);
+    border: 1px solid rgba(237, 28, 1, 0.3);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.admin-points-info h3 {
+    color: #ED1C01;
+    margin-bottom: 1rem;
+}
+
+.admin-points-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-points-info li {
+    color: #cccccc;
+    margin-bottom: 0.5rem;
+}
+
+.admin-back-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    background: rgba(237, 28, 1, 0.9);
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.admin-back-button:hover {
+    background: #ff2d10;
+    transform: translateY(-2px);
+}
+
+.admin-loading {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 3rem;
+}
+
+@media (max-width: 768px) {
+    .admin-page {
+        padding: 1rem;
+    }
+    
+    .admin-title {
+        font-size: 2rem;
+    }
+    
+    .admin-results-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-result-item {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .admin-result-inputs {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+.admin-form {
+    transition: all 0.3s ease;
+}
+
+.admin-form:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 40px rgba(237, 28, 1, 0.4);
+    border-color: #ED1C01;
+}
+
+.admin-race-info {
+    transition: all 0.3s ease;
+}
+
+.admin-race-info:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 40px rgba(237, 28, 1, 0.4);
+    border-color: #ED1C01;
+}
+
+.admin-result-item {
+    transition: all 0.3s ease;
+}
+
+.admin-result-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 40px rgba(237, 28, 1, 0.4);
+    border-color: #ED1C01;
+}

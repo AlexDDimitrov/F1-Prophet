@@ -89,3 +89,22 @@ VALUES
 ('Las Vegas Grand Prix', 'Las Vegas', '2026-11-21 22:00:00', '2026-11-20 23:00:00', 2026, 20, 'upcoming'),
 ('Qatar Grand Prix', 'Lusail', '2026-11-29 19:00:00', '2026-11-28 20:00:00', 2026, 21, 'upcoming'),
 ('Abu Dhabi Grand Prix', 'Abu Dhabi', '2026-12-06 17:00:00', '2026-12-05 18:00:00', 2026, 22, 'upcoming');
+
+
+CREATE TABLE IF NOT EXISTS race_results (
+    id            INT          NOT NULL AUTO_INCREMENT,
+    race_id       INT          NOT NULL,
+    driver_id     VARCHAR(50)  NOT NULL,
+    position      INT,
+    is_dnf        TINYINT(1)   NOT NULL DEFAULT 0,
+    fastest_lap   TINYINT(1)   NOT NULL DEFAULT 0,
+    created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    PRIMARY KEY (id),
+    UNIQUE KEY unique_driver_race (race_id, driver_id),
+    FOREIGN KEY (race_id) REFERENCES races(id) ON DELETE CASCADE,
+    INDEX idx_race (race_id)
+);
+
+ALTER TABLE users 
+ADD COLUMN total_points INT NOT NULL DEFAULT 0 AFTER is_admin;

@@ -129,3 +129,39 @@ def login():
  
     finally:
         cursor.close()
+
+@auth_bp.route('/me', methods=['GET'])
+def get_current_user():
+    token = request.headers.get('Authorization')
+    
+    if not token:
+        return jsonify({'error': 'Token is missing'}), 401
+    
+    try:
+        if token.startswith('Bearer '):
+            token = token[7:]
+        
+        data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
+        user_id = data['user_id']
+        
+        db = get_db()
+        cursor = db.cursor(dictionary=True)
+        
+        cursor.execute("""
+            SELECT id, username, email, is_admin, created_at
+            FROM users
+            WHERE id = %s
+        """, (user_id,))
+        
+        user = cursor.fetchone()
+        cursor.close()
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify(user), 200
+        
+    except jwt.ExpiredSignatureError:
+        return jsonify({'error': 'Token has expired'}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({'error': 'Invalid token'}), 401

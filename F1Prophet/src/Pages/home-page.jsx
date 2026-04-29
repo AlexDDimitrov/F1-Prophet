@@ -1,8 +1,37 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './HomePage.css'
 
 function HomePage() {
+    const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    setUser(userData);
+                    setIsAdmin(userData.is_admin === 1);
+                }
+            } catch (err) {
+                console.error('Error fetching user:', err);
+            }
+        };
+
+        fetchUser();
+    }, []);
+
     return (
         <div className='homepage'>
             <section className='hero'>
@@ -34,6 +63,11 @@ function HomePage() {
                         <Link to='/predict' className='btn btn-primary'>
                             Predict
                         </Link>
+                        {isAdmin && (
+                                <Link to='/admin' className='btn btn-primary'>
+                                    Admin
+                                </Link>
+                            )}
                         <Link to='/drivers' className='btn btn-primary'>
                             View Drivers
                         </Link>
