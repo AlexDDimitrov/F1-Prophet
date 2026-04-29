@@ -105,7 +105,8 @@ function MyPredictionsPage() {
                                     <span>{new Date(prediction.race_date).toLocaleDateString()}</span>
                                     <span>Submitted: {new Date(prediction.submitted_at).toLocaleString()}</span>
                                 </div>
-
+                                {//To update: points earned
+                                }
                                 {prediction.points_earned !== null && (
                                     <div className='my-points-earned'>
                                         Points Earned: {prediction.points_earned}
