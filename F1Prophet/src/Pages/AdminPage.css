@@ -319,3 +319,42 @@
     box-shadow: 0 10px 40px rgba(237, 28, 1, 0.4);
     border-color: #ED1C01;
 }
+
+.my-points-earned-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #333;
+}
+
+.my-points-earned-section h3 {
+    font-size: 1.2rem;
+    color: #ED1C01;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.my-points-breakdown {
+    background: rgba(237, 28, 1, 0.1);
+    border: 1px solid rgba(237, 28, 1, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.my-total-points {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.my-points-label {
+    font-size: 1.1rem;
+    color: #cccccc;
+    font-weight: 600;
+}
+
+.my-points-value {
+    font-size: 1.8rem;
+    color: #ED1C01;
+    font-weight: 900;
+}

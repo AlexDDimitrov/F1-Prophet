@@ -105,11 +105,15 @@ function MyPredictionsPage() {
                                     <span>{new Date(prediction.race_date).toLocaleDateString()}</span>
                                     <span>Submitted: {new Date(prediction.submitted_at).toLocaleString()}</span>
                                 </div>
-                                {//To update: points earned
-                                }
-                                {prediction.points_earned !== null && (
-                                    <div className='my-points-earned'>
-                                        Points Earned: {prediction.points_earned}
+                                {prediction.status === 'completed' && prediction.points_earned !== null && (
+                                    <div className='my-points-earned-section'>
+                                        <h3>Points Earned</h3>
+                                        <div className='my-points-breakdown'>
+                                            <div className='my-total-points'>
+                                                <span className='my-points-label'>Total:</span>
+                                                <span className='my-points-value'>{prediction.points_earned} pts</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
 
