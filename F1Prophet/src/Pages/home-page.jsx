@@ -63,7 +63,7 @@ function HomePage() {
                         <Link to='/predict' className='btn btn-primary'>
                             Predict
                         </Link>
-                        {isAdmin && (
+                        {user && (user.is_admin === 1 || user.is_admin === true)&& (
                                 <Link to='/admin' className='btn btn-primary'>
                                     Admin
                                 </Link>

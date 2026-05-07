@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminPage.css';
+import './AdminPage.css'
+import '../Components/F1Loader'
+import F1Loader from '../Components/F1Loader';
 
 function AdminPage() {
     const navigate = useNavigate();
+    const [races, setRaces] = useState([]);
+    const [selectedRaceId, setSelectedRaceId] = useState('');
     const [race, setRace] = useState(null);
     const [drivers, setDrivers] = useState([]);
     const [results, setResults] = useState({});
@@ -42,11 +46,17 @@ function AdminPage() {
 
         const fetchData = async () => {
             try {
-                const raceRes = await fetch('http://localhost:5000/api/races/current');
-                if (raceRes.ok) {
-                    const raceData = await raceRes.json();
-                    setRace(raceData);
+                const racesRes = await fetch('http://localhost:5000/api/races/all');
+                if (racesRes.ok) {
+                    const racesData = await racesRes.json();
+                    setRaces(racesData);
+                    
+                    if (racesData.length > 0) {
+                        setSelectedRaceId(racesData[0].id.toString());
+                        setRace(racesData[0]);
+                    }
                 }
+
                 const driversRes = await fetch('http://localhost:5000/api/drivers');
                 if (driversRes.ok) {
                     const driversData = await driversRes.json();
@@ -69,6 +79,25 @@ function AdminPage() {
         checkAdmin();
         fetchData();
     }, [navigate]);
+
+    const handleRaceChange = (e) => {
+        const raceId = e.target.value;
+        setSelectedRaceId(raceId);
+        
+        const selectedRace = races.find(r => r.status === 'upcoming' && r.id === Number(raceId));
+        setRace(selectedRace);
+        
+        const resetResults = {};
+        drivers.forEach(driver => {
+            resetResults[driver.driver_id] = {
+                position: null,
+                is_dnf: false
+            };
+        });
+        setResults(resetResults);
+        setFastestLap('');
+        setMessage('');
+    };
 
     const handlePositionChange = (driverId, position) => {
         setResults(prev => ({
@@ -115,7 +144,7 @@ function AdminPage() {
             }));
 
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/calculate-points/${race.id}`, {
+            const response = await fetch(`http://localhost:5000/api/admin/calculate-points/${selectedRaceId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -133,7 +162,7 @@ function AdminPage() {
             }
 
             const data = await response.json();
-            setMessage(`YES ${data.message}`);
+            setMessage(`${data.message}`);
             
         } catch (err) {
             console.error('Error:', err);
@@ -143,10 +172,10 @@ function AdminPage() {
         }
     };
 
-    if (!race) {
+    if (!race || drivers.length === 0) {
         return (
             <div className='admin-page'>
-                <div className='loading'>Loading race data...</div>
+                <F1Loader message="Loading race data..."/>
             </div>
         );
     }
@@ -163,13 +192,32 @@ function AdminPage() {
                     <p className='admin-subtitle'>Enter race results and calculate points</p>
                 </header>
 
+                <div className='admin-race-selector'>
+                    <label htmlFor='race-select'>Select Race:</label>
+                    <select
+                        id='race-select'
+                        value={selectedRaceId}
+                        onChange={handleRaceChange}
+                        className='admin-race-select'
+                    >
+                        {races.map((r) => (
+                            <option key={r.id} value={r.id}>
+                                Round {r.round_number} - {r.name} ({r.status})
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
                 <div className='admin-race-info'>
                     <h2>{race.name}</h2>
                     <p>{new Date(race.race_date).toLocaleDateString()}</p>
+                    <span className={`admin-race-status ${race.status}`}>
+                        {race.status}
+                    </span>
                 </div>
 
                 {message && (
-                    <div className={`admin-message ${message.startsWith('YES') ? 'success' : 'error'}`}>
+                    <div className={`admin-message ${message ? 'success' : 'error'}`}>
                         {message}
                     </div>
                 )}
@@ -183,7 +231,12 @@ function AdminPage() {
                                 <div key={driver.driver_id} className='admin-result-item'>
                                     <div className='admin-driver-info'>
                                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                        <img className='driver-image-small' src={`/images/drivers/${driver.code}.png`} alt={driver.full_name} />
+                                            <img 
+                                                className='driver-image-small' 
+                                                src={`/images/drivers/${driver.code}.png`} 
+                                                alt={driver.full_name}
+                                                onError={(e) => { e.target.style.display = 'none'; }}
+                                            />
                                         </div>
                                         <span className='admin-driver-code'>{driver.code}</span>
                                         <span className='admin-driver-name'>{driver.full_name}</span>

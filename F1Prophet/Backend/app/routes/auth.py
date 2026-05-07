@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app
 import bcrypt
 from ..database import get_db
+from ..models import User
 import jwt
 from datetime import datetime, timedelta
 from .. import limiter
@@ -17,67 +18,56 @@ def create_token(user_id):
 @auth_bp.route('/register', methods=['POST'])
 @limiter.limit("5 per minute")
 def register():
-    data = request.get_json(silent = True)
+    data = request.get_json(silent=True)
     if not data:
-        return jsonify({
-            'error': 'Invalid JSON body'
-        }), 400
+        return jsonify({'error': 'Invalid JSON body'}), 400
     
-    username = data.get('username' or '').strip()
-    email = (data.get('email')    or '').strip().lower()
+    username = (data.get('username') or '').strip()
+    email = (data.get('email') or '').strip().lower()
     password = (data.get('password') or '').strip()
 
     if not username or not email or not password:
-        return jsonify({
-            'error': 'Username, email and password are required'
-        }), 400
+        return jsonify({'error': 'Username, email and password are required'}), 400
     
     if len(username) < 3:
-        return jsonify({
-            'error': 'Username must be at least 3 characters long'
-        }), 400
+        return jsonify({'error': 'Username must be at least 3 characters long'}), 400
     
     if len(password) < 6:
-        return jsonify({
-            'error': 'Password must be at least 6 characters long'
-        }), 400
+        return jsonify({'error': 'Password must be at least 6 characters long'}), 400
     
     db = get_db()
-    cursor = db.cursor()
 
     try:
-        cursor.execute(
-            'SELECT id FROM users WHERE email = %s OR username = %s',
-            (email, username)
-        )
-        if cursor.fetchone():
+        existing = db.query(User).filter(
+            (User.email == email) | (User.username == username)
+        ).first()
+        
+        if existing:
             return jsonify({'error': 'Email or username already taken'}), 409
         
         hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        cursor.execute(
-            'INSERT INTO users (username, email, password_hash) VALUES (%s, %s, %s)',
-            (username, email, hashed.decode('utf-8'))
+        
+        user = User(
+            username=username,
+            email=email,
+            password_hash=hashed.decode('utf-8')
         )
+        
+        db.add(user)
         db.commit()
+        db.refresh(user)
 
-        user_id = cursor.lastrowid
-
-        token = create_token(user_id)
+        token = create_token(user.id)
 
         return jsonify({
             'message': 'Registration successful',
             'token': token,
-            'user': {'id': user_id, 'username': username, 'email': email}
+            'user': {'id': user.id, 'username': user.username, 'email': user.email}
         }), 201
 
     except Exception as e:
         db.rollback()
-        return jsonify({
-            'error': 'Server error', 'detail': str(e)
-            }), 500
-    
-    finally:
-        cursor.close()
+        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
 
 @auth_bp.route('/login', methods=['POST'])
 @limiter.limit("5 per minute")
@@ -93,42 +83,35 @@ def login():
         return jsonify({'error': 'email and password are required'}), 400
  
     db = get_db()
-    cursor = db.cursor(dictionary=True)
  
     try:
-        cursor.execute(
-            'SELECT id, username, email, password_hash FROM users WHERE email = %s',
-            (email,)
-        )
-        user = cursor.fetchone()
+        user = db.query(User).filter(User.email == email).first()
  
         if not user:
             return jsonify({'error': 'Invalid email or password'}), 401
  
         password_matches = bcrypt.checkpw(
             password.encode('utf-8'),
-            user['password_hash'].encode('utf-8')
+            user.password_hash.encode('utf-8')
         )
  
         if not password_matches:
             return jsonify({'error': 'Invalid email or password'}), 401
  
-        token = create_token(user['id'])
+        token = create_token(user.id)
+        
         return jsonify({
             'message': 'Login successful',
             'token': token,
             'user': {
-                'id':       user['id'],
-                'username': user['username'],
-                'email':    user['email'],
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
             }
         }), 200
  
     except Exception as e:
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500
- 
-    finally:
-        cursor.close()
 
 @auth_bp.route('/me', methods=['GET'])
 def get_current_user():
@@ -145,21 +128,18 @@ def get_current_user():
         user_id = data['user_id']
         
         db = get_db()
-        cursor = db.cursor(dictionary=True)
-        
-        cursor.execute("""
-            SELECT id, username, email, is_admin, created_at
-            FROM users
-            WHERE id = %s
-        """, (user_id,))
-        
-        user = cursor.fetchone()
-        cursor.close()
+        user = db.query(User).filter(User.id == user_id).first()
         
         if not user:
             return jsonify({'error': 'User not found'}), 404
         
-        return jsonify(user), 200
+        return jsonify({
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'is_admin': user.is_admin,
+            'created_at': user.created_at.isoformat()
+        }), 200
         
     except jwt.ExpiredSignatureError:
         return jsonify({'error': 'Token has expired'}), 401

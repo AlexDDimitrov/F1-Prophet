@@ -1,8 +1,10 @@
 from flask import Blueprint, request, jsonify, g
 from ..database import get_db
+from ..models import Race, Prediction, PredictedPosition
 from functools import wraps
 import jwt
 from flask import current_app
+from datetime import datetime
 
 bp = Blueprint('predictions', __name__, url_prefix='/api')
 
@@ -32,28 +34,55 @@ def token_required(f):
 @bp.route('/races/current', methods=['GET'])
 def get_current_race():
     db = get_db()
-    cursor = db.cursor(dictionary=True)
     
     try:
-        cursor.execute("""
-            SELECT id, name, location, race_date, deadline, season, round_number, status
-            FROM races
-            WHERE CURRENT_DATE <= race_date
-            ORDER BY race_date ASC
-            LIMIT 1
-        """)
-        
-        race = cursor.fetchone()
+        race = db.query(Race).filter(
+            Race.race_date >= datetime.now()
+        ).order_by(Race.race_date.asc()).first()
         
         if not race:
             return jsonify({'error': 'No upcoming races'}), 404
         
-        return jsonify(race), 200
+        return jsonify({
+            'id': race.id,
+            'name': race.name,
+            'location': race.location,
+            'race_date': race.race_date.isoformat(),
+            'deadline': race.deadline.isoformat(),
+            'season': race.season,
+            'round_number': race.round_number,
+            'status': race.status
+        }), 200
         
     except Exception as e:
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500
-    finally:
-        cursor.close()
+
+@bp.route('/races/all', methods=['GET'])
+def get_all_races():
+    db = get_db()
+    
+    try:
+        races = db.query(Race).filter(
+            Race.season == 2026
+        ).order_by(Race.round_number.asc()).all()
+        
+        result = []
+        for race in races:
+            result.append({
+                'id': race.id,
+                'name': race.name,
+                'location': race.location,
+                'race_date': race.race_date.isoformat(),
+                'deadline': race.deadline.isoformat(),
+                'season': race.season,
+                'round_number': race.round_number,
+                'status': race.status
+            })
+        
+        return jsonify(result), 200
+        
+    except Exception as e:
+        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
 
 @bp.route('/predictions', methods=['POST'])
 @token_required
@@ -71,66 +100,51 @@ def submit_prediction():
     
     user_id = g.user_id
     db = get_db()
-    cursor = db.cursor(dictionary=True)
     
     try:
-        cursor.execute("""
-            SELECT id, deadline, status
-            FROM races
-            WHERE id = %s
-        """, (race_id,))
-        
-        race = cursor.fetchone()
+        race = db.query(Race).filter(Race.id == race_id).first()
         
         if not race:
             return jsonify({'error': 'Race not found'}), 404
         
-        if race['status'] == 'completed':
+        if race.status == 'completed':
             return jsonify({'error': 'Race has already finished'}), 400
         
-        from datetime import datetime
-        if datetime.now() > race['deadline']:
+        if datetime.now() > race.deadline:
             return jsonify({'error': 'Prediction deadline has passed'}), 400
         
-        cursor.execute("""
-            SELECT id FROM predictions
-            WHERE user_id = %s AND race_id = %s
-        """, (user_id, race_id))
-        
-        existing = cursor.fetchone()
+        existing = db.query(Prediction).filter(
+            Prediction.user_id == user_id,
+            Prediction.race_id == race_id
+        ).first()
         
         if existing:
-            prediction_id = existing['id']
+            existing.fastest_lap = fastest_lap
+            existing.submitted_at = datetime.utcnow()
             
-            cursor.execute("""
-                UPDATE predictions
-                SET fastest_lap = %s, submitted_at = NOW()
-                WHERE id = %s
-            """, (fastest_lap, prediction_id))
+            db.query(PredictedPosition).filter(
+                PredictedPosition.prediction_id == existing.id
+            ).delete()
             
-            cursor.execute("""
-                DELETE FROM predicted_positions
-                WHERE prediction_id = %s
-            """, (prediction_id,))
-            
+            prediction_id = existing.id
         else:
-            cursor.execute("""
-                INSERT INTO predictions (user_id, race_id, fastest_lap)
-                VALUES (%s, %s, %s)
-            """, (user_id, race_id, fastest_lap))
-            
-            prediction_id = cursor.lastrowid
+            prediction = Prediction(
+                user_id=user_id,
+                race_id=race_id,
+                fastest_lap=fastest_lap
+            )
+            db.add(prediction)
+            db.flush()
+            prediction_id = prediction.id
         
         for pos in positions:
-            cursor.execute("""
-                INSERT INTO predicted_positions (prediction_id, driver_id, position, is_dnf)
-                VALUES (%s, %s, %s, %s)
-            """, (
-                prediction_id,
-                pos['driver_id'],
-                pos.get('position'),
-                pos.get('is_dnf', False)
-            ))
+            predicted_pos = PredictedPosition(
+                prediction_id=prediction_id,
+                driver_id=pos['driver_id'],
+                position=pos.get('position'),
+                is_dnf=pos.get('is_dnf', False)
+            )
+            db.add(predicted_pos)
         
         db.commit()
         
@@ -142,41 +156,42 @@ def submit_prediction():
     except Exception as e:
         db.rollback()
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500
-    finally:
-        cursor.close()
 
 @bp.route('/predictions/my', methods=['GET'])
 @token_required
 def get_all_my_predictions():
     user_id = g.user_id
     db = get_db()
-    cursor = db.cursor(dictionary=True)
     
     try:
-        cursor.execute("""
-            SELECT p.id, p.race_id, p.fastest_lap, p.submitted_at, p.points_earned,
-                   r.name as race_name, r.location, r.race_date, r.status
-            FROM predictions p
-            JOIN races r ON p.race_id = r.id
-            WHERE p.user_id = %s
-            ORDER BY r.race_date DESC
-        """, (user_id,))
+        predictions = db.query(Prediction).join(Race).filter(
+            Prediction.user_id == user_id
+        ).order_by(Race.race_date.desc()).all()
         
-        predictions = cursor.fetchall()
-        
+        result = []
         for prediction in predictions:
-            cursor.execute("""
-                SELECT driver_id, position, is_dnf
-                FROM predicted_positions
-                WHERE prediction_id = %s
-                ORDER BY position ASC, is_dnf ASC
-            """, (prediction['id'],))
+            positions = []
+            for pos in prediction.positions:
+                positions.append({
+                    'driver_id': pos.driver_id,
+                    'position': pos.position,
+                    'is_dnf': pos.is_dnf
+                })
             
-            prediction['positions'] = cursor.fetchall()
+            result.append({
+                'id': prediction.id,
+                'race_id': prediction.race_id,
+                'fastest_lap': prediction.fastest_lap,
+                'submitted_at': prediction.submitted_at.isoformat(),
+                'points_earned': prediction.points_earned,
+                'race_name': prediction.race.name,
+                'location': prediction.race.location,
+                'race_date': prediction.race.race_date.isoformat(),
+                'status': prediction.race.status,
+                'positions': positions
+            })
         
-        return jsonify(predictions), 200
+        return jsonify(result), 200
         
     except Exception as e:
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500
-    finally:
-        cursor.close()

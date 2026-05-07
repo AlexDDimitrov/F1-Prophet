@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, g
 from ..database import get_db
+from ..models import User, Race, Prediction, PredictedPosition, RaceResult
 from ..services.points_service import PointsCalculationService
 from functools import wraps
 import jwt
@@ -10,6 +11,9 @@ bp = Blueprint('admin', __name__, url_prefix='/api/admin')
 def admin_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+        if request.method == 'OPTIONS':
+            return jsonify({'message': 'OK'}), 200
+        
         token = request.headers.get('Authorization')
         
         if not token:
@@ -23,12 +27,9 @@ def admin_required(f):
             user_id = data['user_id']
             
             db = get_db()
-            cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT is_admin FROM users WHERE id = %s", (user_id,))
-            user = cursor.fetchone()
-            cursor.close()
+            user = db.query(User).filter(User.id == user_id).first()
             
-            if not user or not user['is_admin']:
+            if not user or not user.is_admin:
                 return jsonify({'error': 'Admin access required'}), 403
             
             g.user_id = user_id
@@ -42,7 +43,7 @@ def admin_required(f):
     
     return decorated
 
-@bp.route('/calculate-points/<int:race_id>', methods=['POST'])
+@bp.route('/calculate-points/<int:race_id>', methods=['OPTIONS', 'POST'])
 @admin_required
 def calculate_race_points(race_id):
     data = request.get_json(silent=True)
@@ -56,34 +57,28 @@ def calculate_race_points(race_id):
         return jsonify({'error': 'actual_results is required'}), 400
     
     db = get_db()
-    cursor = db.cursor(dictionary=True)
     
     try:
-        cursor.execute("DELETE FROM race_results WHERE race_id = %s", (race_id,))
-
-        for result in actual_results:
-            is_fastest_lap = 1 if result['driver_id'] == actual_fastest_lap else 0
-            
-            cursor.execute("""
-                INSERT INTO race_results (race_id, driver_id, position, is_dnf, fastest_lap)
-                VALUES (%s, %s, %s, %s, %s)
-            """, (
-                race_id,
-                result['driver_id'],
-                result.get('position'),
-                result.get('is_dnf', False),
-                is_fastest_lap
-            ))
-        
+        db.query(RaceResult).filter(RaceResult.race_id == race_id).delete()
         db.commit()
 
-        cursor.execute("""
-            SELECT p.id, p.user_id, p.fastest_lap
-            FROM predictions p
-            WHERE p.race_id = %s
-        """, (race_id,))
+        for result in actual_results:
+            is_fastest_lap = result['driver_id'] == actual_fastest_lap
+            
+            race_result = RaceResult(
+                race_id=race_id,
+                driver_id=result['driver_id'],
+                position=result.get('position'),
+                is_dnf=result.get('is_dnf', False),
+                fastest_lap=is_fastest_lap
+            )
+            db.add(race_result)
         
-        predictions = cursor.fetchall()
+        db.commit()
+        
+        predictions = db.query(Prediction).filter(
+            Prediction.race_id == race_id
+        ).all()
         
         if not predictions:
             return jsonify({'error': 'No predictions found for this race'}), 404
@@ -92,28 +87,24 @@ def calculate_race_points(race_id):
         user_points_updates = {}
         
         for prediction in predictions:
-            cursor.execute("""
-                SELECT driver_id, position, is_dnf
-                FROM predicted_positions
-                WHERE prediction_id = %s
-            """, (prediction['id'],))
-            
-            predicted_positions = cursor.fetchall()
+            predicted_positions = []
+            for pos in prediction.positions:
+                predicted_positions.append({
+                    'driver_id': pos.driver_id,
+                    'position': pos.position,
+                    'is_dnf': pos.is_dnf
+                })
             
             points_breakdown = PointsCalculationService.calculate_points(
                 predicted_positions=predicted_positions,
                 actual_results=actual_results,
-                predicted_fastest_lap=prediction['fastest_lap'],
+                predicted_fastest_lap=prediction.fastest_lap,
                 actual_fastest_lap=actual_fastest_lap
             )
             
-            cursor.execute("""
-                UPDATE predictions
-                SET points_earned = %s
-                WHERE id = %s
-            """, (points_breakdown['total_points'], prediction['id']))
+            prediction.points_earned = points_breakdown['total_points']
             
-            user_id = prediction['user_id']
+            user_id = prediction.user_id
             if user_id not in user_points_updates:
                 user_points_updates[user_id] = 0
             user_points_updates[user_id] += points_breakdown['total_points']
@@ -123,19 +114,15 @@ def calculate_race_points(race_id):
         db.commit()
     
         for user_id, points_earned in user_points_updates.items():
-            cursor.execute("""
-                UPDATE users
-                SET total_points = total_points + %s
-                WHERE id = %s
-            """, (points_earned, user_id))
+            user = db.query(User).filter(User.id == user_id).first()
+            if user:
+                user.total_points += points_earned
         
         db.commit()
         
-        cursor.execute("""
-            UPDATE races
-            SET status = 'completed'
-            WHERE id = %s
-        """, (race_id,))
+        race = db.query(Race).filter(Race.id == race_id).first()
+        if race:
+            race.status = 'completed'
         
         db.commit()
         
@@ -150,39 +137,37 @@ def calculate_race_points(race_id):
         import traceback
         traceback.print_exc()
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500
-    finally:
-        cursor.close()
-
 
 @bp.route('/race-results/<int:race_id>', methods=['GET'])
 def get_race_results(race_id):
     db = get_db()
-    cursor = db.cursor(dictionary=True)
     
     try:
-        cursor.execute("""
-            SELECT driver_id, position, is_dnf, fastest_lap
-            FROM race_results
-            WHERE race_id = %s
-            ORDER BY 
-                CASE WHEN is_dnf = 1 THEN 999 ELSE position END ASC
-        """, (race_id,))
+        results = db.query(RaceResult).filter(
+            RaceResult.race_id == race_id
+        ).order_by(
+            RaceResult.position.asc()
+        ).all()
         
-        results = cursor.fetchall()
-
+        result_list = []
         fastest_lap_driver = None
+        
         for result in results:
-            if result['fastest_lap']:
-                fastest_lap_driver = result['driver_id']
-                break
+            result_list.append({
+                'driver_id': result.driver_id,
+                'position': result.position,
+                'is_dnf': result.is_dnf,
+                'fastest_lap': result.fastest_lap
+            })
+            
+            if result.fastest_lap:
+                fastest_lap_driver = result.driver_id
         
         return jsonify({
             'race_id': race_id,
-            'results': results,
+            'results': result_list,
             'fastest_lap': fastest_lap_driver
         }), 200
         
     except Exception as e:
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500
-    finally:
-        cursor.close()

@@ -24,7 +24,7 @@ F1 Prophet allows Formula 1 fans to:
 - **Admin Panel** - Admin interface to enter race results and calculate points
 
 ## In The Works:
-- Points and scoring system
+- Points and scoring system - testing tonight or tomorrow
 
 ## Coming Soon
 
