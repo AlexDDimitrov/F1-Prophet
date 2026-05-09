@@ -217,6 +217,7 @@
 }
 
 .admin-points-info {
+    margin-top: 2rem;
     background: rgba(237, 28, 1, 0.1);
     border: 1px solid rgba(237, 28, 1, 0.3);
     border-radius: 8px;
