@@ -21,14 +21,14 @@ F1 Prophet allows Formula 1 fans to:
 - **User registration and login** - Create and login user profile
 - **Race prediction submission system** - Submit what you think will be the results of the next gp.
 - **Prediction history** - View all the predictions you have made.
-- **Admin Panel** - Admin interface to enter race results and calculate points
+- **Admin Panel** - Admin panel for entering race results and calculating points for all users.
+- **Points and scoring system** - Automated points calculation based on prediction accuracy. 
 
 ## In The Works:
-- Points and scoring system - testing tonight or tomorrow
+- Monthly and seasonal leaderboards (Probably also all time leaderboard)
 
 ## Coming Soon
 
-- Monthly and seasonal leaderboards (Probably also all time leaderboard)
 - User Profile Page (Username, email, stats, total points,edit profile)
 - Race calendar page
 - Email notifications
