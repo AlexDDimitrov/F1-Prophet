@@ -23,13 +23,13 @@ F1 Prophet allows Formula 1 fans to:
 - **Prediction history** - View all the predictions you have made.
 - **Admin Panel** - Admin panel for entering race results and calculating points for all users.
 - **Points and scoring system** - Automated points calculation based on prediction accuracy. 
+- **Monthly, seasonal and all-time leaderboards** - View all placements based on prediction accuracy and who the top players are.
 
 ## In The Works:
-- Monthly and seasonal leaderboards (Probably also all time leaderboard)
+- User Profile Page (Username, email, stats, total points,edit profile)
 
 ## Coming Soon
 
-- User Profile Page (Username, email, stats, total points,edit profile)
 - Race calendar page
 - Email notifications
 
