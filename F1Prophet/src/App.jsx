@@ -9,6 +9,7 @@ import RegisterPage from './Pages/RegisterPage'
 import PredictPage from './Pages/PredictPage';
 import MyPredictionsPage from './Pages/MyPredictionsPage';
 import AdminPage from './Pages/AdminPage';
+import LeaderboardPage from './Pages/LeaderboardPage';
 import './App.css';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/predict" element={<PredictPage />} />
         <Route path="/my-predictions" element={<MyPredictionsPage/>} />
         <Route path="/admin" element={<AdminPage />} /> 
+        <Route path="/leaderboards" element={<LeaderboardPage />} />
       </Routes>
     </Router>
   )

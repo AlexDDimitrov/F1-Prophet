@@ -24,7 +24,7 @@ def create_app():
     
     from . import models
 
-    from app.routes import drivers, teams, predictions, admin
+    from app.routes import drivers, teams, predictions, admin, leaderboards
     from app.routes.auth import auth_bp
     
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
@@ -32,6 +32,7 @@ def create_app():
     app.register_blueprint(teams.bp)
     app.register_blueprint(predictions.bp)
     app.register_blueprint(admin.bp)
+    app.register_blueprint(leaderboards.bp)
     
     @app.route('/')
     def index():

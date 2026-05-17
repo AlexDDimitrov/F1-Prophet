@@ -1,0 +1,243 @@
+.leaderboard-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    color: #ffffff;
+    padding: 2rem;
+}
+
+.leaderboard-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.leaderboard-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.leaderboard-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ED1C01;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.leaderboard-subtitle {
+    font-size: 1.2rem;
+    color: #cccccc;
+}
+
+.leaderboard-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-button {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    background: #0a0a0a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    color: #cccccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+}
+
+.tab-button:hover {
+    border-color: #ED1C01;
+    color: #ED1C01;
+}
+
+.tab-button.active {
+    background: #ED1C01;
+    border-color: #ED1C01;
+    color: #ffffff;
+}
+
+.user-rank-box {
+    background: #0a0a0a;
+    border: 2px solid #333;
+    padding: 1.2rem;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.user-rank-box:hover {
+    transform: translateY(-5px);
+    border-color: #ED1C01;
+    box-shadow: 0 5px 15px rgba(237, 28, 1, 0.3);
+}
+
+.your-rank-label {
+    font-size: 1rem;
+    color: #cccccc;
+    margin-right: 1rem;
+    font-weight: 600;
+}
+
+.your-rank-value {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ED1C01;
+}
+
+.leaderboard-table {
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 100px 1fr 150px 150px;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    background: #0a0a0a;
+    border-bottom: 2px solid #333;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    color: #ED1C01;
+    font-size: 0.9rem;
+}
+
+.table-body {
+    padding: 1rem;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 150px 150px;
+    gap: 1rem;
+    padding: 1.2rem 1rem;
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.table-row:hover {
+    transform: translateY(-3px);
+    border-color: #ED1C01;
+    box-shadow: 0 3px 10px rgba(237, 28, 1, 0.2);
+}
+
+.table-row.current-user {
+    background: rgba(237, 28, 1, 0.1);
+    border: 2px solid #ED1C01;
+}
+
+.table-row.current-user:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(237, 28, 1, 0.4);
+}
+
+.row-rank {
+    text-align: center;
+}
+
+.rank-icon {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #ED1C01;
+}
+
+.row-username {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.row-points {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #ED1C01;
+    text-align: center;
+}
+
+.row-predictions {
+    font-size: 1rem;
+    color: #cccccc;
+    text-align: center;
+}
+
+.no-data {
+    text-align: center;
+    padding: 3rem;
+    color: #999;
+    font-size: 1.1rem;
+}
+
+.leaderboard-back-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    background: rgba(237, 28, 1, 0.9);
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.leaderboard-back-button:hover {
+    background: #ff2d10;
+    transform: translateY(-2px);
+}
+
+.loading,
+.error {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 3rem;
+}
+
+.error {
+    color: #ED1C01;
+}
+
+@media (max-width: 768px) {
+    .leaderboard-page {
+        padding: 1rem;
+    }
+
+    .leaderboard-title {
+        font-size: 2rem;
+    }
+
+    .leaderboard-tabs {
+        flex-direction: column;
+    }
+
+    .table-header,
+    .table-row {
+        grid-template-columns: 60px 1fr 80px 80px;
+        gap: 0.5rem;
+        padding: 1rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .rank-icon {
+        font-size: 1.2rem;
+    }
+
+    .row-username {
+        font-size: 0.95rem;
+    }
+}
