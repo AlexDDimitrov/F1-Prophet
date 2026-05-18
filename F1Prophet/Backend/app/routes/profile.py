@@ -107,7 +107,6 @@ def get_stats():
             },
             'average_points': round(average_points, 2),
             'total_completed': len(predictions_with_points),
-            'total_points': total_points
         }), 200
         
     except Exception as e:
