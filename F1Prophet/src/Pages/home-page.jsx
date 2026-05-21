@@ -53,6 +53,9 @@ function HomePage() {
                         <Link to='/login' className='btn btn-primary'>
                             Login
                         </Link>
+                        <Link to='/profile' className='btn btn-primary'>
+                            Profile
+                        </Link>
                         <Link to='/' onClick={() => {
                             localStorage.removeItem('user');
                             localStorage.removeItem('token');

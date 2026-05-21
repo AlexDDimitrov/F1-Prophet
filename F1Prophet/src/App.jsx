@@ -10,6 +10,7 @@ import PredictPage from './Pages/PredictPage';
 import MyPredictionsPage from './Pages/MyPredictionsPage';
 import AdminPage from './Pages/AdminPage';
 import LeaderboardPage from './Pages/LeaderboardPage';
+import ProfilePage from './Pages/ProfilePage';
 import './App.css';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/my-predictions" element={<MyPredictionsPage/>} />
         <Route path="/admin" element={<AdminPage />} /> 
         <Route path="/leaderboards" element={<LeaderboardPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   )
