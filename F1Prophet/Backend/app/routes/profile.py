@@ -1,35 +1,12 @@
 from flask import Blueprint, jsonify, g
 from ..database import get_db
 from ..models import User, Prediction, Race
-from sqlalchemy import func, desc
-from functools import wraps
-import jwt
-from flask import current_app, request
+from sqlalchemy import func
+import bcrypt
+from flask import request
+from ..middleware.auth_guard import token_required
 
 bp = Blueprint('profile', __name__, url_prefix='/api/users')
-
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = request.headers.get('Authorization')
-        
-        if not token:
-            return jsonify({'error': 'Token is missing'}), 401
-        
-        try:
-            if token.startswith('Bearer '):
-                token = token[7:]
-            
-            data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
-            g.user_id = data['user_id']
-        except jwt.ExpiredSignatureError:
-            return jsonify({'error': 'Token has expired'}), 401
-        except jwt.InvalidTokenError:
-            return jsonify({'error': 'Invalid token'}), 401
-        
-        return f(*args, **kwargs)
-    
-    return decorated
 
 @bp.route('/profile', methods=['GET'])
 @token_required
@@ -66,6 +43,87 @@ def get_profile():
         }), 200
         
     except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
+    
+@bp.route('/profile', methods=['PUT'])
+@token_required
+def update_profile():
+    db = get_db()
+    user_id = g.user_id
+    
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({'error': 'Invalid JSON body'}), 400
+    
+    try:
+        user = db.query(User).filter(User.id == user_id).first()
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        username = data.get('username', '').strip()
+        email = data.get('email', '').strip().lower()
+        current_password = data.get('current_password', '').strip()
+        new_password = data.get('new_password', '').strip()
+        
+        if username and username != user.username:
+            if len(username) < 3:
+                return jsonify({'error': 'Username must be at least 3 characters long'}), 400
+            
+            existing_user = db.query(User).filter(
+                User.username == username,
+                User.id != user_id
+            ).first()
+            
+            if existing_user:
+                return jsonify({'error': 'Username already taken'}), 409
+            
+            user.username = username
+        
+        if email and email != user.email:
+            existing_user = db.query(User).filter(
+                User.email == email,
+                User.id != user_id
+            ).first()
+            
+            if existing_user:
+                return jsonify({'error': 'Email already taken'}), 409
+            
+            user.email = email
+        
+        if new_password:
+            if not current_password:
+                return jsonify({'error': 'Current password is required to set new password'}), 400
+            
+            password_matches = bcrypt.checkpw(
+                current_password.encode('utf-8'),
+                user.password_hash.encode('utf-8')
+            )
+            
+            if not password_matches:
+                return jsonify({'error': 'Current password is incorrect'}), 401
+            
+            if len(new_password) < 6:
+                return jsonify({'error': 'New password must be at least 6 characters long'}), 400
+            
+            hashed = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+            user.password_hash = hashed.decode('utf-8')
+        
+        db.commit()
+        
+        return jsonify({
+            'message': 'Profile updated successfully',
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email
+            }
+        }), 200
+        
+    except Exception as e:
+        db.rollback()
         import traceback
         traceback.print_exc()
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500

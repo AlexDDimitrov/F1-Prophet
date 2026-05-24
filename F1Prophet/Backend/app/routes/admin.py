@@ -1,47 +1,10 @@
-from flask import Blueprint, request, jsonify, g
+from flask import Blueprint, request, jsonify
 from ..database import get_db
-from ..models import User, Race, Prediction, PredictedPosition, RaceResult
+from ..models import User, Race, Prediction, RaceResult
 from ..services.points_service import PointsCalculationService
-from functools import wraps
-import jwt
-from flask import current_app
+from ..middleware.auth_guard import admin_required
 
 bp = Blueprint('admin', __name__, url_prefix='/api/admin')
-
-def admin_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        if request.method == 'OPTIONS':
-            return jsonify({'message': 'OK'}), 200
-        
-        token = request.headers.get('Authorization')
-        
-        if not token:
-            return jsonify({'error': 'Token is missing'}), 401
-        
-        try:
-            if token.startswith('Bearer '):
-                token = token[7:]
-            
-            data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
-            user_id = data['user_id']
-            
-            db = get_db()
-            user = db.query(User).filter(User.id == user_id).first()
-            
-            if not user or not user.is_admin:
-                return jsonify({'error': 'Admin access required'}), 403
-            
-            g.user_id = user_id
-            
-        except jwt.ExpiredSignatureError:
-            return jsonify({'error': 'Token has expired'}), 401
-        except jwt.InvalidTokenError:
-            return jsonify({'error': 'Invalid token'}), 401
-        
-        return f(*args, **kwargs)
-    
-    return decorated
 
 @bp.route('/calculate-points/<int:race_id>', methods=['OPTIONS', 'POST'])
 @admin_required

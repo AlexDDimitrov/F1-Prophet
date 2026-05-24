@@ -4,32 +4,9 @@ from flask import Blueprint, jsonify, g
 from ..database import get_db
 from ..models import User, Prediction, Race
 from sqlalchemy import func, extract
-from functools import wraps
-import jwt
-from flask import current_app, request
+from ..middleware.auth_guard import token_optional
 
 bp = Blueprint('leaderboards', __name__, url_prefix='/api/leaderboards')
-
-def token_optional(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        token = request.headers.get('Authorization')
-        
-        if token:
-            try:
-                if token.startswith('Bearer '):
-                    token = token[7:]
-                
-                data = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
-                g.user_id = data['user_id']
-            except:
-                g.user_id = None
-        else:
-            g.user_id = None
-        
-        return f(*args, **kwargs)
-    
-    return decorated
 
 @bp.route('/monthly/<int:year>/<int:month>', methods=['GET'])
 @token_optional
