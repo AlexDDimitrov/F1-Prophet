@@ -64,36 +64,36 @@ function DisplayDriver({
                 </div>
             </div>
             <div className='driver-info-boxes'>
-                <div className='info-box'>
-                    <span className='info-label'>NAME</span>
-                    <span className='info-value'>{name}</span>
+                <div className='driver-info-box'>
+                    <span className='driver-info-label'>NAME</span>
+                    <span className='driver-info-value'>{name}</span>
                 </div>
                 
-                <div className='info-box'>
-                    <span className='info-label'>TEAM</span>
-                    <span className='info-value'>{team}</span>
+                <div className='driver-info-box'>
+                    <span className='driver-info-label'>TEAM</span>
+                    <span className='driver-info-value'>{team}</span>
                 </div>
                 
-                <div className='info-box'>
-                    <span className='info-label'>NUMBER</span>
-                    <span className='info-value'>{number}</span>
+                <div className='driver-info-box'>
+                    <span className='driver-info-label'>NUMBER</span>
+                    <span className='driver-info-value'>{number}</span>
                 </div>
 
-                <div className='info-box'>
-                    <span className='info-label'>NATIONALITY</span>
-                    <span className='info-value'>{nationality}</span>
+                <div className='driver-info-box'>
+                    <span className='driver-info-label'>NATIONALITY</span>
+                    <span className='driver-info-value'>{nationality}</span>
                 </div>
                 
-                <div className='info-box'>
-                    <span className='info-label'>POSITION</span>
-                    <span className='info-value'>
+                <div className='driver-info-box'>
+                    <span className='driver-info-label'>POSITION</span>
+                    <span className='driver-info-value'>
                         {position ? `P${position}` : 'DNF'}
                     </span>
                 </div>
                 
-                <div className='info-box'>
-                    <span className='info-label'>POINTS</span>
-                    <span className='info-value'>{points || 0}</span>
+                <div className='driver-info-box'>
+                    <span className='driver-info-label'>POINTS</span>
+                    <span className='driver-info-value'>{points || 0}</span>
                 </div>
                 
                 <button className='view-profile-btn' onClick={handleViewProfile}>

@@ -11,6 +11,7 @@ import MyPredictionsPage from './Pages/MyPredictionsPage';
 import AdminPage from './Pages/AdminPage';
 import LeaderboardPage from './Pages/LeaderboardPage';
 import ProfilePage from './Pages/ProfilePage';
+import EditProfilePage from './Pages/EditProfilePage';
 import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/admin" element={<AdminPage />} /> 
         <Route path="/leaderboards" element={<LeaderboardPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/edit" element={<EditProfilePage />} />
       </Routes>
     </Router>
   )

@@ -89,7 +89,7 @@
     position: relative;
 }
 
-.info-box {
+.driver-info-box {
     background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(15px);
     padding: 0.7rem 1rem;
@@ -102,12 +102,12 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.info-box:hover {
+.driver-info-box:hover {
     background: rgba(255, 255, 255, 1);
     transform: translateX(5px);
 }
 
-.info-label {
+.driver-info-label {
     font-size: 0.7rem;
     font-weight: 700;
     color: #666;
@@ -115,7 +115,7 @@
     letter-spacing: 0.1rem;
 }
 
-.info-value {
+.driver-info-value {
     font-size: 1.2rem;
     font-weight: 900;
     color: #0a0a0a;
@@ -164,15 +164,15 @@
         gap: 0.5rem;
     }
     
-    .info-box {
+    .driver-info-box {
         padding: 0.7rem 1rem;
     }
     
-    .info-label {
+    .driver-info-label {
         font-size: 0.6rem;
     }
     
-    .info-value {
+    .driver-info-value {
         font-size: 1rem;
     }
 }

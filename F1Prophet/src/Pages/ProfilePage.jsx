@@ -75,7 +75,7 @@ function ProfilePage() {
     };
 
     const handleEditProfile = () => {
-        console.log('Edit profile clicked');
+        navigate('/profile/edit');
     };
 
     if (loading) {
