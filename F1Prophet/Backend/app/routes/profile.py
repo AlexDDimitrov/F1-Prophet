@@ -127,6 +127,72 @@ def update_profile():
         import traceback
         traceback.print_exc()
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500
+    
+@bp.route('/profile/favorite-driver/<driver_id>', methods = ['POST'])
+@token_required
+def set_fav_driver(driver_id):
+    db = get_db()
+    user_id = g.user_id
+
+    try:
+        user = db.query(User).filter(User.id == user_id).first()
+
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        if user.favorite_driver == driver_id:
+            user.favorite_driver = None
+            db.commit()
+            return jsonify({
+                'message': 'Favorite driver removed',
+                'favorite_driver': None
+            }), 200
+
+        user.favorite_driver = driver_id
+        db.commit()
+
+        return jsonify({
+                'message': 'Favorite driver set successfully',
+                'favorite_driver': driver_id
+            }), 200
+    except Exception as e:
+        db.rollback()
+        import traceback
+        traceback().print_exc()
+        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
+
+@bp.route('/profile/favorite-team/<team_id>', methods = ['POST'])
+@token_required
+def set_fav_team(team_id):
+    db = get_db()
+    user_id = g.user_id
+
+    try:
+        user = db.query(User).filter(User.id == user_id).first()
+
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        if user.favorite_team == team_id:
+            user.favorite_team = None
+            db.commit()
+            return jsonify({
+                'message': 'Favorite team removed',
+                'favorite_team': None
+            }), 200
+
+        user.favorite_team = team_id
+        db.commit()
+
+        return jsonify({
+                'message': 'Favorite team set successfully',
+                'favorite_team': team_id
+            }), 200
+    except Exception as e:
+        db.rollback()
+        import traceback
+        traceback().print_exc()
+        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
 
 @bp.route('/stats', methods=['GET'])
 @token_required

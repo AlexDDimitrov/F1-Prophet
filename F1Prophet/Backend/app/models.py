@@ -12,6 +12,8 @@ class User(Base):
     password_hash = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False)
     total_points = Column(Integer, default=0)
+    favorite_driver = Column(String(50))
+    favorite_team = Column(String(50))
     created_at = Column(DateTime, default=datetime.utcnow)
     
     predictions = relationship('Prediction', back_populates='user', cascade='all, delete-orphan')
