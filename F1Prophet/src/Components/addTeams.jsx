@@ -44,7 +44,7 @@ function CollectTeams({ profile }) {
                 <Team 
                     key={team.team_id} 
                     team={team}
-                    favoriteTeam={profile?.favorite_team}   // ← FIX
+                    favoriteTeam={profile?.favorite_team}
                 />
             ))}
         </div>

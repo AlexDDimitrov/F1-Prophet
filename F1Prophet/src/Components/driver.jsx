@@ -115,7 +115,7 @@ function DisplayDriver({
     };
 
     return (
-        <div className='driver-card' style={{ border: isFavorite ? '3px solid gold' : '1px solid #333' }}>
+        <div className='driver-card' style={{ border: isFavorite ? '3px solid gold' : '3px solid #333' }}>
             <div 
                 className='card-background' 
                 style={{ background: getFlagGradient(nationality)}}
