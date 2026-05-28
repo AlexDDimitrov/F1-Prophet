@@ -1,18 +1,89 @@
-import React from 'react'
-import {useNavigate} from 'react-router-dom'
-import './driver.css'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './driver.css';
+import F1Loader from '../Components/F1Loader';
 
-function DisplayDriver({ 
+function DisplayDriver({
     driver_id,
-    name, 
-    team, 
-    number, 
-    code, 
-    nationality, 
-    position, 
-    points 
+    name,
+    team,
+    number,
+    code,
+    nationality,
+    position,
+    points,
+    favoriteDriver
 }) {
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    const reverseDriverMap = {
+        "Max Verstappen": "max_verstappen",
+        "Kimi Antonelli": "antonelli",
+        "George Russell": "russell",
+        "Charles Leclerc": "leclerc",
+        "Lando Norris": "norris",
+        "Lewis Hamilton": "hamilton",
+        "Oscar Piastri": "piastri",
+        "Franco Colapinto": "colapinto",
+        "Isack Hadjar": "hadjar",
+        "Carlos Sainz": "sainz",
+        "Alex Albon": "albon",
+        "Pierre Gasly": "gasly",
+        "Gabriel Bortoleto": "bortoleto",
+        "Oliver Bearman": "bearman",
+        "Esteban Ocon": "ocon",
+        "Liam Lawson": "lawson",
+        "Arvid Lindblad": "arvid_lindblad",
+        "Fernando Alonso": "alonso",
+        "Lance Stroll": "stroll",
+        "Nico Hülkenberg": "hulkenberg",
+        "Sergio Pérez": "perez",
+        "Valtteri Bottas": "bottas"
+    };
+
+    useEffect(() => {
+        if (!favoriteDriver) {
+            setIsFavorite(false);
+            return;
+        }
+
+        const mapped = reverseDriverMap[favoriteDriver];
+        if (!mapped) {
+            setIsFavorite(false);
+            return;
+        }
+
+        setIsFavorite(mapped === driver_id);
+    }, [favoriteDriver, driver_id]);
+
+    const handleToggleFavorite = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) return navigate('/login');
+
+        setLoading(true);
+        setIsFavorite(prev => !prev);
+
+        try {
+            await fetch(`http://localhost:5000/api/users/profile/favorite-driver/${driver_id}`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        } catch (err) {
+            console.error("Error toggling favorite:", err);
+            setError(err.message);
+            setIsFavorite(prev => !prev);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (error) {
+        return <div className="error">Error: {error}</div>;
+    }
 
     const handleViewProfile = () => {
         navigate(`/drivers/${driver_id}`);
@@ -39,10 +110,10 @@ function DisplayDriver({
             'Brazilian': 'linear-gradient(135deg, #009B3A 0%, #009B3A 35%, #FFDF00 35%, #FFDF00 50%, #009B3A 50%, #009B3A 65%, #FFDF00 65%, #009B3A 65%, #009B3A 100%)',
             'Argentine': 'linear-gradient(180deg, #74ACDF 0%, #74ACDF 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #74ACDF 66.66%, #74ACDF 100%)',
             'New Zealander': 'linear-gradient(135deg, #00247D 0%, #00247D 40%, #012169 40%, #012169 60%, #00247D 60%, #00247D 100%)'};
-        
+
         return flags[nationality] || 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)';
     };
-    
+
     return (
         <div className='driver-card'>
             <div 
@@ -59,7 +130,7 @@ function DisplayDriver({
                         e.target.nextSibling.style.display = 'flex';
                     }}
                 />
-                <div className='driver-placeholder' style={{display: 'none'}}>
+                <div className='driver-placeholder' style={{ display: 'none' }}>
                     <span className='placeholder-code'>{code}</span>
                 </div>
             </div>
@@ -68,12 +139,12 @@ function DisplayDriver({
                     <span className='driver-info-label'>NAME</span>
                     <span className='driver-info-value'>{name}</span>
                 </div>
-                
+
                 <div className='driver-info-box'>
                     <span className='driver-info-label'>TEAM</span>
                     <span className='driver-info-value'>{team}</span>
                 </div>
-                
+
                 <div className='driver-info-box'>
                     <span className='driver-info-label'>NUMBER</span>
                     <span className='driver-info-value'>{number}</span>
@@ -83,25 +154,36 @@ function DisplayDriver({
                     <span className='driver-info-label'>NATIONALITY</span>
                     <span className='driver-info-value'>{nationality}</span>
                 </div>
-                
+
                 <div className='driver-info-box'>
                     <span className='driver-info-label'>POSITION</span>
                     <span className='driver-info-value'>
                         {position ? `P${position}` : 'DNF'}
                     </span>
                 </div>
-                
+
                 <div className='driver-info-box'>
                     <span className='driver-info-label'>POINTS</span>
                     <span className='driver-info-value'>{points || 0}</span>
                 </div>
-                
-                <button className='view-profile-btn' onClick={handleViewProfile}>
-                    View Profile →
-                </button>
+
+                <div className='driver-actions'>
+                    <button 
+                        className='view-profile-btn'
+                        onClick={handleToggleFavorite}
+                        disabled={loading}
+                        title={isFavorite ? 'Remove favorite' : 'Add favorite'}
+                    >
+                        {isFavorite ? 'Rem Favorite' : 'Add Favorite'}
+                    </button>
+
+                    <button className='view-profile-btn' onClick={handleViewProfile}>
+                        <span>View Profile</span>
+                    </button>
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default DisplayDriver
+export default DisplayDriver;

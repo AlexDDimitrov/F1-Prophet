@@ -1,6 +1,6 @@
 .team-card {
     position: relative;
-    min-height: 400px;
+    min-height: 33rem;
     height: auto;
     overflow: hidden;
     border-radius: 15px;
@@ -105,9 +105,9 @@
     min-height: 13%;
 }
 
-@media (max-width: 768px) {
+@media ((max-width: 768px) and (min-width: 480px) or (max-width: 480px)) {
     .team-card {
-        height: 350px;
+        height: 33rem;
     }
     
     .team-image-section {

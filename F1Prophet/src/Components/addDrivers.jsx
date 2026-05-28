@@ -4,7 +4,7 @@ import './addDrivers.css'
 import F1Loader from '../Components/F1Loader';
 import { driversAPI } from '../services/api'
 
-function CollectDrivers() {
+function CollectDrivers({profile}) {
     const [drivers, setDrivers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -52,6 +52,7 @@ function CollectDrivers() {
                     nationality={driver.nationality}
                     position={driver.position}
                     points={driver.points} 
+                    favoriteDriver={profile?.favorite_driver}   
                     />
             ))}
         </div>

@@ -32,6 +32,54 @@ def get_profile():
         
         global_rank = (all_time_rank_query or 0) + 1
         
+        favorite_driver = 'None'
+        favorite_team = 'None'
+
+        driver_map = {
+            "max_verstappen": "Max Verstappen",
+            "antonelli": "Kimi Antonelli",
+            "russell": "George Russell",
+            "leclerc": "Charles Leclerc",
+            "norris": "Lando Norris",
+            "hamilton": "Lewis Hamilton",
+            "piastri": "Oscar Piastri",
+            "colapinto": "Franco Colapinto",
+            "hadjar": "Isack Hadjar",
+            "sainz": "Carlos Sainz",
+            "albon": "Alex Albon",
+            "gasly": "Pierre Gasly",
+            "bortoleto": "Gabriel Bortoleto",
+            "bearman": "Oliver Bearman",
+            "ocon": "Esteban Ocon",
+            "lawson": "Liam Lawson",
+            "arvid_lindblad": "Arvid Lindblad",
+            "alonso": "Fernando Alonso",
+            "stroll": "Lance Stroll",
+            "hulkenberg": "Nico Hülkenberg",
+            "perez": "Sergio Pérez",
+            "bottas": "Valtteri Bottas",
+        }
+
+        if user.favorite_driver in driver_map:
+            favorite_driver = driver_map[user.favorite_driver]
+            
+        team_map = {
+            "alpine": "Alpine F1 Team",
+            "aston_martin": "Aston Martin",
+            "audi": "Audi",
+            "cadillac": "Cadillac F1 Team",
+            "ferrari": "Ferrari",
+            "haas": "Haas F1 Team",
+            "mclaren": "McLaren",
+            "mercedes": "Mercedes",
+            "rb": "RB F1 Team",
+            "red_bull": "Red Bull",
+            "williams": "Williams",
+        }
+
+        if user.favorite_team in team_map:
+            favorite_team = team_map[user.favorite_team]
+
         return jsonify({
             'id': user.id,
             'username': user.username,
@@ -39,7 +87,9 @@ def get_profile():
             'total_points': user.total_points,
             'created_at': user.created_at.isoformat(),
             'predictions_made': total_predictions,
-            'global_rank': global_rank
+            'global_rank': global_rank,
+            'favorite_driver': favorite_driver,
+            'favorite_team': favorite_team
         }), 200
         
     except Exception as e:

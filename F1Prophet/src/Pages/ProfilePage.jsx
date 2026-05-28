@@ -149,6 +149,16 @@ function ProfilePage() {
                             <span className='info-label'>Predictions Made:</span>
                             <span className='info-value'>{profile.predictions_made}</span>
                         </div>
+
+                        <div className='info-row'>
+                            <span className='info-label'>Favorite Driver:</span>
+                            <span className='info-value'>{profile.favorite_driver}</span>
+                        </div>
+
+                        <div className='info-row'>
+                            <span className='info-label'>Favorite Team:</span>
+                            <span className='info-value'>{profile.favorite_team}</span>
+                        </div>
                     </div>
 
                     <div className='profile-stats-card'>

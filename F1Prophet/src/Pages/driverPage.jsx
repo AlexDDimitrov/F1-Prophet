@@ -1,15 +1,54 @@
-import CollectDrivers from '../Components/addDrivers'
-import React from 'react'
-import {useNavigate} from 'react-router-dom'
-import './DriverPage.css'
-import './HomePage.css'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import CollectDrivers from '../Components/addDrivers';
+import './DriverPage.css';
+import './HomePage.css';
+import F1Loader from '../Components/F1Loader';
 
 function DriverPage() {
-        
     const navigate = useNavigate();
+    const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadProfile = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            try {
+                const res = await fetch('http://localhost:5000/api/users/profile', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    setProfile(data);
+                }
+                setLoading(false);
+            } catch (err) {
+                console.error("Error loading profile:", err);
+                setLoading(false);
+            }
+        };
+
+        loadProfile();
+    }, []);
+
+    useEffect(() => {
+        window.myProfile = profile;
+        console.log("PROFILE FROM BACKEND:", profile);
+    }, [profile]);
+
+    if (loading) {
+        return (
+            <div className="predict-page">
+                <F1Loader message="loading driver data..." />
+            </div>
+        );
+    }
+
     return (
         <div>
-
             <button onClick={() => navigate('/')} className='back-button'>
                 ← Back to Home Page
             </button>
@@ -21,7 +60,7 @@ function DriverPage() {
                 </header>
 
                 <section className='drivers-section'>
-                    <CollectDrivers/>
+                    <CollectDrivers profile={profile} />
                 </section>
             </div>
 
@@ -29,7 +68,7 @@ function DriverPage() {
                 Pictures from https://www.formulaonehistory.com/
             </p>
         </div>
-    )
+    );
 }
 
-export default DriverPage
+export default DriverPage;

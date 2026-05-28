@@ -1,6 +1,6 @@
 .driver-card {
     position: relative;
-    height: 500px;
+    height: 550px;
     border-radius: 15px;
     overflow: hidden;
     display: flex;
@@ -127,7 +127,7 @@
     background: #ED1C01;
     color: #ffffff;
     border: none;
-    padding: 1rem;
+    padding: 0.8rem 1.5rem;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 700;
@@ -137,6 +137,8 @@
     transition: all 0.3s ease;
     margin-top: 0.5rem;
     box-shadow: 0 4px 15px rgba(237, 28, 1, 0.3);
+    height: fit-content;
+    max-width: 17.5rem;
 }
 
 .view-profile-btn:hover {
@@ -174,5 +176,10 @@
     
     .driver-info-value {
         font-size: 1rem;
+    }
+
+    .view-profile-btn {
+        font-size: 0.9rem;
+        max-width: 17.5rem;
     }
 }

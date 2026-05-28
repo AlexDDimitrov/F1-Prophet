@@ -1,8 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './team.css';
 
-function Team({ team }) {
+function Team({ team, favoriteTeam }) {
+    const navigate = useNavigate();
+
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const reverseTeamMap = {
+        "Red Bull": "red_bull",
+        "Mercedes": "mercedes",
+        "Ferrari": "ferrari",
+        "McLaren": "mclaren",
+        "Aston Martin": "aston_martin",
+        "Alpine": "alpine",
+        "Williams": "williams",
+        "RB": "rb",
+        "Audi": "audi",
+        "Haas": "haas"
+    };
+
+    useEffect(() => {
+        if (!favoriteTeam) {
+            setIsFavorite(false);
+            return;
+        }
+        setIsFavorite(reverseTeamMap[favoriteTeam] === team.team_id);
+    }, [favoriteTeam, team.team_id]);
+
+    const handleToggleFavorite = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) return navigate('/login');
+
+        setLoading(true);
+        setIsFavorite(prev => !prev);
+
+        try {
+            await fetch(`http://localhost:5000/api/users/profile/favorite-team/${team.team_id}`, {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        } catch (err) {
+            console.error("Error toggling favorite:", err);
+            setError(err.message);
+            setIsFavorite(prev => !prev);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const teamImage = `/images/teams/${team.team_id}.png`;
+
     const getTeamGradient = (team_id) => {
         const teams = {
             "red_bull": ["#0600EF", "#DC052D"],
@@ -31,14 +80,12 @@ function Team({ team }) {
                 ${colors[1]} 65%,
                 ${colors[1]} 100%
             ),
-
             linear-gradient(
                 90deg,
                 rgba(255,255,255,0.15) 0%,
                 rgba(255,255,255,0.15) 5%,
                 transparent 5%
             ),
-
             linear-gradient(
                 45deg,
                 rgba(255,255,255,0.05) 25%,
@@ -48,7 +95,13 @@ function Team({ team }) {
     };
 
     return (
-        <div className='team-card' style={{ background: getTeamGradient(team.team_id) }}>
+        <div 
+            className='team-card' 
+            style={{ 
+                background: getTeamGradient(team.team_id),
+                border: isFavorite ? '3px solid gold' : '1px solid #ccc',
+            }}
+        >
             <div className='team-image-section'>
                 <img 
                     src={teamImage} 
@@ -86,9 +139,20 @@ function Team({ team }) {
                     <span className='info-label'>Points</span>
                     <span className='info-value'>{team.points}</span>
                 </div>
+
+                <div className='driver-actions'>
+                    <button 
+                        className='view-profile-btn'
+                        onClick={handleToggleFavorite}
+                        disabled={loading}
+                        title={isFavorite ? 'Remove favorite' : 'Add favorite'}
+                    >
+                        {isFavorite ? 'Rem Favorite' : 'Add Favorite'}
+                    </button>
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Team;
