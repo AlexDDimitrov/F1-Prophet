@@ -99,7 +99,7 @@ function Team({ team, favoriteTeam }) {
             className='team-card' 
             style={{ 
                 background: getTeamGradient(team.team_id),
-                border: isFavorite ? '3px solid gold' : '1px solid #ccc',
+                border: isFavorite ? '3px solid gold' : '2px solid #333',
             }}
         >
             <div className='team-image-section'>
