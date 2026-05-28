@@ -24,12 +24,10 @@ F1 Prophet allows Formula 1 fans to:
 - **Admin Panel** - Admin panel for entering race results and calculating points for all users.
 - **Points and scoring system** - Automated points calculation based on prediction accuracy. 
 - **Monthly, seasonal and all-time leaderboards** - View all placements based on prediction accuracy and who the top players are.
+- **User Profile Page** – View personal profile and stats, edit profile details, and manage favorite driver and favorite team selections in the Drivers and Teams pages
 
 ## In The Works:
-- User Profile Page 
-    - See stats and profile details (Username, email, stats, total points) p1/3,
-    - Edit profile (Edit profile, add favorite driver, add favorite team) p2/3, 
-    - Add to Drivers page option to select the favorite driver and in the Team page option to pick the favorite team p3/3
+
 
 ## Coming Soon
 - Race calendar page

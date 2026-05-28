@@ -13,7 +13,10 @@ function DriverPage() {
     useEffect(() => {
         const loadProfile = async () => {
             const token = localStorage.getItem('token');
-            if (!token) return;
+            if (!token) {
+                setLoading(false);
+                return;
+            }
 
             try {
                 const res = await fetch('http://localhost:5000/api/users/profile', {
@@ -27,6 +30,8 @@ function DriverPage() {
                 setLoading(false);
             } catch (err) {
                 console.error("Error loading profile:", err);
+                setLoading(false);
+            } finally {
                 setLoading(false);
             }
         };

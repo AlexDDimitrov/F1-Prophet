@@ -12,7 +12,10 @@ function TeamPage() {
     useEffect(() => {
         const loadProfile = async () => {
             const token = localStorage.getItem('token');
-            if (!token) return;
+            if (!token) {
+                setLoading(false);    
+                return;
+            }
 
             try {
                 const res = await fetch('http://localhost:5000/api/users/profile', {
