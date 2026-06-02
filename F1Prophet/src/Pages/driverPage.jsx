@@ -41,7 +41,7 @@ function DriverPage() {
 
     useEffect(() => {
         window.myProfile = profile;
-        console.log("PROFILE FROM BACKEND:", profile);
+        //console.log("PROFILE FROM BACKEND:", profile);
     }, [profile]);
 
     if (loading) {

@@ -13,6 +13,7 @@ limiter = Limiter(
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    app.json.ensure_ascii = False
     
     CORS(app, resources={
         r"/api/*": {

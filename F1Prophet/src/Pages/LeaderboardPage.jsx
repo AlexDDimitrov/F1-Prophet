@@ -140,13 +140,13 @@ function LeaderboardPage() {
                             </div>
                         ))}
                     </div>
+                    
+                    {leaderboard.length === 0 && (
+                        <div className='no-data'>
+                            <p>No leaderboard data yet. Be the first to make predictions!</p>
+                        </div>
+                    )}
                 </div>
-
-                {leaderboard.length === 0 && (
-                    <div className='no-data'>
-                        <p>No leaderboard data yet. Be the first to make predictions!</p>
-                    </div>
-                )}
             </div>
         </div>
     );

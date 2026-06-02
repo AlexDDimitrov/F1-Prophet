@@ -13,7 +13,7 @@ function DriverDetailPage() {
     useEffect(() => {
     const fetchDriverDetails = async () => {
         try {
-            console.log('Fetching driver with ID:', driver_id);
+            //console.log('Fetching driver with ID:', driver_id);
             
             const response = await fetch(`http://localhost:5000/api/drivers/${driver_id}`);
             
@@ -22,7 +22,7 @@ function DriverDetailPage() {
             }
             
             const data = await response.json();
-            console.log('Driver data:', data);
+            //console.log('Driver data:', data);
             
             setDriver(data);
             setLoading(false);

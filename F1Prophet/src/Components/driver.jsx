@@ -72,6 +72,8 @@ function DisplayDriver({
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}` }
             });
+
+            window.location.reload();
         } catch (err) {
             console.error("Error toggling favorite:", err);
             setError(err.message);
@@ -84,10 +86,11 @@ function DisplayDriver({
     if (error) {
         return <div className="error">Error: {error}</div>;
     }
-
+    
     const handleViewProfile = () => {
         navigate(`/drivers/${driver_id}`);
     };
+
     const driverImage = `/images/drivers/${code}.png`;
     const getFlagGradient = (nationality) => {
         const flags = {
@@ -114,6 +117,10 @@ function DisplayDriver({
         return flags[nationality] || 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)';
     };
 
+    /*function refreshPage() {
+        window.location.reload(true);
+    }*/
+      
     return (
         <div className='driver-card' style={{ border: isFavorite ? '3px solid gold' : '3px solid #333' }}>
             <div 
@@ -170,7 +177,9 @@ function DisplayDriver({
                 <div className='driver-actions'>
                     <button 
                         className='view-profile-btn'
-                        onClick={handleToggleFavorite}
+                        onClick={() => {
+                            handleToggleFavorite();
+                        }}
                         disabled={loading}
                         title={isFavorite ? 'Remove favorite' : 'Add favorite'}
                     >

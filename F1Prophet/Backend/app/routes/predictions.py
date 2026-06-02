@@ -4,62 +4,9 @@ from ..models import Race, Prediction, PredictedPosition
 from datetime import datetime
 from ..middleware.auth_guard import token_required
 
-bp = Blueprint('predictions', __name__, url_prefix='/api')
+bp = Blueprint('predictions', __name__, url_prefix='/api/predictions')
 
-@bp.route('/races/current', methods=['GET'])
-def get_current_race():
-    db = get_db()
-    
-    try:
-        race = db.query(Race).filter(
-            Race.race_date >= datetime.now()
-        ).order_by(Race.race_date.asc()).first()
-        
-        if not race:
-            return jsonify({'error': 'No upcoming races'}), 404
-        
-        return jsonify({
-            'id': race.id,
-            'name': race.name,
-            'location': race.location,
-            'race_date': race.race_date.isoformat(),
-            'deadline': race.deadline.isoformat(),
-            'season': race.season,
-            'round_number': race.round_number,
-            'status': race.status
-        }), 200
-        
-    except Exception as e:
-        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
-
-@bp.route('/races/all', methods=['GET'])
-def get_all_races():
-    db = get_db()
-    
-    try:
-        races = db.query(Race).filter(
-            Race.season == 2026
-        ).order_by(Race.round_number.asc()).all()
-        
-        result = []
-        for race in races:
-            result.append({
-                'id': race.id,
-                'name': race.name,
-                'location': race.location,
-                'race_date': race.race_date.isoformat(),
-                'deadline': race.deadline.isoformat(),
-                'season': race.season,
-                'round_number': race.round_number,
-                'status': race.status
-            })
-        
-        return jsonify(result), 200
-        
-    except Exception as e:
-        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
-
-@bp.route('/predictions', methods=['POST'])
+@bp.route('/', methods=['POST'])
 @token_required
 def submit_prediction():
     data = request.get_json(silent=True)
@@ -132,7 +79,7 @@ def submit_prediction():
         db.rollback()
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500
 
-@bp.route('/predictions/my', methods=['GET'])
+@bp.route('/my', methods=['GET'])
 @token_required
 def get_all_my_predictions():
     user_id = g.user_id

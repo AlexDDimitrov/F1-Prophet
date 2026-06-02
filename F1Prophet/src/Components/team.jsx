@@ -41,6 +41,8 @@ function Team({ team, favoriteTeam }) {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}` }
             });
+
+            window.location.reload();
         } catch (err) {
             console.error("Error toggling favorite:", err);
             setError(err.message);
