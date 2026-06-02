@@ -18,8 +18,8 @@ def get_calendar(year):
             'id': race.id,
             'name': race.name,
             'location': race.location,
-            'race_date': race.race_date.isoformat(),
-            'deadline': race.deadline.isoformat(),
+            'race_date': race.race_date,
+            'deadline': race.deadline,
             'season': race.season,
             'round_number': race.round_number,
             'status': race.status
