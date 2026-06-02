@@ -56,13 +56,15 @@ function HomePage() {
                         <Link to='/profile' className='btn btn-primary'>
                             Profile
                         </Link>
-                        <Link to='/' onClick={() => {
+                        {user && (
+                            <Link to='/' onClick={() => {
                             localStorage.removeItem('user');
                             localStorage.removeItem('token');
                             window.location.reload();
                         }} refresh={true} className='btn btn-primary'>
                             Log out
-                        </Link>
+                        </Link>)
+                        }
                         <Link to='/predict' className='btn btn-primary'>
                             Predict
                         </Link>
