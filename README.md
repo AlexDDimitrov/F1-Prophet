@@ -30,11 +30,11 @@ F1 Prophet allows Formula 1 fans to:
 
 
 ## Coming Soon
-- Race calendar page
-- Email notifications
 
 
 ## More features i want to add if i have time.
+- Email notifications
+- Race calendar page
 - AI analyzer
 - Mobile app
 - Social Features (Private leagues with your friends)
