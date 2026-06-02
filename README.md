@@ -27,14 +27,12 @@ F1 Prophet allows Formula 1 fans to:
 - **User Profile Page** – View personal profile and stats, edit profile details, and manage favorite driver and favorite team selections in the Drivers and Teams pages
 
 ## In The Works:
-
+- Race calendar page
 
 ## Coming Soon
-
+- Email notifications
 
 ## More features i want to add if i have time.
-- Email notifications
-- Race calendar page
 - AI analyzer
 - Mobile app
 - Social Features (Private leagues with your friends)
