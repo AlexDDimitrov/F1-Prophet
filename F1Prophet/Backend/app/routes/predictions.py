@@ -6,7 +6,7 @@ from ..middleware.auth_guard import token_required
 
 bp = Blueprint('predictions', __name__, url_prefix='/api/predictions')
 
-@bp.route('/', methods=['POST'])
+@bp.route('', methods=['POST'])
 @token_required
 def submit_prediction():
     data = request.get_json(silent=True)
