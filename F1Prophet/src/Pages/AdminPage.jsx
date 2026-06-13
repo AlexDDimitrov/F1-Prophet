@@ -14,6 +14,70 @@ function AdminPage() {
     const [fastestLap, setFastestLap] = useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const [displayDrivers, setDisplayDrivers] = useState([]);
+
+    const fetchRaceResults = async (raceId) => {
+        try {
+            const token = localStorage.getItem('token');
+
+            const response = await fetch(
+                `http://localhost:5000/api/admin/race-results/${raceId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch race results');
+            }
+
+            const data = await response.json();
+
+            const mappedResults = {};
+
+            drivers.forEach(driver => {
+                mappedResults[driver.driver_id] = {
+                    position: null,
+                    is_dnf: false
+                };
+            });
+
+            data.results.forEach(result => {
+                mappedResults[result.driver_id] = {
+                    position: result.position,
+                    is_dnf: result.is_dnf
+                };
+            });
+
+            setResults(mappedResults);
+            const sortedDrivers = [...drivers].sort((a, b) => {
+                const resultA = mappedResults[a.driver_id];
+                const resultB = mappedResults[b.driver_id];
+
+                if (resultA?.is_dnf && !resultB?.is_dnf) return 1;
+                if (!resultA?.is_dnf && resultB?.is_dnf) return -1;
+
+                if (resultA?.position && resultB?.position) {
+                    return resultA.position - resultB.position;
+                }
+
+                if (resultA?.position) return -1;
+                if (resultB?.position) return 1;
+
+                return 0;
+            });
+
+            setDisplayDrivers(sortedDrivers);
+
+            if (data.fastest_lap) {
+                setFastestLap(data.fastest_lap);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     useEffect(() => {
         const checkAdmin = async () => {
@@ -50,7 +114,7 @@ function AdminPage() {
                 if (racesRes.ok) {
                     const racesData = await racesRes.json();
                     setRaces(racesData);
-                    
+
                     if (racesData.length > 0) {
                         setSelectedRaceId(racesData[0].id.toString());
                         setRace(racesData[0]);
@@ -60,8 +124,10 @@ function AdminPage() {
                 const driversRes = await fetch('http://localhost:5000/api/drivers');
                 if (driversRes.ok) {
                     const driversData = await driversRes.json();
+
                     setDrivers(driversData);
-                    
+                    setDisplayDrivers(driversData);
+
                     const initialResults = {};
                     driversData.forEach(driver => {
                         initialResults[driver.driver_id] = {
@@ -69,6 +135,7 @@ function AdminPage() {
                             is_dnf: false
                         };
                     });
+
                     setResults(initialResults);
                 }
             } catch (err) {
@@ -80,23 +147,18 @@ function AdminPage() {
         fetchData();
     }, [navigate]);
 
-    const handleRaceChange = (e) => {
+    const handleRaceChange = async (e) => {
         const raceId = e.target.value;
+
         setSelectedRaceId(raceId);
-        
-        const selectedRace = races.find(r => r.status === 'upcoming' && r.id === Number(raceId));
+
+        const selectedRace = races.find(
+            r => r.id === Number(raceId)
+        );
+
         setRace(selectedRace);
-        
-        const resetResults = {};
-        drivers.forEach(driver => {
-            resetResults[driver.driver_id] = {
-                position: null,
-                is_dnf: false
-            };
-        });
-        setResults(resetResults);
-        setFastestLap('');
-        setMessage('');
+
+        await fetchRaceResults(raceId);
     };
 
     const handlePositionChange = (driverId, position) => {
@@ -227,7 +289,7 @@ function AdminPage() {
                         <h3>Race Results</h3>
                         <p className='admin-instruction'>Enter finishing positions or mark as DNF</p>
                         <div className='admin-results-grid'>
-                            {drivers.map((driver) => (
+                            {displayDrivers.map((driver) => (
                                 <div key={driver.driver_id} className='admin-result-item'>
                                     <div className='admin-driver-info'>
                                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -277,7 +339,7 @@ function AdminPage() {
                             required
                         >
                             <option value=''>Select driver...</option>
-                            {drivers.map((driver) => (
+                            {displayDrivers.map((driver) => (
                                 <option key={driver.driver_id} value={driver.driver_id}>
                                     {driver.code} - {driver.full_name}
                                 </option>
