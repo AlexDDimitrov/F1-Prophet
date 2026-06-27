@@ -82,6 +82,9 @@ function HomePage() {
                         <Link to='/teams' className='btn btn-primary'>
                             View Teams
                         </Link>
+                        <Link to='/races/calendar' className='btn btn-primary'>
+                            View Calendar
+                        </Link>
                     </div>
                 </div>
 

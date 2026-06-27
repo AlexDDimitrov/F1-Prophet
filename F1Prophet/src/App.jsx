@@ -12,6 +12,7 @@ import AdminPage from './Pages/AdminPage';
 import LeaderboardPage from './Pages/LeaderboardPage';
 import ProfilePage from './Pages/ProfilePage';
 import EditProfilePage from './Pages/EditProfilePage';
+import RaceCalendarPage from './Pages/RaceCalendarPage';
 import './App.css';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/leaderboards" element={<LeaderboardPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/edit" element={<EditProfilePage />} />
+        <Route path='/races/calendar' element={<RaceCalendarPage/>} />
       </Routes>
     </Router>
   )
