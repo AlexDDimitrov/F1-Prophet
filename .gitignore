@@ -4,4 +4,10 @@ venv/
 .venv/
 env/
 
-/F1-Prophet Java app
+*.jar
+target/
+
+**/__pycache__/
+*.pkl
+*.h5
+*.csv
