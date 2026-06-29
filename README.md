@@ -28,7 +28,7 @@ F1 Prophet allows Formula 1 fans to:
 
 ## In The Works:
 - Desktop app (JAVA) - problem with displaying videos (ex. loading screens, f1 promo video ...).
-###### Note: gonna add more loading screens in the feature.
+###### **Note:** gonna add more loading screens in the feature.
 
 ## Coming Soon
 - Email notifications
@@ -50,4 +50,4 @@ F1 Prophet allows Formula 1 fans to:
 
 This project is for **educational purposes only**.
 
-**Note:** This is a student project and not affiliated with Formula 1, Liberty Media, or any F1 teams.
+###### **Note:** This is a student project and not affiliated with Formula 1, Liberty Media, or any F1 teams.
