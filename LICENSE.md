@@ -1,3 +1,5 @@
+Copyright (c) 2026 AlexDDimitrov
+
 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License
 
 By exercising any rights to the Work provided here, You accept and agree to be bound by the terms of this Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License ("Public License"). To the extent this Public License may be interpreted as a contract, You are granted the rights contained herein in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Work available under these terms and conditions.
@@ -16,12 +18,14 @@ TERMS AND CONDITIONS:
    
    Under the following terms:
    - Attribution: Credit AlexDDimitrov
+   - Link to original repo: https://github.com/AlexDDimitrov/F1-Prophet
+   - Link to GitHub profile: https://github.com/AlexDDimitrov
    - NonCommercial: Not for commercial advantage or usage
    - ShareAlike: Distribute derivatives under same license
    
 3. Restrictions
    - You cannot use this for commercial purposes
    - You must attribute the original work
-   - Any derivative must use this same license
+   - Any derivative must use this same license and be open source
 
 Full license: https://creativecommons.org/licenses/by-nc-sa/4.0/
