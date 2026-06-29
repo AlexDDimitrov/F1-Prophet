@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from ..database import get_db
-from ..models import User, Race, Prediction, RaceResult
+from ..models import User, Race, Prediction, RaceResult, PredictedPosition
 from ..services.points_service import PointsCalculationService
 from ..middleware.auth_guard import admin_required
 
@@ -134,3 +134,22 @@ def get_race_results(race_id):
         
     except Exception as e:
         return jsonify({'error': 'Server error', 'detail': str(e)}), 500
+
+@bp.route('/users/<int:user_id>', methods=['DELETE'])
+@admin_required
+def delete_user(user_id):
+    db = get_db()
+
+    user = db.query(User).get(user_id)
+    if not user:
+        return {'error': 'User not found'}, 404
+    
+    predictions = db.query(Prediction).filter_by(user_id=user_id).all()
+    for pred in predictions:
+        db.query(PredictedPosition).filter_by(prediction_id=pred.id).delete()
+    db.query(Prediction).filter_by(user_id=user_id).delete()
+    
+    db.delete(user)
+    db.commit()
+    
+    return {'message': f'User {user_id} deleted successfully'}, 200
