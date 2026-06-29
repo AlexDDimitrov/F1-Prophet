@@ -13,8 +13,8 @@ F1 Prophet allows Formula 1 fans to:
 
 ## Current Features
 
-- **Driver Grid** - View all 2026 F1 drivers with their teams
-- **Team Grid** - View all 2026 F1 teams
+- **Driver Grid** - View all F1 drivers with their teams
+- **Team Grid** - View all F1 teams
 - **Driver Profiles** - Detailed statistics for each driver including career wins, podiums, and championships
 - **Live F1 Data** - Real-time integration with official F1 data sources
 - **User registration and login** - Create and login user profile
@@ -24,19 +24,17 @@ F1 Prophet allows Formula 1 fans to:
 - **Points and scoring system** - Automated points calculation based on prediction accuracy. 
 - **Monthly, seasonal and all-time leaderboards** - View all placements based on prediction accuracy and who the top players are.
 - **User Profile Page** – View personal profile and stats, edit profile details, and manage favorite driver and favorite team selections in the Drivers and Teams pages
+- **Calendar Page** - View all tracks for a certain year with three groups - upcoming, active and completed
 
 ## In The Works:
-- Race calendar page
+- Desktop app (JAVA) - only left - problem with displaying videos (ex. loading screens, f1 promo video ...).
 
 ## Coming Soon
 - Email notifications
-
-## More features i want to add if i have time.
 - AI analyzer
 - Mobile app
 - Social Features (Private leagues with your friends)
 - Desktop admin panel (JAVA)
-- Desktop app (JAVA)
 
 ## Data Sources
 
