@@ -27,7 +27,7 @@ F1 Prophet allows Formula 1 fans to:
 - **Calendar Page** - View all tracks for a certain year with three groups - upcoming, active and completed
 
 ## In The Works:
-- Desktop app (JAVA) - only left - problem with displaying videos (ex. loading screens, f1 promo video ...).
+- Desktop app (JAVA) - problem with displaying videos (ex. loading screens, f1 promo video ...).
 
 ## Coming Soon
 - Email notifications
