@@ -6,10 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="f1-prophet-desktop" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="f1-prophet-desktop" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

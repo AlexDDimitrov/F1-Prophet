@@ -24,14 +24,14 @@ const TRACK_DATA = {
     suzuka: (
         <div className='video-wrapper-loading'>
             <video className='loader-vid' autoPlay muted loop playsInline>
-                <source src="/videos/F1ProphetLoaderShort.mov" type="video/mp4" />
+                <source src="/videos/F1ProphetLoaderShort.webm" type="video/webm" />
             </video>
         </div>
     ),
     albert_park: (
         <div className='video-wrapper-loading'>
             <video className='loader-vid' autoPlay muted loop playsInline>
-                <source src="/videos/F1ProphetLoaderShort2.mov" type="video/mp4" />
+                <source src="/videos/F1ProphetLoaderShort2.webm" type="video/webm" />
             </video>
         </div>
     ),
