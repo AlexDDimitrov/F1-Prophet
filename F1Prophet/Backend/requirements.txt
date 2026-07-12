@@ -7,3 +7,4 @@ bcrypt
 PyJWT
 sqlalchemy
 pymysql
+gunicorn==23.0.0
