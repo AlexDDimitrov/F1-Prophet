@@ -14,7 +14,7 @@ _session_factory = None
 def init_db(app):
     global _engine, _session_factory
     
-    database_url = "mysql+pymysql://root:LTFASdtcSNDozMVuiYpQoYnBPghwGLhq@mysql.railway.internal:3306/railway"
+    database_url = "mysql+pymysql://root:LTFASdtcSNdozMVuiYpQoYnBPghwGLhq@mysql.railway.internal:3306/railway"
     app.config['DATABASE_URL'] = database_url
     
     _engine = create_engine(
