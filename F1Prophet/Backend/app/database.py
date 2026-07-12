@@ -11,17 +11,19 @@ def init_db(app):
     global _engine, _session_factory
     
     cfg = app.config
+    
     connection_string = (
         f"mysql+pymysql://{cfg['MYSQL_USER']}:{cfg['MYSQL_PASSWORD']}"
         f"@{cfg['MYSQL_HOST']}:{cfg['MYSQL_PORT']}/{cfg['MYSQL_DATABASE']}"
+        f"?client_flag=2"
     )
     
     _engine = create_engine(
         connection_string,
         connect_args={
-            "ssl": {"ssl_mode": "DISABLED"},
-            "read_timeout": 30,
-            "write_timeout": 30
+            "connect_timeout": 60,
+            "read_timeout": 60,
+            "write_timeout": 60
         },
         pool_recycle=60,
         pool_pre_ping=True,
