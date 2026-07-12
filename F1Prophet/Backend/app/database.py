@@ -18,10 +18,15 @@ def init_db(app):
     
     _engine = create_engine(
         connection_string,
+        connect_args={
+            "ssl": {"ssl_mode": "DISABLED"},
+            "read_timeout": 30,
+            "write_timeout": 30
+        },
         pool_recycle=60,
         pool_pre_ping=True,
-        pool_size=10,
-        max_overflow=20
+        pool_size=5,
+        max_overflow=10
     )
     
     _session_factory = sessionmaker(bind=_engine)
