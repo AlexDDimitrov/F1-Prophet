@@ -9,7 +9,6 @@ _engine = None
 _session_factory = None
 
 def init_db(app):
-    """Initialize database connection - DO NOT create tables here"""
     global _engine, _session_factory
     
     database_url = app.config.get('DATABASE_URL')
