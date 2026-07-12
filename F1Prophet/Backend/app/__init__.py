@@ -16,9 +16,18 @@ def create_app():
     app.json.ensure_ascii = False
     
     CORS(app, resources={
-        r"/api/*": {
-            "origins": ["http://localhost:5173", f"http://localhost:{app.config['PORT']}", "http://localhost:3000/*", "https://f1-prophet.3labz.com"]
+        CORS(app, resources={
+        r"/*": {
+            "origins": [
+                "http://localhost:5173", 
+                f"http://localhost:{app.config.get('PORT', 5000)}", 
+                "http://localhost:3000", 
+                "https://f1-prophet.3labz.com"
+            ],
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"]
         }
+    })
     })
     
     limiter.init_app(app)
