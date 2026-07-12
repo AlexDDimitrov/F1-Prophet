@@ -14,28 +14,21 @@ _session_factory = None
 def init_db(app):
     global _engine, _session_factory
     
-    database_url = app.config.get('DATABASE_URL')
-    
-    if not database_url:
-        raise ValueError("DATABASE_URL not configured")
+    database_url = "mysql+pymysql://root:LTFASdtcSNDozMVuiYpQoYnBPghwGLhq@mysql.railway.internal:3306/railway"
+    app.config['DATABASE_URL'] = database_url
     
     _engine = create_engine(
         database_url,
         poolclass=QueuePool,
-        
         pool_size=1,
         max_overflow=2,
-        
         pool_recycle=120,
         pool_pre_ping=True,
-        
         connect_args={
             "connect_timeout": 5,
             "charset": "utf8mb4",
             "autocommit": False,
         },
-        
-        # Logging
         echo=False,
         future=True,
     )
@@ -60,9 +53,16 @@ def init_db(app):
         autocommit=False,
     )
     
-    app.teardown_appcontext(close_db)
+    try:
+        from app.models import Base
+        Base.metadata.create_all(bind=_engine)
+        logger.info("Database schemas verified and initialized safely.")
+    except Exception as err:
+        logger.error(f"Schema generation hook skipped or failed: {err}")
     
+    app.teardown_appcontext(close_db)
     logger.info("Database initialized (aggressive pooling for Railway)")
+
 
 def get_db():
     if 'db_session' not in g:
