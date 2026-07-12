@@ -13,9 +13,9 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon></icon>
+  <icon>D:\User\Downloads\logo.ico</icon>
   <jre>
-    <path>%JAVA_HOME%;%PATH%</path>
+    <path>C:\Program Files\Java\</path>
     <requiresJdk>true</requiresJdk>
     <requires64Bit>true</requires64Bit>
     <minVersion>25</minVersion>

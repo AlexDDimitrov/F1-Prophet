@@ -28,7 +28,7 @@ public class LoadHtmlFromReact extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         CefClient client = cefApp.createClient();
-        browser = client.createBrowser("http://localhost:5173", false, false);
+        browser = client.createBrowser("http://f1-prophet.3labz.com", false, false);
 
         add(browser.getUIComponent(), BorderLayout.CENTER);
         setVisible(true);
