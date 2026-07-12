@@ -11,12 +11,3 @@ class Config:
     MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
     MYSQL_DATABASE = os.getenv('MYSQL_DATABASE')
     PORT = int(os.getenv('PORT', 5000))
-
-    
-
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        "pool_recycle": 60,
-        "pool_pre_ping": True,
-        "pool_size": 5,
-        "max_overflow": 10
-    }
