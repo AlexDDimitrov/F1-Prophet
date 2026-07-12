@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Team from './team';
 import F1Loader from '../Components/F1Loader';
 import './addTeams.css';
+import { API_START } from '../services/api_start';
 
 function CollectTeams({ profile }) {
     const [teams, setTeams] = useState([]);
@@ -11,7 +12,7 @@ function CollectTeams({ profile }) {
     useEffect(() => {
         const fetchTeams = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/teams');
+                const response = await fetch(`${API_START}/api/teams`);
                 if (!response.ok) throw new Error('Failed to fetch teams');
 
                 const data = await response.json();

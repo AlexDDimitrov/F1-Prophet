@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './AdminPage.css'
 import '../Components/F1Loader'
 import F1Loader from '../Components/F1Loader';
+import { API_START } from '../services/api_start';
 
 function AdminPage() {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ function AdminPage() {
             const token = localStorage.getItem('token');
 
             const response = await fetch(
-                `http://localhost:5000/api/admin/race-results/${raceId}`,
+                `${API_START}/api/admin/race-results/${raceId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -88,7 +89,7 @@ function AdminPage() {
             }
 
             try {
-                const response = await fetch('http://localhost:5000/api/auth/me', {
+                const response = await fetch(`${API_START}/api/auth/me`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -110,7 +111,7 @@ function AdminPage() {
 
         const fetchData = async () => {
             try {
-                const racesRes = await fetch('http://localhost:5000/api/races/all');
+                const racesRes = await fetch(`${API_START}/api/races/all`);
                 if (racesRes.ok) {
                     const racesData = await racesRes.json();
                     setRaces(racesData);
@@ -121,7 +122,7 @@ function AdminPage() {
                     }
                 }
 
-                const driversRes = await fetch('http://localhost:5000/api/drivers');
+                const driversRes = await fetch(`${API_START}/api/drivers`);
                 if (driversRes.ok) {
                     const driversData = await driversRes.json();
 
@@ -206,7 +207,7 @@ function AdminPage() {
             }));
 
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/calculate-points/${selectedRaceId}`, {
+            const response = await fetch(`${API_START}/api/admin/calculate-points/${selectedRaceId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

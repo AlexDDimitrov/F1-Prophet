@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './driver.css';
 import F1Loader from '../Components/F1Loader';
+import { API_START } from '../services/api_start';
 
 function DisplayDriver({
     driver_id,
@@ -68,7 +69,7 @@ function DisplayDriver({
         setIsFavorite(prev => !prev);
 
         try {
-            await fetch(`http://localhost:5000/api/users/profile/favorite-driver/${driver_id}`, {
+            await fetch(`${API_START}/api/users/profile/favorite-driver/${driver_id}`, {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}` }
             });

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './HomePage.css'
+import { API_START } from '../services/api_start';
 
 function HomePage() {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ function HomePage() {
             if (!token) return;
 
             try {
-                const response = await fetch('http://localhost:5000/api/auth/me', {
+                const response = await fetch(`${API_START}/api/auth/me`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

@@ -17,6 +17,7 @@ import {
 } from '@dnd-kit/sortable';
 import SortableDriverItem from '../Components/SortableDriverItem';
 import './PredictPage.css';
+import { API_START } from '../services/api_start';
 
 function PredictPage() {
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ function PredictPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const driversRes = await fetch('http://localhost:5000/api/drivers');
+                const driversRes = await fetch(`${API_START}/api/drivers`);
                 if (!driversRes.ok) throw new Error('Failed to fetch drivers');
                 const driversData = await driversRes.json();
                 
@@ -47,7 +48,7 @@ function PredictPage() {
                 setFinishingDrivers(sortedDrivers);
                 setFastestLap(sortedDrivers[0]?.driver_id || '');
                 
-                const raceRes = await fetch('http://localhost:5000/api/races/current');
+                const raceRes = await fetch(`${API_START}/api/races/current`);
                 if (raceRes.ok) {
                     const raceData = await raceRes.json();
                     setRace(raceData);
@@ -150,7 +151,7 @@ function PredictPage() {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/predictions', {
+            const response = await fetch(`${API_START}/api/predictions`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

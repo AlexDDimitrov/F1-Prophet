@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import F1Loader from '../Components/F1Loader';
 import './RaceCalendarPage.css';
+import { API_START } from '../services/api_start';
 
 function RaceCalendarPage() {
     const navigate = useNavigate();
@@ -44,7 +45,7 @@ function RaceCalendarPage() {
     const fetchRaces = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:5000/api/races/race_calendar/${currentYear}`);
+            const response = await fetch(`${API_START}/api/races/race_calendar/${currentYear}`);
 
             if (!response.ok) {
                 throw new Error('Failed to fetch races');

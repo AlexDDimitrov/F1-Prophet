@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import DisplayDriver from './driver'
 import './addDrivers.css'
 import F1Loader from '../Components/F1Loader';
-import { driversAPI } from '../services/api'
+import { driversAPI } from '../services/api';
 
 function CollectDrivers({profile}) {
     const [drivers, setDrivers] = useState([]);

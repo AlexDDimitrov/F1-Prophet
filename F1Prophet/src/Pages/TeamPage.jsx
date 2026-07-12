@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CollectTeams from '../Components/addTeams';
 import './TeamPage.css';
 import F1Loader from '../Components/F1Loader';
+import { API_START } from '../services/api_start';
 
 function TeamPage() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ function TeamPage() {
             }
 
             try {
-                const res = await fetch('http://localhost:5000/api/users/profile', {
+                const res = await fetch(`${API_START}/api/users/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 

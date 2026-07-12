@@ -4,6 +4,7 @@ import CollectDrivers from '../Components/addDrivers';
 import './DriverPage.css';
 import './HomePage.css';
 import F1Loader from '../Components/F1Loader';
+import { API_START } from '../services/api_start';
 
 function DriverPage() {
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ function DriverPage() {
             }
 
             try {
-                const res = await fetch('http://localhost:5000/api/users/profile', {
+                const res = await fetch(`${API_START}/api/users/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import F1Loader from '../Components/F1Loader';
 import './LeaderboardPage.css';
+import { API_START } from '../services/api_start';
 
 function LeaderboardPage() {
     const navigate = useNavigate();
@@ -27,11 +28,11 @@ function LeaderboardPage() {
 
         let url = '';
         if (activeTab === 'monthly') {
-            url = `http://localhost:5000/api/leaderboards/monthly/${currentYear}/${currentMonth}`;
+            url = `${API_START}/api/leaderboards/monthly/${currentYear}/${currentMonth}`;
         } else if (activeTab === 'seasonal') {
-            url = `http://localhost:5000/api/leaderboards/seasonal/${currentYear}`;
+            url = `${API_START}/api/leaderboards/seasonal/${currentYear}`;
         } else {
-            url = 'http://localhost:5000/api/leaderboards/all-time';
+            url = `${API_START}/api/leaderboards/all-time`;
         }
 
         try {

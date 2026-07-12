@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import F1Loader from '../Components/F1Loader';
 import './MyPredictionPage.css'
+import { API_START } from '../services/api_start';
 
 function MyPredictionsPage() {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ function MyPredictionsPage() {
             }
 
             try {
-                const driversRes = await fetch('http://localhost:5000/api/drivers');
+                const driversRes = await fetch(`${API_START}/api/drivers`);
                 if (driversRes.ok) {
                     const driversData = await driversRes.json();
                     const driversMap = {};
@@ -30,7 +31,7 @@ function MyPredictionsPage() {
                     setDrivers(driversMap);
                 }
 
-                const predictionsRes = await fetch('http://localhost:5000/api/predictions/my', {
+                const predictionsRes = await fetch(`${API_START}/api/predictions/my`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

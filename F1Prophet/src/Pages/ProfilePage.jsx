@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ProfilePage.css';
+import { API_START } from '../services/api_start';
 
 function ProfilePage() {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ function ProfilePage() {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/users/profile', {
+            const response = await fetch(`${API_START}/api/users/profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -45,7 +46,7 @@ function ProfilePage() {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch('http://localhost:5000/api/users/stats', {
+            const response = await fetch(`${API_START}/api/users/stats`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

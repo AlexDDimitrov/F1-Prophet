@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useParams, useNavigate} from 'react-router-dom'
 import F1Loader from '../Components/F1Loader';
 import './DriverDetailPage.css'
+import { API_START } from '../services/api_start';
 
 function DriverDetailPage() {
     const {driver_id} = useParams();
@@ -15,7 +16,7 @@ function DriverDetailPage() {
         try {
             //console.log('Fetching driver with ID:', driver_id);
             
-            const response = await fetch(`http://localhost:5000/api/drivers/${driver_id}`);
+            const response = await fetch(`${API_START}/api/drivers/${driver_id}`);
             
             if (!response.ok) {
                 throw new Error('Driver not found');

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './team.css';
+import { API_START } from '../services/api_start';
 
 function Team({ team, favoriteTeam }) {
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ function Team({ team, favoriteTeam }) {
         setIsFavorite(prev => !prev);
 
         try {
-            await fetch(`http://localhost:5000/api/users/profile/favorite-team/${team.team_id}`, {
+            await fetch(`${API_START}/api/users/profile/favorite-team/${team.team_id}`, {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}` }
             });
