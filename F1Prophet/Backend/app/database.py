@@ -18,20 +18,25 @@ def init_db(app):
     app.config['DATABASE_URL'] = database_url
     
     _engine = create_engine(
-        database_url,
-        poolclass=QueuePool,
-        pool_size=1,
-        max_overflow=2,
-        pool_recycle=120,
-        pool_pre_ping=True,
-        connect_args={
-            "connect_timeout": 5,
-            "charset": "utf8mb4",
-            "autocommit": False,
-        },
-        echo=False,
-        future=True,
-    )
+            database_url,
+            poolclass=QueuePool,
+            pool_size=1,
+            max_overflow=2,
+            pool_recycle=120,
+            pool_pre_ping=True,
+            
+            connect_args={
+                "connect_timeout": 5,
+                "charset": "utf8mb4",
+                "autocommit": False,
+                "auth_plugin_map": {
+                    "caching_sha2_password": "pymysql.auth.MysqlOldPasswordAuth"
+                }
+            },
+            echo=False,
+            future=True,
+        )
+
     
     @event.listens_for(_engine, "connect")
     def receive_connect(dbapi_connection, connection_record):
