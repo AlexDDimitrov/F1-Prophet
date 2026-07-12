@@ -102,7 +102,7 @@ Backend will start at `http://localhost:5000`
 ### **Build & Run**
 
 ```bash
-cd "F1-Prophet Java app"
+cd "F1-Prophet Java app/main/java"
 
 # Compile
 javac -d out src/*.java
