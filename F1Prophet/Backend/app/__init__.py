@@ -32,14 +32,14 @@ def create_app():
     
     limiter.init_app(app)
 
-    SQLALCHEMY_ENGINE_OPTIONS = {
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
         "pool_recycle": 60,
         "pool_pre_ping": True,
         "pool_size": 5,
         "max_overflow": 10
     }
 
-    init_db(app, engine_options=SQLALCHEMY_ENGINE_OPTIONS)
+    init_db(app)
 
     from . import models
 
