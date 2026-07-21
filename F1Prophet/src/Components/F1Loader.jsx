@@ -19,7 +19,7 @@ const TRACK_DATA = {
   spa: (
     <div className="video-wrapper-loading">
       <video className="loader-vid" autoPlay muted loop playsInline>
-        <source src="/videos/F1ProphetLoaderShort3.webm" type="video/webm" />
+        <source src="/videos/F1LoaderProphetShort3.webm" type="video/webm" />
       </video>
     </div>
   ),
