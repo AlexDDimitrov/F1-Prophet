@@ -42,6 +42,62 @@ const TRACK_DATA = {
       </video>
     </div>
     ),
+    hungary: (
+    <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort4.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    china: (
+    <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort5.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    barcelona: (
+    <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort6.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    canada: (
+    <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort7.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    miami: (
+    <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort8.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    monaco: (
+    <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort9.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    silverstone: (
+    <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort10.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    spielberg: (
+    <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort11.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
 };
 
 function F1Loader({message = 'Loading...'}) {
