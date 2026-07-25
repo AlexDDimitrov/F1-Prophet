@@ -31,6 +31,7 @@ BLOCKED_USERNAMES = [
     
     'porn', 'xxx', 'sex', 'drug', 'cocaine', 'heroin',
     'kill', 'death', 'suicide', 'rape', 'hitler', 'nazi',
+    'fuck',
     
     'official', 'verified', 'real', 'true', 'actual',
     'the_', 'official_', 'real_', 'true_',
