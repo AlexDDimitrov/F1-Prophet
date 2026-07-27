@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-F1 Prophet - Railway MySQL Connection Diagnostics
-Run this to find the actual problem
-"""
-
 import os
 import sys
 from dotenv import load_dotenv
@@ -20,7 +14,7 @@ print()
 database_url = os.getenv('DATABASE_URL')
 print("1. Checking DATABASE_URL...")
 if not database_url:
-    print("   ❌ DATABASE_URL not set!")
+    print("   DATABASE_URL not set!")
     print("   Go to Railway → Project → Variables")
     print("   MySQL plugin should auto-set DATABASE_URL")
     sys.exit(1)
@@ -32,20 +26,20 @@ else:
         user = user_part.split(':')[0]
         host_part = parts[1]
         masked = f"mysql+pymysql://{user}:***@{host_part}"
-        print(f"   ✅ Found: {masked}")
+        print(f"   Found: {masked}")
     else:
-        print(f"   ✅ Found: {database_url[:50]}...")
+        print(f"   Found: {database_url[:50]}...")
 
 print()
 
 # 2. Check if it's valid format
 print("2. Validating DATABASE_URL format...")
 if not database_url.startswith('mysql+pymysql://'):
-    print(f"   ❌ Wrong format! Should start with 'mysql+pymysql://'")
+    print(f"   Wrong format! Should start with 'mysql+pymysql://'")
     print(f"   Got: {database_url[:40]}...")
     sys.exit(1)
 else:
-    print("   ✅ Format is correct")
+    print("   Format is correct")
 
 print()
 
@@ -59,7 +53,7 @@ try:
     print(f"   User: {parsed.username}")
     print(f"   Database: {parsed.path.lstrip('/')}")
 except Exception as e:
-    print(f"   ❌ Could not parse: {e}")
+    print(f"   Could not parse: {e}")
     sys.exit(1)
 
 print()
@@ -68,9 +62,9 @@ print()
 print("4. Checking SQLAlchemy...")
 try:
     from sqlalchemy import create_engine
-    print("   ✅ SQLAlchemy imported")
+    print("   SQLAlchemy imported")
 except Exception as e:
-    print(f"   ❌ Failed: {e}")
+    print(f"   Failed: {e}")
     sys.exit(1)
 
 print()
@@ -85,9 +79,9 @@ try:
         pool_pre_ping=True,
         connect_args={"connect_timeout": 5, "charset": "utf8mb4"},
     )
-    print("   ✅ Engine created")
+    print("   Engine created")
 except Exception as e:
-    print(f"   ❌ Failed: {e}")
+    print(f"   Failed: {e}")
     sys.exit(1)
 
 print()
@@ -97,10 +91,10 @@ print("6. Attempting to connect to MySQL...")
 try:
     with engine.connect() as conn:
         result = conn.execute("SELECT 1")
-        print("   ✅ Connected and query successful!")
-        print("   ✅ MySQL is responding")
+        print("   Connected and query successful!")
+        print("   MySQL is responding")
 except Exception as e:
-    print(f"   ❌ Connection failed: {e}")
+    print(f"   Connection failed: {e}")
     print()
     print("   Possible causes:")
     print("   - MySQL plugin not added to Railway project")
@@ -126,7 +120,7 @@ try:
         result = conn.execute("SHOW TABLES")
         tables = [row[0] for row in result]
         if not tables:
-            print("   ⚠️  No tables found!")
+            print("   No tables found!")
             print("   Did you import your database dump?")
             print()
             print("   Fix:")
@@ -134,13 +128,13 @@ try:
             print("   2. Import via Railway MySQL plugin")
             print("   3. Or run: mysql -h [host] -u [user] -p [db] < dump.sql")
         else:
-            print(f"   ✅ Found {len(tables)} tables:")
+            print(f"   Found {len(tables)} tables:")
             for table in tables[:10]:  # Show first 10
                 print(f"      - {table}")
 except Exception as e:
-    print(f"   ⚠️  Could not check tables: {e}")
+    print(f"   Could not check tables: {e}")
 
 print()
 print("=" * 60)
-print("✅ All diagnostics completed!")
+print("All diagnostics completed!")
 print("=" * 60)
