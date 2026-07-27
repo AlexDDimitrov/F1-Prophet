@@ -25,7 +25,7 @@ function RaceCalendarPage() {
         'British Grand Prix': 'silverstone.png',
         'Belgian Grand Prix': 'spa.png',
         'Hungarian Grand Prix': 'budapest.png',
-        'Dutch Grand Prix': 'zandvoort.png',
+        'Dutch Grand Prix': 'dutch.png',
         'Italian Grand Prix': 'monza.png',
         'Spanish Grand Prix (Madrid)': 'madrid.png',
         'Azerbaijan Grand Prix': 'baku.png',
