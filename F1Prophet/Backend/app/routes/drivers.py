@@ -5,11 +5,18 @@ bp = Blueprint('drivers', __name__, url_prefix='/api')
 f1_service = F1DriverData()
 
 def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
-    if driver_to_replace_id == replacement_driver_id or driver_to_replace_id not in driver_list or replacement_driver_id in driver_list:
+    existing_ids = {driver['driver_id'] for driver in driver_list}
+    
+    if driver_to_replace_id == replacement_driver_id:
+        return driver_list
+    if driver_to_replace_id not in existing_ids:
+        return driver_list
+    if replacement_driver_id in existing_ids:
         return driver_list
 
     try:
         response = f1_service.get_driver_detail(replacement_driver_id, 2025)
+        
         for driver in driver_list:
             if driver['driver_id'] == driver_to_replace_id:
                 driver.update({
@@ -67,7 +74,7 @@ def get_drivers():
             })
 
             #only for the dutch gp
-            result = substitute_driver('hadjar', 'tsunoda', result)
+            result = substitute_driver("hadjar", "tsunoda", result)
 
         return jsonify(result), 200
     
