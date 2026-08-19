@@ -14,31 +14,48 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
         return driver_list
     if replacement_driver_id in existing_ids:
         return driver_list
-
+        
     try:
-        response = requests.get(f"{f1_service.JOLPICA}/drivers/{replacement_driver_id}.json", timeout=10)
+        res = requests.get(f"{f1_service.JOLPICA}/drivers/{replacement_driver_id}.json", timeout=10)
+        res.raise_for_status() 
+        data = res.json()
+        
+        drivers_list = data.get('MRData', {}).get('DriverTable', {}).get('Drivers', [])
+        if not drivers_list:
+            print(f"Driver {replacement_driver_id} not found in API response.")
+            return driver_list
+            
+        driver_data = drivers_list[0]
         
         for driver in driver_list:
+
+            team = 'missing'
+            if driver_to_replace_id == 'tsunoda':
+                team = 'Red Bull Racing'
+
             if driver['driver_id'] == driver_to_replace_id:
                 driver.update({
-                    'driver_id': response['driver_id'],
-                    'code': response['code'],
-                    'number': response['number'],
-                    'full_name': response['full_name'],
-                    'given_name': response['given_name'],
-                    'family_name': response['family_name'],
-                    'nationality': response['nationality'],
-                    'date_of_birth': response.get('date_of_birth', 'Unknown'),
-                    'team': response.get('team', 'Unknown'),
-                    'position': response.get('position'),
-                    'points': response.get('points', 0),
-                    'wins': response.get('wins', 0)
+                    'driver_id': driver_data.get('driverId'),
+                    'code': driver_data.get('code'),
+                    'number': driver_data.get('permanentNumber'),
+                    'full_name': f"{driver_data.get('givenName', '')} {driver_data.get('familyName', '')}".strip(),
+                    'given_name': driver_data.get('givenName'),
+                    'family_name': driver_data.get('familyName'),
+                    'nationality': driver_data.get('nationality'),
+                    'date_of_birth': driver_data.get('dateOfBirth', 'Unknown'),
+                    'team': team,
+                    'position': None,
+                    'points': 0,
+                    'wins': 0
                 })
                 break
+                
         return driver_list
+        
     except Exception as e:
         print(f"Error fetching replacement driver details: {e}")
         return driver_list
+
 
 
 @bp.route('/drivers', methods=['GET'])
