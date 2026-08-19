@@ -30,7 +30,7 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
         for driver in driver_list:
 
             team = 'missing'
-            if driver_to_replace_id == 'tsunoda':
+            if replacement_driver_id == 'tsunoda':
                 team = 'Red Bull Racing'
 
             if driver['driver_id'] == driver_to_replace_id:
