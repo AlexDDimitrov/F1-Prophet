@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 from app.services.f1_data import F1DriverData
+import requests
 
 bp = Blueprint('drivers', __name__, url_prefix='/api')
 f1_service = F1DriverData()
@@ -15,7 +16,7 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
         return driver_list
 
     try:
-        response = f1_service.get_driver_career_stats(replacement_driver_id, 2025)
+        response = requests.get(f"{f1_service.JOLPICA}/drivers/{replacement_driver_id}.json", timeout=10)
         
         for driver in driver_list:
             if driver['driver_id'] == driver_to_replace_id:
