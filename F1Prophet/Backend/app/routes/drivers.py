@@ -59,7 +59,7 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
 
 
 @bp.route('/drivers-for-gp', methods=['GET'])
-def get_drivers():
+def get_drivers_for_gp():
     try:
         drivers = f1_service.get_all_drivers(season=2026)
         standings = f1_service.get_current_standings(season=2026)
@@ -91,8 +91,8 @@ def get_drivers():
                 'wins': standing.get('wins', 0)
             })
 
-            #only for the dutch gp
-            result = substitute_driver("hadjar", "tsunoda", result)
+        #only for the dutch gp
+        result = substitute_driver("hadjar", "tsunoda", result)
 
         return jsonify(result), 200
     
@@ -144,7 +144,7 @@ def get_drivers():
         return jsonify({'error': str(e)}), 500
 
 @bp.route('/drivers-all-time', methods=['GET'])
-def get_drivers():
+def get_drivers_all_time():
     try:
         drivers = f1_service.get_all_drivers(season=2026)
         standings = f1_service.get_current_standings(season=2026)
