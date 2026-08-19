@@ -36,8 +36,8 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
             if driver['driver_id'] == driver_to_replace_id:
                 driver.update({
                     'driver_id': driver_data.get('driverId'),
-                    'code': f"#{driver_data.get('code')}",
-                    'number': driver_data.get('permanentNumber'),
+                    'code': driver_data.get('code'),
+                    'number': f"#{driver_data.get('permanentNumber')}",
                     'full_name': f"{driver_data.get('givenName', '')} {driver_data.get('familyName', '')}".strip(),
                     'given_name': driver_data.get('givenName'),
                     'family_name': driver_data.get('familyName'),
