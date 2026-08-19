@@ -93,7 +93,10 @@ function DisplayDriver({
         navigate(`/drivers/${driver_id}`);
     };
 
-    const driverImage = `/images/drivers/${code}.png`;
+    const driverImage =
+    code === 'TSU'
+        ? '/images/drivers/TSU_DRIVER.png'
+        : `/images/drivers/${code}.png`;
     const getFlagGradient = (nationality) => {
         const flags = {
             'Dutch': 'linear-gradient(180deg, #AE1C28 0%, #AE1C28 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #21468B 66.66%, #21468B 100%)',

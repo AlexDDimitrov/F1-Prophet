@@ -31,7 +31,7 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
 
             team = 'missing'
             if replacement_driver_id == 'tsunoda':
-                team = 'Red Bull Racing'
+                team = 'Substitute for Red Bull'
 
             if driver['driver_id'] == driver_to_replace_id:
                 driver.update({
@@ -83,7 +83,7 @@ def add_driver(driver_to_add_id, driver_list):
         team = 'missing'
 
         if driver_to_add_id == 'tsunoda':
-            team = 'Red Bull Racing'
+            team = 'Substitute for Red Bull'
 
         driver = {
             'driver_id': driver_data.get('driverId'),

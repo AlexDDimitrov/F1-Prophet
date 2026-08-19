@@ -243,6 +243,11 @@ function AdminPage() {
         );
     }
 
+    const driverImage =
+    driver.code === 'TSU'
+        ? '/images/drivers/TSU_DRIVER.png'
+        : `/images/drivers/${driver.code}.png`;
+
     return (
         <div className='admin-page'>
             <button onClick={() => navigate('/')} className='admin-back-button'>
@@ -296,7 +301,7 @@ function AdminPage() {
                                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                             <img 
                                                 className='driver-image-small' 
-                                                src={`/images/drivers/${driver.code}.png`} 
+                                                src={driverImage} 
                                                 alt={driver.full_name}
                                                 onError={(e) => { e.target.style.display = 'none'; }}
                                             />

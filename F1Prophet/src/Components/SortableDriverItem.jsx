@@ -17,7 +17,10 @@ function SortableDriverItem({ driver, position, onRemove, isDnf }) {
         transition,
     };
 
-    const driverImage = `/images/drivers/${driver.code}.png`;
+    const driverImage =
+    driver.code === 'TSU'
+        ? '/images/drivers/TSU_DRIVER.png'
+        : `/images/drivers/${driver.code}.png`;
 
     return (
         <div
