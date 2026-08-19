@@ -260,6 +260,7 @@ def get_drivers_all_time():
                 'wins': standing.get('wins', 0)
             })
 
+        result = add_driver("tsunoda", result)
 
         return jsonify(result), 200
     
