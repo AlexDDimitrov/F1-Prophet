@@ -15,7 +15,7 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
         return driver_list
 
     try:
-        response = f1_service.get_driver_detail(replacement_driver_id, 2025)
+        response = f1_service.get_driver_career_stats(replacement_driver_id, 2025)
         
         for driver in driver_list:
             if driver['driver_id'] == driver_to_replace_id:
