@@ -43,7 +43,8 @@ function DisplayDriver({
         "Lance Stroll": "stroll",
         "Nico Hülkenberg": "hulkenberg",
         "Sergio Pérez": "perez",
-        "Valtteri Bottas": "bottas"
+        "Valtteri Bottas": "bottas",
+        "Yuki Tsunoda": "tsunoda",
     };
 
     useEffect(() => {

@@ -60,6 +60,7 @@ def get_profile():
             "hulkenberg": "Nico Hülkenberg",
             "perez": "Sergio Pérez",
             "bottas": "Valtteri Bottas",
+            "tsunoda": "Yuki Tsunoda"
         }
 
         if user.favorite_driver in driver_map:
