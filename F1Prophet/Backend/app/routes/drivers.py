@@ -4,6 +4,35 @@ from app.services.f1_data import F1DriverData
 bp = Blueprint('drivers', __name__, url_prefix='/api')
 f1_service = F1DriverData()
 
+def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
+    if driver_to_replace_id == replacement_driver_id or driver_to_replace_id not in driver_list or replacement_driver_id in driver_list:
+        return driver_list
+
+    try:
+        response = f1_service.get_driver_detail(replacement_driver_id, 2025)
+        for driver in driver_list:
+            if driver['driver_id'] == driver_to_replace_id:
+                driver.update({
+                    'driver_id': response['driver_id'],
+                    'code': response['code'],
+                    'number': response['number'],
+                    'full_name': response['full_name'],
+                    'given_name': response['given_name'],
+                    'family_name': response['family_name'],
+                    'nationality': response['nationality'],
+                    'date_of_birth': response.get('date_of_birth', 'Unknown'),
+                    'team': response.get('team', 'Unknown'),
+                    'position': response.get('position'),
+                    'points': response.get('points', 0),
+                    'wins': response.get('wins', 0)
+                })
+                break
+        return driver_list
+    except Exception as e:
+        print(f"Error fetching replacement driver details: {e}")
+        return driver_list
+
+
 @bp.route('/drivers', methods=['GET'])
 def get_drivers():
     try:
@@ -36,6 +65,9 @@ def get_drivers():
                 'points': standing.get('points', 0),
                 'wins': standing.get('wins', 0)
             })
+
+            #only for the dutch gp
+            result = substitute_driver('hadjar', 'tsunoda', result)
 
         return jsonify(result), 200
     

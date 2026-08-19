@@ -35,7 +35,8 @@ function RaceCalendarPage() {
         'Brazilian Grand Prix': 'sao_paulo.png',
         'Las Vegas Grand Prix': 'las_vegas.png',
         'Qatar Grand Prix': 'lusail.png',
-        'Abu Dhabi Grand Prix': 'abu_dhabi.png'
+        'Abu Dhabi Grand Prix': 'abu_dhabi.png',
+        'Bahrain Grand Prix in Malaysia' : 'sepang.png'
     };
 
     useEffect(() => {
