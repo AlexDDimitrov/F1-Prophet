@@ -129,7 +129,9 @@ function MyPredictionsPage() {
                                                     <span className='my-driver-info'>
                                                         {drivers[pos.driver_id]?.code && (
                                                             <img
-                                                                src={`/images/drivers/${drivers[pos.driver_id].code}.png`}
+                                                                src={drivers[pos.driver_id].code === 'TSU'
+                                                                        ? '/images/drivers/TSU_DRIVER.png'
+                                                                        : `/images/drivers/${drivers[pos.driver_id].code}.png`}
                                                                 alt={drivers[pos.driver_id].full_name}
                                                                 className='my-driver-image-small'
                                                             />
@@ -159,7 +161,11 @@ function MyPredictionsPage() {
                                                             <span className='my-dnf-driver-info'>
                                                                 {drivers[pos.driver_id]?.code && (
                                                                     <img
-                                                                        src={`/images/drivers/${drivers[pos.driver_id].code}.png`}
+                                                                        src={
+                                                                            drivers[pos.driver_id].code === 'TSU'
+                                                                                ? '/images/drivers/TSU_DRIVER.png'
+                                                                                : `/images/drivers/${drivers[pos.driver_id].code}.png`
+                                                                        }
                                                                         alt={drivers[pos.driver_id].full_name}
                                                                         className='my-driver-image-small'
                                                                     />
