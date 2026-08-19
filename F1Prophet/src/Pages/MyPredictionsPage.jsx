@@ -21,7 +21,7 @@ function MyPredictionsPage() {
             }
 
             try {
-                const driversRes = await fetch(`${API_START}/api/drivers`);
+                const driversRes = await fetch(`${API_START}/api/drivers-all-time`);
                 if (driversRes.ok) {
                     const driversData = await driversRes.json();
                     const driversMap = {};

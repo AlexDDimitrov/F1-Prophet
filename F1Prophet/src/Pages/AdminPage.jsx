@@ -122,7 +122,7 @@ function AdminPage() {
                     }
                 }
 
-                const driversRes = await fetch(`${API_START}/api/drivers`);
+                const driversRes = await fetch(`${API_START}/api/drivers-for-gp`);
                 if (driversRes.ok) {
                     const driversData = await driversRes.json();
 

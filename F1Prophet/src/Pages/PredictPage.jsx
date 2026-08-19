@@ -39,7 +39,7 @@ function PredictPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const driversRes = await fetch(`${API_START}/api/drivers`);
+                const driversRes = await fetch(`${API_START}/api/drivers-for-gp`);
                 if (!driversRes.ok) throw new Error('Failed to fetch drivers');
                 const driversData = await driversRes.json();
                 

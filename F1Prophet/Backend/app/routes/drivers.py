@@ -58,7 +58,7 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
 
 
 
-@bp.route('/drivers', methods=['GET'])
+@bp.route('/drivers-for-gp', methods=['GET'])
 def get_drivers():
     try:
         drivers = f1_service.get_all_drivers(season=2026)
@@ -102,6 +102,119 @@ def get_drivers():
         traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
+@bp.route('/drivers', methods=['GET'])
+def get_drivers():
+    try:
+        drivers = f1_service.get_all_drivers(season=2026)
+        standings = f1_service.get_current_standings(season=2026)
+
+        standings_dict = {s['driver_id']: s for s in standings}
+
+        result = []
+
+        for driver in drivers:
+            driver_id = driver['driver_id']
+            standing = standings_dict.get(driver_id, {})
+
+            team = standing.get('team', 'Unknown')
+            if team == 'Unknown':
+                continue
+
+            result.append({
+                'driver_id': driver_id,
+                'code': driver['code'],
+                'number': driver['number'],
+                'full_name': driver['full_name'],
+                'given_name': driver['given_name'],
+                'family_name': driver['family_name'],
+                'nationality': driver['nationality'],
+                'date_of_birth': driver.get('date_of_birth', 'Unknown'),
+                'team': standing.get('team', 'Unknown'),
+                'position': standing.get('position'),
+                'points': standing.get('points', 0),
+                'wins': standing.get('wins', 0)
+            })
+
+        return jsonify(result), 200
+    
+    except Exception as e:
+        print(f"Error in get_drivers: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
+
+@bp.route('/drivers-all-time', methods=['GET'])
+def get_drivers():
+    try:
+        drivers = f1_service.get_all_drivers(season=2026)
+        standings = f1_service.get_current_standings(season=2026)
+
+        drivers2025 = f1_service.get_all_drivers(season=2025)
+        standings2025 = f1_service.get_current_standings(season=2025)
+
+        standings_dict = {s['driver_id']: s for s in standings}
+        standings2025_dict = {s['driver_id']: s for s in standings2025}
+
+        result = []
+
+        for driver in drivers:
+            driver_id = driver['driver_id']
+            standing = standings_dict.get(driver_id, {})
+
+            team = standing.get('team', 'Unknown')
+            if team == 'Unknown':
+                continue
+
+            result.append({
+                'driver_id': driver_id,
+                'code': driver['code'],
+                'number': driver['number'],
+                'full_name': driver['full_name'],
+                'given_name': driver['given_name'],
+                'family_name': driver['family_name'],
+                'nationality': driver['nationality'],
+                'date_of_birth': driver.get('date_of_birth', 'Unknown'),
+                'team': standing.get('team', 'Unknown'),
+                'position': standing.get('position'),
+                'points': standing.get('points', 0),
+                'wins': standing.get('wins', 0)
+            })
+
+
+        for driver in drivers2025:
+            if driver in result:
+                continue
+
+            driver_id = driver['driver_id']
+            standing = standings_dict.get(driver_id, {})
+
+            team = standing.get('team', 'Unknown')
+            if team == 'Unknown':
+                continue
+
+            result.append({
+                'driver_id': driver_id,
+                'code': driver['code'],
+                'number': driver['number'],
+                'full_name': driver['full_name'],
+                'given_name': driver['given_name'],
+                'family_name': driver['family_name'],
+                'nationality': driver['nationality'],
+                'date_of_birth': driver.get('date_of_birth', 'Unknown'),
+                'team': standing.get('team', 'Unknown'),
+                'position': standing.get('position'),
+                'points': standing.get('points', 0),
+                'wins': standing.get('wins', 0)
+            })
+
+
+        return jsonify(result), 200
+    
+    except Exception as e:
+        print(f"Error in get_drivers: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': str(e)}), 500
 
 @bp.route('/drivers/<driver_id>', methods=['GET'])
 def get_driver_detail(driver_id):
