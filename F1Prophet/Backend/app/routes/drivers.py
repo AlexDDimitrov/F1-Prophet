@@ -57,6 +57,57 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
         return driver_list
 
 
+def add_driver(driver_to_add_id, driver_list):
+    existing_ids = {driver['driver_id'] for driver in driver_list}
+
+    if driver_to_add_id in existing_ids:
+        return driver_list
+
+    try:
+        res = requests.get(
+            f"{f1_service.JOLPICA}/drivers/{driver_to_add_id}.json",
+            timeout=10
+        )
+        res.raise_for_status()
+
+        data = res.json()
+
+        drivers_list = data.get('MRData', {}).get('DriverTable', {}).get('Drivers', [])
+
+        if not drivers_list:
+            print(f"Driver {driver_to_add_id} not found in API response.")
+            return driver_list
+
+        driver_data = drivers_list[0]
+
+        team = 'missing'
+
+        if driver_to_add_id == 'tsunoda':
+            team = 'Red Bull Racing'
+
+        driver = {
+            'driver_id': driver_data.get('driverId'),
+            'code': driver_data.get('code'),
+            'number': f"#{driver_data.get('permanentNumber')}",
+            'full_name': f"{driver_data.get('givenName', '')} {driver_data.get('familyName', '')}".strip(),
+            'given_name': driver_data.get('givenName'),
+            'family_name': driver_data.get('familyName'),
+            'nationality': driver_data.get('nationality'),
+            'date_of_birth': driver_data.get('dateOfBirth', 'Unknown'),
+            'team': team,
+            'position': None,
+            'points': 0,
+            'wins': 0
+        }
+
+        driver_list.append(driver)
+
+        return driver_list
+
+    except Exception as e:
+        print(f"Error fetching driver {driver_to_add_id}: {e}")
+        return driver_list
+
 
 @bp.route('/drivers-for-gp', methods=['GET'])
 def get_drivers_for_gp():
@@ -134,6 +185,8 @@ def get_drivers():
                 'points': standing.get('points', 0),
                 'wins': standing.get('wins', 0)
             })
+
+        result = add_driver("tsunoda", result)
 
         return jsonify(result), 200
     
