@@ -114,7 +114,7 @@ def add_driver(driver_to_add_id, driver_list):
         }
 
         for standing in standings:
-                            if standing['driver_id'] == driver_to_replace_id:
+                            if standing['driver_id'] == driver_to_add_id:
                                 driver.update({
                                     'position': standing.get('position'),
                                     'points': standing.get('points', 0),
@@ -163,15 +163,6 @@ def get_drivers_for_gp():
                 'points': standing.get('points', 0),
                 'wins': standing.get('wins', 0)
             })
-
-            for standing in standings:
-                if standing['driver_id'] == driver_id:
-                    driver.update({
-                        'position': standing.get('position'),
-                        'points': standing.get('points', 0),
-                        'wins': standing.get('wins', 0)
-                    })
-                    break
 
         #only for the dutch gp
         result = substitute_driver("hadjar", "max_verstappen", result)
