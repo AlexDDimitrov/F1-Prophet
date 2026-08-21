@@ -53,7 +53,7 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
                 for standing in standings:
                     if standing['driver_id'] == driver_to_replace_id:
                         driver.update({
-                            'team': standing['Constructors'][0]['name'] if standing['Constructors'] else team,
+                            'team': standing.get('Constructors', [{}])[0].get('name') if standing.get('Constructors') else team,
                             'position': standing.get('position'),
                             'points': standing.get('points', 0),
                             'wins': standing.get('wins', 0)
@@ -115,14 +115,14 @@ def add_driver(driver_to_add_id, driver_list):
         }
 
         for standing in standings:
-                            if standing['driver_id'] == driver_to_add_id:
-                                driver.update({
-                                    'team': standing['Constructors'][0]['name'] if standing['Constructors'] else team,
-                                    'position': standing.get('position'),
-                                    'points': standing.get('points', 0),
-                                    'wins': standing.get('wins', 0)
-                                })
-                                break
+            if standing['driver_id'] == driver_to_add_id:
+                    driver.update({
+                        'team': standing.get('Constructors', [{}])[0].get('name') if standing.get('Constructors') else team,
+                        'position': standing.get('position'),
+                        'points': standing.get('points', 0),
+                        'wins': standing.get('wins', 0)
+                    })
+                    break
 
         driver_list.append(driver)
 
