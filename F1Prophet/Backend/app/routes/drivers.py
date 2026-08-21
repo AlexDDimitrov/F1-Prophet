@@ -17,6 +17,7 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
         
     try:
         res = requests.get(f"{f1_service.JOLPICA}/drivers/{replacement_driver_id}.json", timeout=10)
+        standings = f1_service.get_current_standings(season=2026)
         res.raise_for_status() 
         data = res.json()
         
@@ -48,6 +49,16 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
                     'points': 0,
                     'wins': 0
                 })
+
+                for standing in standings:
+                    if standing['driver_id'] == driver_to_replace_id:
+                        driver.update({
+                            'position': standing.get('position'),
+                            'points': standing.get('points', 0),
+                            'wins': standing.get('wins', 0)
+                        })
+                        break
+
                 break
                 
         return driver_list
@@ -68,6 +79,8 @@ def add_driver(driver_to_add_id, driver_list):
             f"{f1_service.JOLPICA}/drivers/{driver_to_add_id}.json",
             timeout=10
         )
+
+        standings = f1_service.get_current_standings(season=2026)
         res.raise_for_status()
 
         data = res.json()
@@ -99,6 +112,15 @@ def add_driver(driver_to_add_id, driver_list):
             'points': 0,
             'wins': 0
         }
+
+        for standing in standings:
+                            if standing['driver_id'] == driver_to_replace_id:
+                                driver.update({
+                                    'position': standing.get('position'),
+                                    'points': standing.get('points', 0),
+                                    'wins': standing.get('wins', 0)
+                                })
+                                break
 
         driver_list.append(driver)
 
@@ -141,6 +163,15 @@ def get_drivers_for_gp():
                 'points': standing.get('points', 0),
                 'wins': standing.get('wins', 0)
             })
+
+            for standing in standings:
+                if standing['driver_id'] == driver_id:
+                    driver.update({
+                        'position': standing.get('position'),
+                        'points': standing.get('points', 0),
+                        'wins': standing.get('wins', 0)
+                    })
+                    break
 
         #only for the dutch gp
         result = substitute_driver("hadjar", "max_verstappen", result)
