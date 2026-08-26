@@ -57,7 +57,9 @@ function DriverDetailPage() {
             'Italian': 'linear-gradient(90deg, #009246 0%, #009246 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #CE2B37 66.66%, #CE2B37 100%)',
             'Brazilian': 'linear-gradient(135deg, #009B3A 0%, #009B3A 35%, #FFDF00 35%, #FFDF00 50%, #009B3A 50%, #009B3A 65%, #FFDF00 65%, #009B3A 65%, #009B3A 100%)',
             'Argentine': 'linear-gradient(180deg, #74ACDF 0%, #74ACDF 33.33%, #FFFFFF 33.33%, #FFFFFF 66.66%, #74ACDF 66.66%, #74ACDF 100%)',
-            'New Zealander': 'linear-gradient(135deg, #00247D 0%, #00247D 40%, #012169 40%, #012169 60%, #00247D 60%, #00247D 100%)'};
+            'New Zealander': 'linear-gradient(135deg, #00247D 0%, #00247D 40%, #012169 40%, #012169 60%, #00247D 60%, #00247D 100%)',
+            'Japanese': 'radial-gradient(circle at center, #BC002D 0%, #BC002D 25%, #FFFFFF 25%, #FFFFFF 100%)',
+        };
         
         return flags[nationality] || 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)';
     };
@@ -94,7 +96,10 @@ function DriverDetailPage() {
         );
     }
 
-    const driverImage = `/images/drivers/${driver.code}.png`;
+    const driverImage =
+    driver.code === 'TSU'
+        ? '/images/drivers/TSU_DRIVER.png'
+        : `/images/drivers/${driver.code}.png`;
 
     return(
         <div className="driver-detail-page">
