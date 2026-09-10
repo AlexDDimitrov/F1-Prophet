@@ -1,6 +1,7 @@
 .driver-card {
     position: relative;
-    height: 550px;
+    height: auto;
+    min-height: 550px;
     border-radius: 15px;
     overflow: hidden;
     display: flex;
@@ -54,6 +55,7 @@
     justify-content: center;
     z-index: 1;
     overflow: hidden;
+    min-height: 550px;
 }
 
 .driver-image {
@@ -124,6 +126,13 @@
     letter-spacing: 0.05rem;
 }
 
+.driver-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
 .view-profile-btn {
     background: #ED1C01;
     color: #ffffff;
@@ -136,10 +145,9 @@
     letter-spacing: 0.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 0.5rem;
     box-shadow: 0 4px 15px rgba(237, 28, 1, 0.3);
     height: fit-content;
-    max-width: 17.5rem;
+    width: 100%;
 }
 
 .view-profile-btn:hover {
@@ -153,22 +161,33 @@
 }
 
 @media (max-width: 768px) {
-    .modern-driver-card {
-        height: 400px;
+    .driver-card {
+        height: auto !important;
+        min-height: auto !important;
+        max-width: 100% !important;
+        width: 100% !important;
         flex-direction: column;
     }
     
     .driver-image-section {
-        flex: 0 0 50%;
+        flex: 0 0 250px !important;
+        min-height: 250px !important;
+        height: 250px !important;
+        width: 100%;
     }
     
+    .card-background {
+        left: 0;
+        width: 100%;
+    }
+
     .driver-info-boxes {
         padding: 1rem;
-        gap: 0.5rem;
+        gap: 0.4rem;
     }
     
     .driver-info-box {
-        padding: 0.7rem 1rem;
+        padding: 0.6rem 0.8rem;
     }
     
     .driver-info-label {
@@ -176,11 +195,74 @@
     }
     
     .driver-info-value {
-        font-size: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .driver-actions {
+        flex-direction: row;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
     }
 
     .view-profile-btn {
-        font-size: 0.9rem;
-        max-width: 17.5rem;
+        font-size: 0.8rem;
+        padding: 0.6rem 1rem;
+        width: 48%;
+    }
+}
+
+@media (max-width: 480px) {
+    .driver-card {
+        height: auto !important;
+        min-height: auto !important;
+        max-width: 90% !important;
+        width: 90% !important;
+        margin: 0 auto !important;
+        flex-direction: column;
+    }
+    
+    .driver-image-section {
+        flex: 0 0 200px !important;
+        min-height: 200px !important;
+        height: 200px !important;
+        width: 100%;
+    }
+    
+    .card-background {
+        left: 0;
+        width: 100%;
+    }
+
+    .placeholder-code {
+        font-size: 3rem;
+    }
+
+    .driver-info-boxes {
+        padding: 0.8rem;
+        gap: 0.3rem;
+    }
+    
+    .driver-info-box {
+        padding: 0.5rem 0.7rem;
+    }
+    
+    .driver-info-label {
+        font-size: 0.55rem;
+    }
+    
+    .driver-info-value {
+        font-size: 0.85rem;
+    }
+
+    .driver-actions {
+        flex-direction: column;
+        gap: 0.4rem;
+        margin-top: 0.5rem;
+    }
+
+    .view-profile-btn {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.8rem;
+        width: 100%;
     }
 }
