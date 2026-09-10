@@ -105,28 +105,34 @@
     min-height: 13%;
 }
 
-@media ((max-width: 768px) and (min-width: 480px) or (max-width: 480px)) {
+@media (max-width: 768px) {
     .team-card {
-        height: 33rem;
+        min-height: auto !important;
+        height: auto !important;
+        max-height: none !important;
+        max-width: 80% !important;        /* ← Changed to 80% */
+        width: 80% !important;             /* ← Changed to 80% */
+        margin: 0 !important;         /* ← Center it */
     }
-    
+
     .team-image-section {
-        flex: 0 0 55%;
+        flex: 0 0 150px !important;     /* ← Fixed pixel height */
+        height: 150px !important;       /* ← Fixed pixel height */
     }
-    
+
     .team-info-boxes {
-        padding: 0.8rem;
-        gap: 0.4rem;
+        padding: 0.5rem;
+        gap: 0.3rem;
     }
-    
+
     .team-card .info-box-team {
-        padding: 0.5rem 0.8rem;
+        padding: 0.4rem;
     }
-    
+
     .team-card .info-label {
         font-size: 0.6rem;
     }
-    
+
     .team-card .info-value {
         font-size: 0.9rem;
     }

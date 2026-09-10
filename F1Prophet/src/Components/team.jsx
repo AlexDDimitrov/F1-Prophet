@@ -67,6 +67,7 @@ function Team({ team, favoriteTeam }) {
             "rb": ["#1A2A3A", "#2B4562"],
             "audi": ["#000000", "#E10600"],
             "haas": ["#FFFFFF", "#B6BABD"],
+            "cadillac": ["#919191", "#0B0B0B"],
         };
 
         const colors = teams[team_id];

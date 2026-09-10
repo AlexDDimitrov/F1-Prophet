@@ -76,4 +76,14 @@
     .team-header {
         padding: 2rem 1rem 1rem;
     }
+
+    .teams-section {
+        margin-top: -3rem;
+        padding: 1rem 0;
+    }
+
+    .teams-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
 }
