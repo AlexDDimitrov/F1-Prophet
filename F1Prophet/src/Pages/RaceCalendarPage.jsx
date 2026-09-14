@@ -28,7 +28,7 @@ function RaceCalendarPage() {
         'Dutch Grand Prix': 'dutch.png',
         'Italian Grand Prix': 'monzaTransparent2.png',
         'Spanish Grand Prix (Madrid)': 'madridGP.png',
-        'Azerbaijan Grand Prix': 'baku.png',
+        'Azerbaijan Grand Prix': 'bakuTransparent.png',
         'Singapore Grand Prix': 'singapore.png',
         'United States Grand Prix': 'austin.png',
         'Mexico City Grand Prix': 'mexico_city.png',
