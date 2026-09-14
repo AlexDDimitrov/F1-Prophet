@@ -183,6 +183,12 @@ function RaceCalendarPage() {
                     >
                         Completed
                     </button>
+                    <button
+                        className={`filter-btn ${filterStatus === 'cancelled' ? 'active' : ''}`}
+                        onClick={() => setFilterStatus('cancelled')}
+                    >
+                        Cancelled
+                    </button>
                 </div>
             </div>
 

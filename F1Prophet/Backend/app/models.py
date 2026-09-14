@@ -28,7 +28,7 @@ class Race(Base):
     deadline = Column(DateTime, nullable=False)
     season = Column(Integer, nullable=False)
     round_number = Column(Integer, nullable=False)
-    status = Column(Enum('upcoming', 'active', 'completed'), default='upcoming')
+    status = Column(Enum('upcoming', 'active', 'completed', 'cancelled'), default='upcoming')
     created_at = Column(DateTime, default=datetime.utcnow)
     
     predictions = relationship('Prediction', back_populates='race', cascade='all, delete-orphan')
