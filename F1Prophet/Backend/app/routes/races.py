@@ -36,7 +36,7 @@ def get_current_race():
     try:
         race = db.query(Race).filter(
             Race.race_date >= datetime.now()
-        ).order_by(Race.race_date.asc()).first()
+        ).order_by(Race.race_date.asc()).filter(Race.status != 'cancelled').first()
         
         if not race:
             return jsonify({'error': 'No upcoming races'}), 404
