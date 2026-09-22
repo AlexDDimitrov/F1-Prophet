@@ -1,8 +1,9 @@
+import os
+import logging
+from flask import g
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
-from sqlalchemy.pool import QueuePool, StaticPool
-from flask import g
-import logging
+from sqlalchemy.pool import QueuePool
 
 logger = logging.getLogger(__name__)
 
@@ -14,28 +15,35 @@ _session_factory = None
 def init_db(app):
     global _engine, _session_factory
     
-    database_url = app.config.get('DATABASE_URL', 'sqlite:///default.db')
+    database_url = os.getenv('DATABASE_URL')
+    
+    if not database_url:
+        user = os.getenv('MYSQL_USER', 'root')
+        password = os.getenv('MYSQL_PASSWORD', 'password_missing')
+        host = os.getenv('MYSQL_HOST', 'localhost')
+        port = os.getenv('MYSQL_PORT', '3306')
+        db_name = os.getenv('MYSQL_DATABASE', 'f1prophet')
+        database_url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{db_name}?auth_plugin=mysql_native_password"
+    
     app.config['DATABASE_URL'] = database_url
     
     _engine = create_engine(
-            database_url,
-            poolclass=QueuePool,
-            pool_size=1,
-            max_overflow=2,
-            pool_recycle=120,
-            pool_pre_ping=True,
-            
-            connect_args={
-                "connect_timeout": 5,
-                "charset": "utf8mb4",
-                "autocommit": False,
-                "auth_plugin": "mysql_native_password" 
-            },
-            echo=False,
-            future=True,
-        )
+        database_url,
+        poolclass=QueuePool,
+        pool_size=1,
+        max_overflow=2,
+        pool_recycle=120,
+        pool_pre_ping=True,
+        
+        connect_args={
+            "connect_timeout": 5,
+            "charset": "utf8mb4",
+            "autocommit": False
+        },
+        echo=False,
+        future=True,
+    )
 
-    
     @event.listens_for(_engine, "connect")
     def receive_connect(dbapi_connection, connection_record):
         cursor = dbapi_connection.cursor()
@@ -89,8 +97,9 @@ def close_db(e=None):
 
 def health_check():
     try:
+        from sqlalchemy import text
         with _engine.connect() as conn:
-            conn.execute("SELECT 1")
+            conn.execute(text("SELECT 1"))
         return True, "Database OK"
     except Exception as e:
         return False, f"Database error: {str(e)}"
