@@ -169,7 +169,9 @@ def get_drivers_for_gp():
         #only for the dutch gp
         #result = substitute_driver("hadjar", "max_verstappen", result)
         #result = add_driver("tsunoda", result)
-        result = add_driver("max_verstappen", result)
+        
+        #for azerbaijan gp
+        result = substitute_driver("tsunoda", "max_verstappen", result)
 
         return jsonify(result), 200
     
@@ -213,8 +215,7 @@ def get_drivers():
             })
 
         #only for the dutch gp
-        #result = add_driver("tsunoda", result)
-        #result = add_driver("max_verstappen", result)
+        result = add_driver("tsunoda", result)
         result = add_driver("max_verstappen", result)
 
         return jsonify(result), 200
