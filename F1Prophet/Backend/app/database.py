@@ -15,15 +15,20 @@ _session_factory = None
 def init_db(app):
     global _engine, _session_factory
     
-    database_url = os.getenv('DATABASE_URL')
+    raw_url = os.getenv('DATABASE_URL')
     
-    if not database_url:
+    if raw_url:
+        if "?" in raw_url:
+            raw_url = raw_url.split("?")[0]
+            
+        database_url = f"{raw_url}?charset=utf8mb4"
+    else:
         user = os.getenv('MYSQL_USER', 'root')
         password = os.getenv('MYSQL_PASSWORD', 'password_missing')
         host = os.getenv('MYSQL_HOST', 'localhost')
         port = os.getenv('MYSQL_PORT', '3306')
         db_name = os.getenv('MYSQL_DATABASE', 'f1prophet')
-        database_url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{db_name}?auth_plugin=mysql_native_password"
+        database_url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{db_name}?charset=utf8mb4"
     
     app.config['DATABASE_URL'] = database_url
     
@@ -34,15 +39,14 @@ def init_db(app):
         max_overflow=2,
         pool_recycle=120,
         pool_pre_ping=True,
-        
         connect_args={
             "connect_timeout": 5,
-            "charset": "utf8mb4",
             "autocommit": False
         },
         echo=False,
         future=True,
     )
+
 
     @event.listens_for(_engine, "connect")
     def receive_connect(dbapi_connection, connection_record):
