@@ -14,7 +14,7 @@ _session_factory = None
 def init_db(app):
     global _engine, _session_factory
     
-    database_url = "mysql+pymysql://root:LTFASdtcSNdozMVuiYpQoYnBPghwGLhq@mysql.railway.internal:3306/railway"
+    database_url = app.config.get('DATABASE_URL', 'sqlite:///default.db')
     app.config['DATABASE_URL'] = database_url
     
     _engine = create_engine(
@@ -29,9 +29,7 @@ def init_db(app):
                 "connect_timeout": 5,
                 "charset": "utf8mb4",
                 "autocommit": False,
-                "auth_plugin_map": {
-                    "caching_sha2_password": "pymysql.auth.MysqlOldPasswordAuth"
-                }
+                "auth_plugin": "mysql_native_password" 
             },
             echo=False,
             future=True,
