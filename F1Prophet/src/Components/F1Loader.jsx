@@ -126,6 +126,27 @@ const TRACK_DATA = {
       </video>
     </div>
     ),
+    malaysia: (
+      <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort16.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    singapore: (
+      <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort17.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    cota: (
+      <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort18.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
     //Add bahrain and jeddah (Saudi arabia) loaders when i have time
 };
 
