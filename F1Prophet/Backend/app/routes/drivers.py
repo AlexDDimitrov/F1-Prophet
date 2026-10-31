@@ -171,7 +171,8 @@ def get_drivers_for_gp():
         #result = add_driver("tsunoda", result)
         
         #for azerbaijan gp
-        result = substitute_driver("tsunoda", "max_verstappen", result)
+        result = add_driver("max_verstappen", result)
+        result = add_driver("stroll", result)
 
         return jsonify(result), 200
     

@@ -31,7 +31,7 @@ function RaceCalendarPage() {
         'Azerbaijan Grand Prix': 'bakuTransparent.png',
         'Singapore Grand Prix': 'marinaBayStreetCircuit.png',
         'United States Grand Prix': 'cota.png',
-        'Mexico City Grand Prix': 'mexico_city.png',
+        'Mexico City Grand Prix': 'mexico.png',
         'Brazilian Grand Prix': 'sao_paulo.png',
         'Las Vegas Grand Prix': 'las_vegas.png',
         'Qatar Grand Prix': 'lusail.png',

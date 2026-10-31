@@ -12,3 +12,4 @@
 [0917/105247.046:WARNING:resource_util.cc(83)] Please customize CefSettings.root_cache_path for your application. Use of the default value may lead to unintended process singleton behavior.
 [0927/180832.284:WARNING:resource_util.cc(83)] Please customize CefSettings.root_cache_path for your application. Use of the default value may lead to unintended process singleton behavior.
 [0927/180847.955:WARNING:resource_util.cc(83)] Please customize CefSettings.root_cache_path for your application. Use of the default value may lead to unintended process singleton behavior.
+[1024/141601.855:WARNING:resource_util.cc(83)] Please customize CefSettings.root_cache_path for your application. Use of the default value may lead to unintended process singleton behavior.

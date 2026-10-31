@@ -147,6 +147,13 @@ const TRACK_DATA = {
       </video>
     </div>
     ),
+    mexico: (
+      <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort18.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
     //Add bahrain and jeddah (Saudi arabia) loaders when i have time
 };
 
