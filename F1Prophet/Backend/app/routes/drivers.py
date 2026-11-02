@@ -338,13 +338,6 @@ def get_driver_detail(driver_id):
             'career_poles': career_stats['poles'],
             'career_championships': career_stats['championships']
         }
-
-        if driver_id == 'tsunoda':
-            result['code'] = 'TSU'
-            result['number'] = '#22'
-        if driver_id == 'hirakawa':
-            result['code'] = 'HIR'
-            result['number'] = '#50'
         
         return jsonify(result), 200
         
