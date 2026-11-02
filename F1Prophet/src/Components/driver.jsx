@@ -97,6 +97,8 @@ function DisplayDriver({
     const driverImage =
     code === 'TSU'
         ? '/images/drivers/TSU_DRIVER.png'
+        : code === 'HIR'
+        ? '/images/drivers/HIR_DRIVER.png'
         : `/images/drivers/${code}.png`;
     const getFlagGradient = (nationality) => {
         const flags = {
