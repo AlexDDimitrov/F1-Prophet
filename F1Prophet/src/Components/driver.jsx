@@ -45,6 +45,7 @@ function DisplayDriver({
         "Sergio Pérez": "perez",
         "Valtteri Bottas": "bottas",
         "Yuki Tsunoda": "tsunoda",
+        "Ryo Hirakawa": "hirakawa",
     };
 
     useEffect(() => {

@@ -218,6 +218,7 @@ def get_drivers():
         #only for the dutch gp
         result = add_driver("tsunoda", result)
         result = add_driver("max_verstappen", result)
+        result = add_driver("stroll", result)
 
         return jsonify(result), 200
     
@@ -295,6 +296,7 @@ def get_drivers_all_time():
         #only for the dutch gp
         result = add_driver("tsunoda", result)
         result = add_driver("max_verstappen", result)
+        result = add_driver("stroll", result)
 
         return jsonify(result), 200
     

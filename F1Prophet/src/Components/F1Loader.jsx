@@ -150,7 +150,14 @@ const TRACK_DATA = {
     mexico: (
       <div className="video-wrapper-loading">
       <video className="loader-vid" autoPlay muted loop playsInline>
-        <source src="/videos/F1LoaderProphetShort18.webm" type="video/webm" />
+        <source src="/videos/F1LoaderProphetShort19.webm" type="video/webm" />
+      </video>
+    </div>
+    ),
+    brazil: (
+      <div className="video-wrapper-loading">
+      <video className="loader-vid" autoPlay muted loop playsInline>
+        <source src="/videos/F1LoaderProphetShort20.webm" type="video/webm" />
       </video>
     </div>
     ),
