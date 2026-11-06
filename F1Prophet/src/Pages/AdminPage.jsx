@@ -299,6 +299,8 @@ function AdminPage() {
                                                 src={
                                                     driver.code === 'TSU'
                                                         ? '/images/drivers/TSU_DRIVER.png'
+                                                        : driver.code === 'HIR'
+                                                        ? '/images/drivers/HIR_DRIVER.png'
                                                         : `/images/drivers/${driver.code}.png`
                                                 }
                                                 alt={driver.full_name}
