@@ -149,10 +149,10 @@ def add_driver(driver_to_add_id, driver_list):
         print(f"Error fetching driver {driver_to_add_id}: {e}")
         return driver_list
 
-def add_driver_custom(driver_to_add_id, driver_data, driver_list):
+def add_driver_custom(driver_data, driver_list):
     existing_ids = {driver['driver_id'] for driver in driver_list}
 
-    if driver_to_add_id in existing_ids:
+    if driver_data['driver_id'] in existing_ids:
         return driver_list
 
     driver_list.append(driver_data)
@@ -160,15 +160,17 @@ def add_driver_custom(driver_to_add_id, driver_data, driver_list):
     return driver_list
 
 def remove_driver(driver_id, driver_list):
-    existing_ids = {driver['driver_id'] for driver in driver_list}
-
-    if driver_id not in existing_ids:
-        return driver_list
+    original_length = len(driver_list)
 
     driver_list[:] = [
         driver for driver in driver_list
         if driver['driver_id'] != driver_id
     ]
+
+    if len(driver_list) < original_length:
+        print(f"Removed driver: {driver_id}")
+    else:
+        print(f"Driver {driver_id} not found.")
 
     return driver_list
 
