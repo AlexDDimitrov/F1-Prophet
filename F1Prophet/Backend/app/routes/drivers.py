@@ -68,6 +68,23 @@ def substitute_driver(driver_to_replace_id, replacement_driver_id, driver_list):
         print(f"Error fetching replacement driver details: {e}")
         return driver_list
 
+def substitute_driver_custom(driver_to_replace_id, replacement_driver_data, driver_list):
+    existing_ids = {driver['driver_id'] for driver in driver_list}
+    
+    if driver_to_replace_id == replacement_driver_data['driver_id']:
+        return driver_list
+    if driver_to_replace_id not in existing_ids:
+        return driver_list
+    if replacement_driver_data['driver_id'] in existing_ids:
+        return driver_list
+
+    for driver in driver_list:
+        if driver['driver_id'] == driver_to_replace_id:
+            driver.update(replacement_driver_data)
+            break
+            
+    return driver_list
+
 
 def add_driver(driver_to_add_id, driver_list):
     existing_ids = {driver['driver_id'] for driver in driver_list}
@@ -132,6 +149,16 @@ def add_driver(driver_to_add_id, driver_list):
         print(f"Error fetching driver {driver_to_add_id}: {e}")
         return driver_list
 
+def remove_driver(driver_to_remove_id, driver_list):
+    existing_ids = {driver['driver_id'] for driver in driver_list}
+
+    if driver_to_remove_id not in existing_ids:
+        return driver_list
+
+    driver_list = [driver for driver in driver_list if driver['driver_id'] != driver_to_remove_id]
+
+    return driver_list
+
 
 @bp.route('/drivers-for-gp', methods=['GET'])
 def get_drivers_for_gp():
@@ -173,6 +200,25 @@ def get_drivers_for_gp():
         #for azerbaijan gp
         result = add_driver("max_verstappen", result)
         result = add_driver("stroll", result)
+
+        #for brazil gp
+        camara = {
+            'driver_id': 'camara',
+            'code': 'CAM',
+            'number': '#99',
+            'full_name': 'Rafael Camara',
+            'given_name': 'Rafael',
+            'family_name': 'Camara',
+            'nationality': 'Brazilian',
+            'date_of_birth': 'Unknown',
+            'team': 'Substitute for Haas',
+            'position': None,
+            'points': 0,
+            'wins': 0
+        }
+
+        result = substitute_driver_custom("ocon", camara, result)
+        result = remove_driver("hirakawa", result)
 
         return jsonify(result), 200
     
@@ -219,6 +265,24 @@ def get_drivers():
         result = add_driver("tsunoda", result)
         result = add_driver("max_verstappen", result)
         result = add_driver("stroll", result)
+
+        #for brazil gp
+        camara = {
+            'driver_id': 'camara',
+            'code': 'CAM',
+            'number': '#99',
+            'full_name': 'Rafael Camara',
+            'given_name': 'Rafael',
+            'family_name': 'Camara',
+            'nationality': 'Brazilian',
+            'date_of_birth': 'Unknown',
+            'team': 'Substitute for Haas',
+            'position': None,
+            'points': 0,
+            'wins': 0
+        }
+
+        result = substitute_driver_custom("ocon", camara, result)
 
         return jsonify(result), 200
     
@@ -297,6 +361,24 @@ def get_drivers_all_time():
         result = add_driver("tsunoda", result)
         result = add_driver("max_verstappen", result)
         result = add_driver("stroll", result)
+
+        #for brazil gp
+        camara = {
+            'driver_id': 'camara',
+            'code': 'CAM',
+            'number': '#99',
+            'full_name': 'Rafael Camara',
+            'given_name': 'Rafael',
+            'family_name': 'Camara',
+            'nationality': 'Brazilian',
+            'date_of_birth': 'Unknown',
+            'team': 'Substitute for Haas',
+            'position': None,
+            'points': 0,
+            'wins': 0
+        }
+
+        result = substitute_driver_custom("ocon", camara, result)
 
         return jsonify(result), 200
     

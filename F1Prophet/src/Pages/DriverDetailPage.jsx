@@ -99,6 +99,8 @@ function DriverDetailPage() {
     const driverImage =
     driver.code === 'TSU'
         ? '/images/drivers/TSU_DRIVER.png'
+        : driver.code === 'HIR'
+        ? '/images/drivers/HIR_DRIVER.png'
         : `/images/drivers/${driver.code}.png`;
 
     return(
