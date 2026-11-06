@@ -160,17 +160,21 @@ def add_driver_custom(driver_data, driver_list):
     return driver_list
 
 def remove_driver(driver_id, driver_list):
-    original_length = len(driver_list)
+    print("Trying to remove:", repr(driver_id))
+
+    for driver in driver_list:
+        if 'hirakawa' in driver.get('full_name', '').lower():
+            print("FOUND:", repr(driver['driver_id']), driver['full_name'])
 
     driver_list[:] = [
         driver for driver in driver_list
-        if driver['driver_id'] != driver_id
+        if driver.get('driver_id', '').strip().lower() != driver_id.strip().lower()
     ]
 
-    if len(driver_list) < original_length:
-        print(f"Removed driver: {driver_id}")
-    else:
-        print(f"Driver {driver_id} not found.")
+    print("Remaining Hirakawa entries:", [
+        d for d in driver_list
+        if 'hirakawa' in d.get('full_name', '').lower()
+    ])
 
     return driver_list
 
