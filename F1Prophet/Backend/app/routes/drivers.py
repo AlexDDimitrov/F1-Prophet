@@ -149,6 +149,16 @@ def add_driver(driver_to_add_id, driver_list):
         print(f"Error fetching driver {driver_to_add_id}: {e}")
         return driver_list
 
+def add_driver_custom(driver_to_add_id, driver_data, driver_list):
+    existing_ids = {driver['driver_id'] for driver in driver_list}
+
+    if driver_to_add_id in existing_ids:
+        return driver_list
+
+    driver_list.append(driver_data)
+
+    return driver_list
+
 def remove_driver(driver_to_remove_id, driver_list):
     existing_ids = {driver['driver_id'] for driver in driver_list}
 
@@ -282,7 +292,7 @@ def get_drivers():
             'wins': 0
         }
 
-        result = substitute_driver_custom("ocon", camara, result)
+        result = add_driver_custom("ocon", camara, result)
 
         return jsonify(result), 200
     
@@ -378,7 +388,7 @@ def get_drivers_all_time():
             'wins': 0
         }
 
-        result = substitute_driver_custom("ocon", camara, result)
+        result = add_driver_custom("ocon", camara, result)
 
         return jsonify(result), 200
     
