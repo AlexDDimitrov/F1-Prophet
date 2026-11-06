@@ -160,7 +160,17 @@ def add_driver_custom(driver_to_add_id, driver_data, driver_list):
     return driver_list
 
 def remove_driver(driver_id, driver_list):
-    return [driver for driver in driver_list if driver['driver_id'] != driver_id]
+    existing_ids = {driver['driver_id'] for driver in driver_list}
+
+    if driver_id not in existing_ids:
+        return driver_list
+
+    driver_list[:] = [
+        driver for driver in driver_list
+        if driver['driver_id'] != driver_id
+    ]
+
+    return driver_list
 
 
 @bp.route('/drivers-for-gp', methods=['GET'])
