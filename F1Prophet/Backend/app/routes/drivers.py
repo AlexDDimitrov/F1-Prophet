@@ -297,7 +297,7 @@ def get_drivers():
             'wins': 0
         }
 
-        result = add_driver_custom("ocon", camara, result)
+        result = add_driver_custom(camara, result)
 
         return jsonify(result), 200
     
@@ -393,7 +393,7 @@ def get_drivers_all_time():
             'wins': 0
         }
 
-        result = add_driver_custom("ocon", camara, result)
+        result = add_driver_custom(camara, result)
 
         return jsonify(result), 200
     
