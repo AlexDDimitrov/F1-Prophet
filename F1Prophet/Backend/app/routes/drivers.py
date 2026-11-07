@@ -220,7 +220,7 @@ def get_drivers_for_gp():
         camara = {
             'driver_id': 'camara',
             'code': 'CAM',
-            'number': '#99',
+            'number': '#51',
             'full_name': 'Rafael Camara',
             'given_name': 'Rafael',
             'family_name': 'Camara',
@@ -285,7 +285,7 @@ def get_drivers():
         camara = {
             'driver_id': 'camara',
             'code': 'CAM',
-            'number': '#99',
+            'number': '#51',
             'full_name': 'Rafael Camara',
             'given_name': 'Rafael',
             'family_name': 'Camara',
@@ -381,7 +381,7 @@ def get_drivers_all_time():
         camara = {
             'driver_id': 'camara',
             'code': 'CAM',
-            'number': '#99',
+            'number': '#51',
             'full_name': 'Rafael Camara',
             'given_name': 'Rafael',
             'family_name': 'Camara',
