@@ -217,22 +217,6 @@ def get_drivers_for_gp():
         result = add_driver("stroll", result)
 
         #for brazil gp
-        camara = {
-            'driver_id': 'camara',
-            'code': 'CAM',
-            'number': '#51',
-            'full_name': 'Rafael Camara',
-            'given_name': 'Rafael',
-            'family_name': 'Camara',
-            'nationality': 'Brazilian',
-            'date_of_birth': 'Unknown',
-            'team': 'Substitute for Haas',
-            'position': None,
-            'points': 0,
-            'wins': 0
-        }
-
-        result = substitute_driver_custom("ocon", camara, result)
         result = remove_driver("ryo_hirakawa", result)
 
         return jsonify(result), 200
@@ -281,23 +265,6 @@ def get_drivers():
         result = add_driver("max_verstappen", result)
         result = add_driver("stroll", result)
 
-        #for brazil gp
-        camara = {
-            'driver_id': 'camara',
-            'code': 'CAM',
-            'number': '#51',
-            'full_name': 'Rafael Camara',
-            'given_name': 'Rafael',
-            'family_name': 'Camara',
-            'nationality': 'Brazilian',
-            'date_of_birth': 'Unknown',
-            'team': 'Substitute for Haas',
-            'position': None,
-            'points': 0,
-            'wins': 0
-        }
-
-        result = add_driver_custom(camara, result)
 
         return jsonify(result), 200
     
@@ -378,22 +345,6 @@ def get_drivers_all_time():
         result = add_driver("stroll", result)
 
         #for brazil gp
-        camara = {
-            'driver_id': 'camara',
-            'code': 'CAM',
-            'number': '#51',
-            'full_name': 'Rafael Camara',
-            'given_name': 'Rafael',
-            'family_name': 'Camara',
-            'nationality': 'Brazilian',
-            'date_of_birth': 'Unknown',
-            'team': 'Substitute for Haas',
-            'position': None,
-            'points': 0,
-            'wins': 0
-        }
-
-        result = add_driver_custom(camara, result)
 
         return jsonify(result), 200
     

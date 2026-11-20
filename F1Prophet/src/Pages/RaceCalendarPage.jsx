@@ -33,7 +33,7 @@ function RaceCalendarPage() {
         'United States Grand Prix': 'cota.png',
         'Mexico City Grand Prix': 'mexico.png',
         'Brazilian Grand Prix': 'sao-paulo.png',
-        'Las Vegas Grand Prix': 'las_vegas.png',
+        'Las Vegas Grand Prix': 'LA.png',
         'Qatar Grand Prix': 'lusail.png',
         'Abu Dhabi Grand Prix': 'abu_dhabi.png',
         'Bahrain Grand Prix in Malaysia' : 'malaysiaTransparent.png',
