@@ -61,7 +61,8 @@ def get_profile():
             "perez": "Sergio Pérez",
             "bottas": "Valtteri Bottas",
             "tsunoda": "Yuki Tsunoda",
-            "hirakawa": "Ryo Hirakawa"
+            "hirakawa": "Ryo Hirakawa",
+            "rafael_camara": "Rafael Camara",
         }
 
         if user.favorite_driver in driver_map:

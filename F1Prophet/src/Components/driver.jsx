@@ -46,6 +46,7 @@ function DisplayDriver({
         "Valtteri Bottas": "bottas",
         "Yuki Tsunoda": "tsunoda",
         "Ryo Hirakawa": "hirakawa",
+        "Rafael Camara": "rafael_camara",
     };
 
     useEffect(() => {
