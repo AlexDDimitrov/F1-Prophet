@@ -218,6 +218,7 @@ def get_drivers_for_gp():
 
         #for brazil gp
         result = remove_driver("ryo_hirakawa", result)
+        result = remove_driver("ocon", result)
 
         return jsonify(result), 200
     
